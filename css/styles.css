@@ -1,0 +1,78 @@
+
+.link-button {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: serif;
+}
+.link-button:focus {
+  outline: none;
+}
+.link-button:active {
+  color:red;
+}
+
+
+
+/*Social networking buttons*/
+.social-login-btn {
+  color: #fff;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+
+
+.facebook-bg-color {
+  background-color: #3b5998;
+}
+.linkedin-bg-color {
+  background-color: #0077b5;
+}
+.google-bg-color {
+  background-color: #d34836;
+}
+.facebook-border-color {
+  border-color: #3b5998;
+}
+.linkedin-border-color {
+  border-color: #0077b5;
+}
+.google-border-color {
+  border-color: #d34836;
+}
+
+.photo-border {
+  border-radius: 8px;
+  border-width: 5px;
+  border-style: solid;
+}
+
+.btn-icon {
+  float: left;
+}
+.social-btn-text {
+  font-weight: 600;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+.separator {
+  content: '';
+  display: inline-block;
+  background: #888;
+  margin: 0px 4px;
+  height: 20px;
+  width: 1px;
+  vertical-align: top;
+  float: left;
+}
+
+.center-outer {
+  width: 100%;
+}
+.center-inner {
+  display: table;
+  margin: 0 auto;
+}
