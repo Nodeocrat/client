@@ -127,7 +127,7 @@ function displayProfile(elementId, id, name, preLinkFnStr) {
     "<div class=\'center-outer\'><div class=\'center-inner\'><label>Linked with Facebook</label></div></div>" +
     "<div class=\'center-outer\'><div class=\'center-inner\'><button type=\'button\' onclick=\'unlink(" + str + ");\' class=\'link-button\'>(Unlink)</button></div></div>" +
     "<div class=\'center-outer\'><div class=\'center-inner\'><img width=\'100\' height=\'100\' class=\'photo-border facebook-border-color\'" +
-    "src=\'http://graph.facebook.com/" + id + "/picture?type=normal\'></div></div>" +
+    "src=\'https://graph.facebook.com/" + id + "/picture?type=normal\'></div></div>" +
     '<div class=\'center-outer\'><div class=\'center-inner\'>' + name + '</div></div>';
 }
 
