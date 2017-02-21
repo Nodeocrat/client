@@ -154,7 +154,7 @@ function attachSignin(element) {
           googleLinkContainer.appendChild(createGoogleLinkedDiv(googlePhotoUrl, profile.getName()));
         }
       }, function(error) {
-        alert(JSON.stringify(error, undefined, 2));
+        console.log(JSON.stringify(error, undefined, 2));
       });
 }
 

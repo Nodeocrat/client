@@ -124,7 +124,7 @@ function preUnlink(done){
 }
 function preLink(fbProfile, done){
 
-  const photoUrl = "http://graph.facebook.com/" + fbProfile.id + "/picture?type=normal";
+  const photoUrl = "https://graph.facebook.com/" + fbProfile.id + "/picture?type=normal";
 
   nc.ajax({
     type: 'POST',
