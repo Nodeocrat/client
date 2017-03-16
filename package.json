@@ -1,0 +1,21 @@
+{
+  "name": "nodeocrat",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "compile": "babel ./react/src/js --out-dir ./react/build",
+    "build": "",
+    "build-prod": "rm -rf ./react/build/html/* && rm -rf ./react/build/css/* && rm -rf ./react/build/js/* && babel ./react/src | uglifyjs - -c -m --screw-ie8 -o ./react/build/js"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.23.0",
+    "babel-preset-es2016": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "uglify-js": "^2.8.12"
+  }
+}
