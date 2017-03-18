@@ -1,49 +1,9 @@
-
-.link-button {
-  background: none;
-  border: none;
-  color: blue;
-  cursor: pointer;
-  font-size: 1em;
-  font-family: serif;
-}
-.link-button:focus {
-  outline: none;
-}
-.link-button:active {
-  color:red;
-}
-
-
-
-
-
-.photo-border {
-  border-radius: 8px;
-  border-width: 5px;
-  border-style: solid;
-}
-
-
-
-
-.center-outer {
-  width: 100%;
-}
-.center-inner {
-  display: table;
-  margin: 0 auto;
-}
-
-
 /*Social networking buttons*/
 .social-login-btn {
   color: #fff;
   border-radius: 20px;
   margin-bottom: 10px;
 }
-
-
 
 
 

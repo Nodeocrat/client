@@ -40,10 +40,6 @@ function setupLogoutBtn(btn){
   }
 }
 
-/*let logoutBtn = document.getElementById("main-layout-logout");
-if(logoutBtn)
-  setupLogoutBtn(logoutBtn);*/
-
 nc.onload(function(){
 
   // Close the dropdown menu if the user clicks outside of it
