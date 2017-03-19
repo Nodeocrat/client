@@ -1,0 +1,47 @@
+.nc-nav-pills {
+  margin-top:11px;
+  margin-left: 40px;
+}
+.nc-nav-login-txt {
+  color: white;
+}
+.nc-nav-login-btn {
+  margin-left: 10px;
+}
+.nc-nav-login-btn:hover, .nc-nav-login-btn:focus {
+  text-decoration: none;
+}
+
+.nc-nav-bar {
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+  background-color: #333333;
+  position: fixed;
+  top: 0;
+  /*height: 64px;*/
+  width: 100%;
+  /*max-width: 100%;*/
+  /*color: #FFFFFF;*/
+  /*padding: 0;*/
+  border: none;
+  z-index: 1030;
+}
+
+
+/*nav-pills colours*/
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+    background-color: #339933;
+}
+.nav-pills > li > a:focus, .nav-pills > li > a:hover {
+  background-color: #777777;
+}
+.nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background-color: #55bb55;
+}
+.nav-pills > li > a{
+  color:white;
+  background-color: #555555;
+}
+.nav-pills > li {
+  margin: 0 5px 0 5px;
+}
