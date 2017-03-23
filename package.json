@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "compile": "babel ./react/src/js --out-dir ./react/build",
-    "build": "cd react-app-dev && npm run build && rm -rf ../react-app 2>/dev/null && mv react-app ../",
+    "build": "cd react-app-dev && npm run build && rm -rf ../static 2>/dev/null; rm ../asset-manifest.json 2>/dev/null; mv react-app/static/ ../ && mv react-app/asset-manifest.json ../",
     "placeholder-build": "rm -rf ./react/build/html/* && rm -rf ./react/build/css/* && rm -rf ./react/build/js/* && babel ./react/src | uglifyjs - -c -m --screw-ie8 -o ./react/build/js"
   },
   "dependencies": {

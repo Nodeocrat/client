@@ -1,30 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './SocialButton.css';
 import '@fonts/social-fonts/fontello.css';
+import ColorSchemes from '@global/ColorSchemes';
 
-class SocialButton extends Component {
-  render() {
-    let colorScheme = null;
-    let icon = null;
-    if(this.props.type == "facebook") {
-      colorScheme = "facebook-bg-color";
-      icon = "icon-facebook";
-    } else if (this.props.type == "google") {
-      colorScheme = "google-bg-color";
-      icon = "icon-gplus";
-    } else {
-      colorScheme = "";
-      icon = "";
-    }
+const siteToIcon = {
+  "facebook": "icon-facebook",
+  "google": "icon-gplus"
+}
 
-    return (
-      <button type="button" className={"btn social-login-btn " + colorScheme} onClick={() => this.props.onClick}>
-        <span className={"btn-icon " + icon}></span>
-        <span className="separator"></span>
-        <span className="social-btn-text">{this.props.text}</span>
-      </button>
-    );
-  }
+const SocialButton = (props) => (
+  <button disabled={props.disabled} type="button" className={"btn social-login-btn"} style={{backgroundColor: ColorSchemes[props.site]}} onClick={props.onClick}>
+    <span className={"btn-icon " + siteToIcon[props.site]}></span>
+    <span className="separator"></span>
+    <span className="social-btn-text">{props.text}</span>
+  </button>
+);
+
+SocialButton.propTypes = {
+  text: React.PropTypes.string.isRequired,
+  site: React.PropTypes.oneOf(Object.keys(siteToIcon)).isRequired,
+  onClick: React.PropTypes.func.isRequired
 }
 
 export default SocialButton;

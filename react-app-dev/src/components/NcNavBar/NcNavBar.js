@@ -1,73 +1,66 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './NcNavBar.css';
 import logo from '@media/nclogosmall.png';
+import { Link, NavLink, Route } from 'react-router-dom';
 
-//react-bootstrap imports
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import Button from 'react-bootstrap/lib/Button';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+//custom components
+import RegisterDialog from '@components/RegisterDialog/RegisterDialog';
+
+const NavTabs = (props) => (
+  <ul className="nav nav-pills pull-left nc-nav-pills">
+    {props.routes.map((route) => (
+      <NavLink
+        exact={route.path === "/" ? true : false}
+        key={route.name} to={route.path}>
+        <li>
+          <div>{route.name}</div>
+        </li>
+      </NavLink>
+    ))}
+  </ul>
+);
 
 
-function handleSelect(selectedKey) {
-  console.log('selected ' + selectedKey);
-}
 
-function NavTabs(props){
-  return (
-    <Nav bsStyle="pills" className="pull-left nc-nav-pills" activeKey={1} onSelect={handleSelect}>
-      <NavItem eventKey={1} href="/home">Home</NavItem>
-      <NavItem eventKey={2} href="/blogs">Blogs</NavItem>
-    </Nav>
-  );
-}
+const LoginNav = () => (
+  <Route path="*" render={({match}) => (
+    <div>
+      <ul className="nav nav-pills nav-login-btns pull-right nc-nav-pills">
+        <Link to={`${match.url==="/"?"":match.url}/login`}>
+          <li>
+            <div>Login</div>
+          </li>
+        </Link>
+        <Link to={`${match.url==="/"?"":match.url}/register`}>
+          <li>
+            <div>Register</div>
+          </li>
+        </Link>
+      </ul>
 
-class LoginNav extends Component {
-  render(){
-    return (
-      <ButtonToolbar className="pull-right" style={{marginTop: 13 + 'px'}}>
+      <Route path={'*/register'} component={RegisterDialog}/>
+      <Route path={'*/login'} component={RegisterDialog}/>
+    </div>
+  )}/>
+);
 
-        <a href="/login">
-          <Button bsStyle="link" className="nc-nav-login-btn">
-            <div className="nc-nav-login-txt">Login</div>
-          </Button>
-        </a>
+const NavLogo = () => (
+  <Link to="/">
+    <img style={{margin: 10 + 'px'}} className="pull-left" alt="logo" src={logo}/>
+    <h2 className="text-muted pull-left" style={{marginLeft: 5 + 'px', marginTop: 16 + 'px', marginBottom: 12 + 'px', color: '#66cc33'}}><b>Nodeocrat</b></h2>
+  </Link>
+);
 
-        <a href="/register">
-          <Button bsStyle="link" className="nc-nav-login-btn">
-            <div className="nc-nav-login-txt">Register</div>
-          </Button>
-        </a>
-      </ButtonToolbar>
-    );
-  }
-}
-
-function NavLogo(props){
-  return (
-    <a href="/">
-      <img style={{margin: 10 + 'px'}} className="pull-left" alt="logo" src={logo}/>
-      <h2 className="text-muted pull-left" style={{marginLeft: 5 + 'px', marginTop: 16 + 'px', marginBottom: 12 + 'px', color: '#66cc33'}}><b>Nodeocrat</b></h2>
-    </a>
-  );
-}
-
-class NcNavBar extends Component {
-  render() {
-    return (
-      <div className="nc-nav-bar">
-        <div className="container">
-					<div className="col-lg-10 col-lg-offset-1">
-			      <nav>
-              <NavLogo/>
-              <NavTabs/>
-              <LoginNav/>
-            </nav>
-          </div>
-        </div>
+export default ({routes}) => (
+  <div className="nc-nav-bar">
+    <div className="container">
+			<div className="col-lg-10 col-lg-offset-1">
+	      <nav>
+          <NavLogo/>
+          <NavTabs routes={routes}/>
+          <LoginNav location={location}/>
+        </nav>
       </div>
-    );
-  }
-}
-
-export default NcNavBar;
+    </div>
+  </div>
+);

@@ -28,20 +28,44 @@
 }
 
 
-/*nav-pills colours*/
-.nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+
+
+/*painstakingly extracted from bootstrap*/
+.nav-pills > a.active > li > div, .nav-pills > a.active > li > div:focus {
     background-color: #339933;
 }
-.nav-pills > li > a:focus, .nav-pills > li > a:hover {
-  background-color: #777777;
-}
-.nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+.nav-pills > a.active > li > div:hover, .nav-pills > a.active > li > div:focus {
     background-color: #55bb55;
 }
-.nav-pills > li > a{
+.nav-pills > a > li > div:focus, .nav-pills > a > li > div:hover {
+  background-color: #777777;
+}
+.nav-pills > a > li > div{
   color:white;
   background-color: #555555;
 }
-.nav-pills > li {
+.nav-pills > a > li {
   margin: 0 5px 0 5px;
+}
+.nav-pills > a > li {
+  float: left;
+}
+.nav-pills > a > li > div {
+  border-radius: 4px;
+}
+.nav-pills > a > li + li {
+  margin-left: 2px;
+}
+.nav > a > li > div {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.nav-login-btns > a > li > div:focus, .nav-login-btns > a > li > div:hover {
+  background-color: #494949;
+}
+.nav-login-btns > a > li > div{
+  color:white;
+  background-color: transparent;
 }

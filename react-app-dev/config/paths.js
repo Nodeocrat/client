@@ -77,5 +77,5 @@ module.exports = {
   nodePaths: nodePaths,
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  appPath: '/static/' + require(resolveApp('package.json')).name + '/'
+  appPath: '/'
 };
