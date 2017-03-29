@@ -9,7 +9,7 @@ const siteToIcon = {
 }
 
 const SocialButton = (props) => (
-  <button disabled={props.disabled} type="button" className={"btn social-login-btn"} style={{backgroundColor: ColorSchemes[props.site]}} onClick={props.onClick}>
+  <button disabled={props.disabled} type="button" className={`btn social-login-btn ${props.spanParent ? 'span-parent' : null}`} style={{backgroundColor: ColorSchemes[props.site]}} onClick={props.onClick}>
     <span className={"btn-icon " + siteToIcon[props.site]}></span>
     <span className="separator"></span>
     <span className="social-btn-text">{props.text}</span>
@@ -18,8 +18,7 @@ const SocialButton = (props) => (
 
 SocialButton.propTypes = {
   text: React.PropTypes.string.isRequired,
-  site: React.PropTypes.oneOf(Object.keys(siteToIcon)).isRequired,
-  onClick: React.PropTypes.func.isRequired
+  site: React.PropTypes.oneOf(Object.keys(siteToIcon)).isRequired
 }
 
 export default SocialButton;

@@ -36,10 +36,10 @@ export default class FacebookOAuthHelper {
             });
         });
       } else if (response.status === 'not_authorized') {
-        //to be implemented once error handling implemented
+        //to be implemented once modal alerts implemented
         console.log('Please log into this app.');
       } else {
-        //to be implemented once error handling implemented
+        //to be implemented once modal alerts implemented
         console.log('Please log into Facebook.');
       }
     }, {scope: 'public_profile'});

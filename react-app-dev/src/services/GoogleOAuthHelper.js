@@ -15,7 +15,8 @@ export default class GoogleOAuthHelper {
           //scope: 'additional_scope'
         });
         this.googleAuth = window.gapi.auth2.getAuthInstance();
-        callback();
+        if(callback)
+          callback();
       });
     });
   }

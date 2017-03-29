@@ -5,7 +5,9 @@
   margin-bottom: 10px;
 }
 
-
+.span-parent {
+ min-width: 100%;
+}
 
 .facebook-bg-color {
   background-color: #3b5998;

@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
 import './NcNavBar.css';
 import logo from '@media/nclogosmall.png';
-import { Link, NavLink, Route } from 'react-router-dom';
+import { Link, NavLink, Route, withRouter } from 'react-router-dom';
 
 //custom components
 import RegisterDialog from '@components/RegisterDialog/RegisterDialog';
+import LoginDialog from '@components/LoginDialog/LoginDialog';
+
+import UrlHelper from '@lib/UrlHelper';
 
 const NavTabs = (props) => (
   <ul className="nav nav-pills pull-left nc-nav-pills">
     {props.routes.map((route) => (
-      <NavLink
-        exact={route.path === "/" ? true : false}
-        key={route.name} to={route.path}>
-        <li>
-          <div>{route.name}</div>
-        </li>
-      </NavLink>
+      route.navTab ? (
+        <NavLink
+          exact={route.exact ? true : false}
+          key={route.name} to={route.path ? route.path : route.paths[0]}>
+          <li>
+            <div>{route.name}</div>
+          </li>
+        </NavLink>
+      ) : (
+        null
+      )
     ))}
   </ul>
 );
@@ -39,10 +46,22 @@ const LoginNav = () => (
       </ul>
 
       <Route path={'*/register'} component={RegisterDialog}/>
-      <Route path={'*/login'} component={RegisterDialog}/>
+      <Route path={'*/login'} component={LoginDialog}/>
     </div>
   )}/>
 );
+
+import PhotoDropdown from '@lib/PhotoDropdown/PhotoDropdown';
+const UserMenu = withRouter((props) => {
+  const dropDown = [
+    {label: 'Account', onClick: () => props.history.push('/account')},
+    {label: 'divider'},
+    {label: 'Sign out', onClick: props.onSignOut}
+  ];
+  return (
+    <PhotoDropdown photoUrl={props.profile.photoUrl} dropDown={dropDown}/>
+  );
+});
 
 const NavLogo = () => (
   <Link to="/">
@@ -51,16 +70,28 @@ const NavLogo = () => (
   </Link>
 );
 
-export default ({routes}) => (
-  <div className="nc-nav-bar">
-    <div className="container">
-			<div className="col-lg-10 col-lg-offset-1">
-	      <nav>
-          <NavLogo/>
-          <NavTabs routes={routes}/>
-          <LoginNav location={location}/>
-        </nav>
+export default (props) => {
+
+  let jsx = null;
+  if(props.user.initialized){
+    if(props.user.signedIn)
+      jsx = (<UserMenu profile={props.user.profile}
+        onSignOut={props.onSignOut}/>);
+    else
+      jsx = (<LoginNav/>);
+  }
+
+  return (
+    <div className="nc-nav-bar">
+      <div className="container">
+  			<div className="col-lg-10 col-lg-offset-1">
+  	      <nav>
+            <NavLogo/>
+            <NavTabs routes={props.routes}/>
+            {jsx}
+          </nav>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}

@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/lib/Button';
 import SocialProfile from '@components/OAuth/SocialProfile';
 import SocialButton from '@components/SocialButton/SocialButton';
 import GRecaptcha from '@lib/GRecaptcha';
-import AlertText from '@lib/AlertText';
+import StatusText from '@lib/StatusText';
 import Center from '@lib/Center';
 import GoogleOAuthHelper from '@services/GoogleOAuthHelper';
 import FacebookOAuthHelper from '@services/FacebookOAuthHelper';
@@ -140,7 +140,7 @@ export default class ModalDialog extends React.Component {
               </Center>
             </div>
             {this.state.errors.length > 0 ?
-              (<Center><AlertText text={this.state.errors}/></Center>)
+              (<Center><StatusText type="error" text={this.state.errors}/></Center>)
               : null
             }
           </Modal.Body>
