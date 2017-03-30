@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './NcNavBar.css';
 import logo from '@media/nclogosmall.png';
 import { Link, NavLink, Route, withRouter } from 'react-router-dom';
+import {PropsRoute} from '@lib/CustomRoutes';
 
 //custom components
 import RegisterDialog from '@components/RegisterDialog/RegisterDialog';
@@ -29,7 +30,7 @@ const NavTabs = (props) => (
 
 
 
-const LoginNav = () => (
+const LoginNav = (props) => (
   <Route path="*" render={({match}) => (
     <div>
       <ul className="nav nav-pills nav-login-btns pull-right nc-nav-pills">
@@ -46,7 +47,7 @@ const LoginNav = () => (
       </ul>
 
       <Route path={'*/register'} component={RegisterDialog}/>
-      <Route path={'*/login'} component={LoginDialog}/>
+      <PropsRoute path={'*/login'} onLogin={props.onUserUpdate} component={LoginDialog}/>
     </div>
   )}/>
 );
@@ -78,7 +79,7 @@ export default (props) => {
       jsx = (<UserMenu profile={props.user.profile}
         onSignOut={props.onSignOut}/>);
     else
-      jsx = (<LoginNav/>);
+      jsx = (<LoginNav onUserUpdate={props.onUserUpdate}/>);
   }
 
   return (

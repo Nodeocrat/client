@@ -133,7 +133,6 @@ export default class ModalDialog extends React.Component {
             errors: response.errors
           });
         } else if (response.success && response.success.length > 0){
-          console.log(JSON.stringify(response.success));
           this.props.history.goBack();
         }
       },
@@ -178,6 +177,7 @@ export default class ModalDialog extends React.Component {
             errors: response.errors
           });
         } else if (response.success){
+          this.props.onLogin();
           this.props.history.goBack();
         }
       },

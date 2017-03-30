@@ -47,7 +47,7 @@ class App extends Component {
     /*this.state = {
       user: {
         initialized: true,
-        signedIn: true,
+        signedIn: false,
         profile: {
           username: "AshleyPhillips",
           photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
@@ -56,7 +56,7 @@ class App extends Component {
         },
         socialProfiles: {
           google: {
-            name: "折原臨也",
+            name: "狂馬鹿",
             photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
             id: 'hihiuhu89898'
           }
@@ -77,7 +77,6 @@ class App extends Component {
         }
       }
     };
-
     this.updateUser = this.updateUser.bind(this);
     this.updateUser();
   }
@@ -86,7 +85,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <NcNavBar user={this.state.user} onSignOut={this.onSignOut} routes={tabs}/>
+          <NcNavBar onUserUpdate={this.updateUser} user={this.state.user} onSignOut={this.onSignOut} routes={tabs}/>
           <NcMainView onUserUpdate={this.updateUser} routes={tabs} user={this.state.user}/>
         </div>
       </Router>
