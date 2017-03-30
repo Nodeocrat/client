@@ -1,6 +1,8 @@
 import {Route} from 'react-router-dom';
 import React from 'react';
 
+
+// from http://stackoverflow.com/questions/27864720/react-router-pass-props-to-handler-component
 function renderMergedProps(component, ...rest){
   const finalProps = Object.assign({}, ...rest);
   return (
