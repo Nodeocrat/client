@@ -11,21 +11,21 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
   <script src="/temp/drawscript.min.js"></script>
-  <div id="login">
-    <form id="login_form" action="">
-      <input placeholder="Name" id="player-name" name="name"/>
-      <button>Play</button>
-    </form>
-  </div>
-  <div id="login-status"></div>
   <script>
-    var name = document.getElementById('player-name').value;
-    $('#login_form').submit(function(){
+    function onLogin(){
+      var name = document.getElementById('player-name').value;
+      if(!name)
+        return;
       startWebsocketSession(name, "myPicUrl");
       $('#m2').val('');
       return false;
-    });
+    }
   </script>
+  <div id="login">
+      <input placeholder="Name" id="player-name" name="name"/>
+      <button id="login-btn" onclick="onLogin();" type="button">Play</button>
+  </div>
+  <div id="login-status"></div>
   <div id="game_container" style="display:none">
     <canvas style="border-style: solid;border-width: 5px" id="canvas" width="800" height="800"></canvas>
     <div id="game_chat" style="display: inline-block">
