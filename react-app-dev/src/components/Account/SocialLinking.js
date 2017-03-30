@@ -5,6 +5,7 @@ import Ajax from '@services/Ajax';
 import SocialButton from '@components/SocialButton/SocialButton';
 import SocialProfile from '@components/OAuth/SocialProfile';
 import Center from '@lib/Center';
+import StatusText from '@lib/StatusText';
 
 export default class SocialLinking extends React.Component {
   constructor(props){
@@ -140,6 +141,9 @@ export default class SocialLinking extends React.Component {
                 )
             }
             </div>
+            {this.state.googleErrors.length > 0 ?
+              <StatusText type="error" text={this.state.googleErrors}/> : null
+            }
           </div>
           <div className="col-md-6">
             <div className="well" style={{paddingLeft: 14 + 'px', paddingRight: 14 + 'px', height: 210 + 'px'}}>
@@ -159,6 +163,9 @@ export default class SocialLinking extends React.Component {
                 )
             }
             </div>
+            {this.state.facebookErrors.length > 0 ?
+              <StatusText type="error" text={this.state.facebookErrors}/> : null
+            }
           </div>
         </div>
       </div>

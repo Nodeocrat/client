@@ -19,15 +19,15 @@ export default (props) => {
   return (
     <div>
       {currentUrl.endsWith('blog/login') || currentUrl.endsWith('blog/register') ||
-        currentUrl.endsWith('blog') ?
+        currentUrl.endsWith('blog') || currentUrl.endsWith('blog/') ?
         <Route path={props.match.url} render={() => (
           <div>
             <h2>Blogs</h2>
             <ul>
               <li>
-                <Link to={`${props.match.url}/GameBlog`}>
+                <a href={`/gameblog.html`}>
                   Loopless game server experiment
-                </Link>
+                </a>
               </li>
               <li>
                 <Link to={`${props.match.url}/ApBlog`}>
@@ -39,10 +39,12 @@ export default (props) => {
         )}/>
       :
         <div>
-          <PropsRoute path={`${props.match.url}/GameBlog`} profile={props.user.profile} render={()=>(<div>GameBlog</div>)}/>
           <Route path={`${props.match.url}/ApBlog`} component={ApBlog}/>
         </div>
       }
     </div>
   );
 };
+
+
+//<PropsRoute path={`${props.match.url}/GameBlog`} profile={props.user.profile} render={()=>(<div>GameBlog</div>)}/>
