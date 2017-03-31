@@ -4,7 +4,7 @@ import UrlHelper from '@lib/UrlHelper';
 
 import {PropsRoute} from '@lib/CustomRoutes';
 import ApBlog from './ApBlog';
-//import GameBlog from './GameBlog';
+import GameBlog from './GameBlog';
 
 const BlogItem = ({ match }) => (
   <div>
@@ -25,9 +25,9 @@ export default (props) => {
             <h2>Blogs</h2>
             <ul>
               <li>
-                <a href={`/gameblog.html`}>
+                <Link to={`${props.match.url}/GameBlog`}>
                   Loopless game server experiment
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to={`${props.match.url}/ApBlog`}>
@@ -40,6 +40,7 @@ export default (props) => {
       :
         <div>
           <Route path={`${props.match.url}/ApBlog`} component={ApBlog}/>
+          <PropsRoute profile={props.user.profile} path={`${props.match.url}/GameBlog`} component={GameBlog}/>
         </div>
       }
     </div>
