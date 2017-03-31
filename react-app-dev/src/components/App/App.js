@@ -44,7 +44,7 @@ class App extends Component {
   constructor(props){
     super(props);
     //********************* CLIENT TESTING ***************
-    this.state = {
+    /*this.state = {
       user: {
         initialized: true,
         signedIn: false,
@@ -62,11 +62,11 @@ class App extends Component {
           }
         }
       }
-    };
+    };*/
     //*********************** END **********************
 
     this.onSignOut = this.onSignOut.bind(this);
-    /*this.state = {
+    this.state = {
       user: {
         initialized: false,
         signedIn: false,
@@ -78,7 +78,7 @@ class App extends Component {
       }
     };
     this.updateUser = this.updateUser.bind(this);
-    this.updateUser();*/
+    this.updateUser();
   }
 
   render() {
