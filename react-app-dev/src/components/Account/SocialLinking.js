@@ -126,11 +126,11 @@ export default class SocialLinking extends React.Component {
           <div className="col-md-6">
             <div className="well" style={{paddingLeft: 14 + 'px', paddingRight: 14 + 'px', height: 210 + 'px'}}>
             {
-              this.props.socialProfiles.google && this.props.socialProfiles.google.id ?
+              this.props.linkedProfiles.google && this.props.linkedProfiles.google.id ?
                 (
-                  <SocialProfile photoUrl={this.props.socialProfiles.google.photoUrl}
+                  <SocialProfile photoUrl={this.props.linkedProfiles.google.photoUrl}
                     onUnlink={this.handleGoogleUnlink} site="google"
-                    name={this.props.socialProfiles.google.name}/>
+                    name={this.props.linkedProfiles.google.name}/>
                 )
                 :
                 (
@@ -148,11 +148,11 @@ export default class SocialLinking extends React.Component {
           <div className="col-md-6">
             <div className="well" style={{paddingLeft: 14 + 'px', paddingRight: 14 + 'px', height: 210 + 'px'}}>
             {
-              this.props.socialProfiles.facebook && this.props.socialProfiles.facebook.id ?
+              this.props.linkedProfiles.facebook && this.props.linkedProfiles.facebook.id ?
                 (
-                  <SocialProfile photoUrl={this.props.socialProfiles.facebook.photoUrl}
+                  <SocialProfile photoUrl={this.props.linkedProfiles.facebook.photoUrl}
                     onUnlink={this.handleFacebookUnlink} site="facebook"
-                    name={this.props.socialProfiles.facebook.name}/>
+                    name={this.props.linkedProfiles.facebook.name}/>
                 )
                 :
                 (

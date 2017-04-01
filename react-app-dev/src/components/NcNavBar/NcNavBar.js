@@ -79,7 +79,7 @@ export default (props) => {
       jsx = (<UserMenu profile={props.user.profile}
         onSignOut={props.onSignOut}/>);
     else
-      jsx = (<LoginNav onUserUpdate={props.onUserUpdate}/>);
+      jsx = (<LoginNav onUserUpdate={props.user.updateUser}/>);
   }
 
   return (

@@ -7,14 +7,15 @@ export default (props) => (
   <div className="container">
     <div className="col-lg-10 col-lg-offset-1">
       {props.routes.map((route) => {
+        const routeProps = route.props || {};
         const paths = route.paths ? route.paths : [route.path];
         return paths.map((path) => (
           <PropsRoute key={route.path}
             exact={route.exact ? true : false}
             path={path}
             component={route.view}
-            user={props.user}
-            onUserUpdate={props.onUserUpdate}/>
+            {...routeProps}
+            />
         ))
       })}
     </div>

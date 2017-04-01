@@ -194,10 +194,10 @@ export default (props) => (
     <div className="well">
       <div className="row">
         <div className="col-md-5">
-          <Profile onUserUpdate={props.onUserUpdate} profile={props.user.profile}/>
+          <Profile onUserUpdate={props.user.updateUser} profile={props.user.profile}/>
         </div>
         <div className="col-md-7">
-          <SocialLinking socialProfiles={props.user.socialProfiles} onUserUpdate={props.onUserUpdate}/>
+          <SocialLinking linkedProfiles={props.user.linkedProfiles} onUserUpdate={props.user.updateUser}/>
         </div>
       </div>
     </div>

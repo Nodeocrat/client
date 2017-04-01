@@ -20,26 +20,6 @@ import Ajax from '@services/Ajax';
 // [name]: name of tab on navigation bar
 // view: view to be rendered
 
-const tabs = [
-  {
-    paths: ["/", "/login", "/register"],
-    exact: true,
-    navTab: true,
-    name: "Home",
-    view: Home
-  },
-  {
-    path: "/blog",
-    navTab: true,
-    name: "Blog",
-    view: Blog
-  },
-  {
-    path: "/account",
-    view: Account
-  }
-];
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -47,14 +27,14 @@ class App extends Component {
     /*this.state = {
       user: {
         initialized: true,
-        signedIn: false,
+        signedIn: true,
         profile: {
           username: "AshleyPhillips",
           photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
           email: 'zukias@hotmail.com',
           passwordSet: true
         },
-        socialProfiles: {
+        linkedProfiles: {
           google: {
             name: "狂馬鹿",
             photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
@@ -64,29 +44,52 @@ class App extends Component {
       }
     };*/
     //*********************** END **********************
-
-    this.onSignOut = this.onSignOut.bind(this);
     this.state = {
       user: {
         initialized: false,
         signedIn: false,
         profile: null,
-        socialProfiles: {
+        linkedProfiles: {
           facebook: null,
           google: null
-        }
+        },
+        updateUser: this.updateUser
       }
     };
+    this.onSignOut = this.onSignOut.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.updateUser();
   }
 
   render() {
+
+    const tabs = [
+      {
+        paths: ["/", "/login", "/register"],
+        exact: true,
+        navTab: true,
+        name: "Home",
+        view: Home
+      },
+      {
+        path: "/blog",
+        navTab: true,
+        name: "Blog",
+        view: Blog,
+        props: {user: this.state.user}
+      },
+      {
+        path: "/account",
+        view: Account,
+        props: {user: this.state.user}
+      }
+    ];
+
     return (
       <Router>
         <div>
-          <NcNavBar onUserUpdate={this.updateUser} user={this.state.user} onSignOut={this.onSignOut} routes={tabs}/>
-          <NcMainView onUserUpdate={this.updateUser} routes={tabs} user={this.state.user}/>
+          <NcNavBar user={this.state.user} onSignOut={this.onSignOut} routes={tabs}/>
+          <NcMainView routes={tabs}/>
         </div>
       </Router>
     );
@@ -102,12 +105,13 @@ class App extends Component {
             initialized: true,
             signedIn: user.signedIn,
             profile: user.profile,
-            socialProfiles: user.socialProfiles
+            linkedProfiles: user.linkedProfiles,
+            updateUser: this.updateUser
           }
         });
       },
       error: (response) => {
-        //TODO use modal dialog once class created
+        //TODO use modal dialog alert once implemented
         console.log(response);
       }
     });
@@ -122,7 +126,8 @@ class App extends Component {
           user: {
             initialized: true,
             signedIn: false,
-            profile: null
+            profile: null,
+            linkedProfiles: null
           }
         });
       },
