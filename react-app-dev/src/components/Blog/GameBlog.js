@@ -9,8 +9,7 @@ export default class GameBlog extends React.Component {
     super(props);
 
     ScriptLoader(["https://cdn.socket.io/socket.io-1.2.0.js",
-                  "/drawscript.min.js",
-                  "https://code.jquery.com/jquery-3.1.1.min.js"]);
+                  "/drawscript.min.js"]);
 
     this.handleOnPlay = this.handleOnPlay.bind(this);
     this.state = {
@@ -70,23 +69,22 @@ export default class GameBlog extends React.Component {
           <div style={{display: loginDisplay}}>
             <Center>
               <Button bsStyle="primary" onClick={this.handleOnPlay} disabled={this.props.profile ? false : true} style={{minWidth: 100 + '%'}}>Play as signed in user</Button>
-              <br/>
+              <br/><br/>
               <Center><div>---- OR ----</div></Center>
               <br/>
               <input className="form-control" placeholder="Guest name" onChange={this.handleOnGuestNameChange}/>
               <Button bsStyle="primary" onClick={this.handleOnPlayAsGuest} style={{minWidth: 100 + '%'}}>
                 Play as guest
               </Button>
-              {this.state.error ? <StatusText type="error" text={this.state.error}/> : null}
             </Center>
+            <Center>{this.state.error ? <StatusText type="error" text={this.state.error}/> : null}</Center>
           </div>
           <div style={{display: canvasDisplay}} id="game_container">
             <canvas style={{borderStyle: 'solid', borderWidth: 5 + 'px'}} id="canvas" width="800" height="800"></canvas>
             <div id="game_chat" style={{display: 'inline-block'}}>
               <ul id="messages"></ul>
-              <form id="chat_form" action="">
-                <input id="m" autoComplete="off"/><button>Send</button>
-              </form>
+              <input id="m" autoComplete="off"/>
+              <button type="button" id="send-chat-msg">Send</button>
             </div>
           </div>
         </div>
