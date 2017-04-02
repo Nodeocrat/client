@@ -123,7 +123,7 @@ export default class SocialLinking extends React.Component {
           <div><u className="h4">Account linking</u></div>
         </div>
         <div className="panel-body">
-          <div className="col-md-6">
+          <div className="col-sm-6">
             <div className="well" style={{paddingLeft: 14 + 'px', paddingRight: 14 + 'px', height: 210 + 'px'}}>
             {
               this.props.linkedProfiles.google && this.props.linkedProfiles.google.id ?
@@ -145,7 +145,7 @@ export default class SocialLinking extends React.Component {
               <StatusText type="error" text={this.state.googleErrors}/> : null
             }
           </div>
-          <div className="col-md-6">
+          <div className="col-sm-6">
             <div className="well" style={{paddingLeft: 14 + 'px', paddingRight: 14 + 'px', height: 210 + 'px'}}>
             {
               this.props.linkedProfiles.facebook && this.props.linkedProfiles.facebook.id ?

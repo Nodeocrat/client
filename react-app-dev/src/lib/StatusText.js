@@ -25,7 +25,7 @@ const StatusText = (props) => {
     texts = ["Unspecified error"];
 
   return (
-    <div style={{marginTop: 15 + 'px', marginBottom: 0 + 'px'}} role="alert" className={`alert alert-${status.className}`}>
+    <div style={{marginTop: 12 + 'px', marginBottom: 12 + 'px'}} role="alert" className={`alert alert-${status.className}`}>
       {texts.map((text, index) => (
         <span key={text}>
           {index !== 0 ? <br/> : null}
