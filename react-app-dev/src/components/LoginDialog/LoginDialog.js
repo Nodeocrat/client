@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 //react-bootstrap
 import Modal from 'react-bootstrap/lib/Modal';
@@ -11,10 +11,9 @@ import SocialButton from '@components/SocialButton/SocialButton';
 import StatusText from '@lib/StatusText';
 import Center from '@lib/Center';
 import Ajax from '@services/Ajax';
+import UrlHelper from '@services/UrlHelper';
 
-import UrlHelper from '@lib/UrlHelper';
-
-export default class ModalDialog extends React.Component {
+class LoginDialog extends React.Component {
   constructor(props){
     super(props);
 
@@ -23,18 +22,17 @@ export default class ModalDialog extends React.Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.goBack = this.goBack.bind(this);
+    this.close = this.close.bind(this);
 
     this.state = {
       username: "",
       password: "",
-      errors: [],
-      show: true
+      errors: []
     }
   }
   render() {
     return (
-      <Modal show={this.state.show} onHide={this.goBack}>
+      <Modal show onHide={this.close}>
         <div>
           <Modal.Header closeButton>
             <Modal.Title>Sign In</Modal.Title>
@@ -67,7 +65,7 @@ export default class ModalDialog extends React.Component {
                 )
                 :
                 null
-              ))(UrlHelper.parseQuery(this.props.location.search).err)
+              ))(UrlHelper.parseQuery(this.props.location.search).loginErr)
             }
             <div className="row">
               <div className="col-lg-12">
@@ -92,7 +90,7 @@ export default class ModalDialog extends React.Component {
           <Modal.Footer>
             <Center>
               <Button onClick={this.handleSubmit}>Submit</Button>
-              <Button onClick={this.goBack}>Cancel</Button>
+              <Button onClick={this.close}>Cancel</Button>
             </Center>
           </Modal.Footer>
         </div>
@@ -100,8 +98,8 @@ export default class ModalDialog extends React.Component {
 
     );
   }
-  goBack(){
-    this.props.history.push(UrlHelper.chopOffLast(this.props.match.url));
+  close(){
+    this.props.onClose();
   }
   handleGoogleSignIn(){
     Ajax.get({
@@ -189,6 +187,4 @@ export default class ModalDialog extends React.Component {
   }
 };
 
-ModalDialog.contextTypes = {
-  router: React.PropTypes.object
-};
+export default withRouter(LoginDialog);

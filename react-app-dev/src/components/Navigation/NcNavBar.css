@@ -62,8 +62,10 @@
     padding: 10px 15px;
 }
 
+
 .nav-login-btns > a > li > div:focus, .nav-login-btns > a > li > div:hover {
   background-color: #494949;
+  cursor: pointer;
 }
 .nav-login-btns > a > li > div{
   color:white;

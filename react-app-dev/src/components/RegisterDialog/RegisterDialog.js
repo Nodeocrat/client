@@ -14,7 +14,7 @@ import GoogleOAuthHelper from '@services/GoogleOAuthHelper';
 import FacebookOAuthHelper from '@services/FacebookOAuthHelper';
 import Ajax from '@services/Ajax';
 
-export default class ModalDialog extends React.Component {
+class RegisterDialog extends React.Component {
   constructor(props){
     super(props);
 
@@ -28,6 +28,7 @@ export default class ModalDialog extends React.Component {
     this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
     this.handleGRecaptchaResponse = this.handleGRecaptchaResponse.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.close = this.close.bind(this);
 
     this.state = {
       googleOAuthReady: false,
@@ -51,14 +52,14 @@ export default class ModalDialog extends React.Component {
   }
   render() {
     return (
-      <Modal show onHide={this.props.history.goBack}>
+      <Modal show onHide={this.close}>
         <div>
           <Modal.Header closeButton>
             <Modal.Title>Register</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-sm-6">
                 <div className="well" style={{height: 210 + 'px'}}>
                   <Center>
                   {
@@ -79,7 +80,7 @@ export default class ModalDialog extends React.Component {
                   </Center>
                 </div>
               </div>
-              <div className="col-lg-6">
+              <div className="col-sm-6">
                 <div className="well" style={{height: 210 + 'px'}}>
                   <Center>
                   {
@@ -103,7 +104,7 @@ export default class ModalDialog extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-lg-12">
+              <div className="col-md-12">
                 <div className="form-group">
                   <label>Username</label>
                   <input type="text" className="form-control" placeholder="Required"
@@ -147,13 +148,16 @@ export default class ModalDialog extends React.Component {
           <Modal.Footer>
             <Center>
               <Button onClick={this.handleSubmit}>Submit</Button>
-              <Button onClick={this.props.history.goBack}>Cancel</Button>
+              <Button onClick={this.close}>Cancel</Button>
             </Center>
           </Modal.Footer>
         </div>
       </Modal>
 
     );
+  }
+  close(){
+    this.props.onClose();
   }
   handleLinkToGoogle(){
     this.GoogleOAuthHelper.signIn({
@@ -262,7 +266,7 @@ export default class ModalDialog extends React.Component {
           });
           window.grecaptcha.reset();
         } else if (response.actions && response.actions.length > 0){
-          this.props.history.goBack();
+          this.close();
         }
       },
       error: (info) => {
@@ -272,3 +276,5 @@ export default class ModalDialog extends React.Component {
     });
   }
 };
+
+export default RegisterDialog;

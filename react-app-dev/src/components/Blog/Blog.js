@@ -1,6 +1,5 @@
 import React from 'react';
 import {Route, Link} from 'react-router-dom';
-import UrlHelper from '@lib/UrlHelper';
 
 import {PropsRoute} from '@lib/CustomRoutes';
 import ApBlog from './ApBlog';
@@ -13,39 +12,27 @@ const BlogItem = ({ match }) => (
 );
 
 export default (props) => {
-
-  const currentUrl = UrlHelper.currentUrl(props);
-
   return (
     <div>
-      {currentUrl.endsWith('blog/login') || currentUrl.endsWith('blog/register') ||
-        currentUrl.endsWith('blog') || currentUrl.endsWith('blog/') ?
-        <Route path={props.match.url} render={() => (
-          <div>
-            <h2>Blogs</h2>
-            <ul>
-              <li>
-                <Link to={`${props.match.url}/GameBlog`}>
-                  Loopless game server experiment
-                </Link>
-              </li>
-              <li>
-                <Link to={`${props.match.url}/ApBlog`}>
-                  Auslander-Parter algorithm
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}/>
-      :
+      <Route exact path={props.match.url} render={() => (
         <div>
-          <Route path={`${props.match.url}/ApBlog`} component={ApBlog}/>
-          <PropsRoute profile={props.user.profile} path={`${props.match.url}/GameBlog`} component={GameBlog}/>
+          <h2>Blogs</h2>
+          <ul>
+            <li>
+              <Link to={`${props.match.url}/GameBlog`}>
+                Loopless game server experiment
+              </Link>
+            </li>
+            <li>
+              <Link to={`${props.match.url}/ApBlog`}>
+                Auslander-Parter algorithm
+              </Link>
+            </li>
+          </ul>
         </div>
-      }
+      )}/>
+      <Route path={`${props.match.url}/ApBlog`} component={ApBlog}/>
+      <PropsRoute profile={props.user.profile} path={`${props.match.url}/GameBlog`} component={GameBlog}/>
     </div>
   );
 };
-
-
-//<PropsRoute path={`${props.match.url}/GameBlog`} profile={props.user.profile} render={()=>(<div>GameBlog</div>)}/>

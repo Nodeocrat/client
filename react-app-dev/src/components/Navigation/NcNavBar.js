@@ -2,13 +2,8 @@ import React, {Component} from 'react';
 import './NcNavBar.css';
 import logo from '@media/nclogosmall.png';
 import { Link, NavLink, Route, withRouter } from 'react-router-dom';
-import {PropsRoute} from '@lib/CustomRoutes';
+import LoginRegisterNav from './LoginRegisterNav';
 
-//custom components
-import RegisterDialog from '@components/RegisterDialog/RegisterDialog';
-import LoginDialog from '@components/LoginDialog/LoginDialog';
-
-import UrlHelper from '@lib/UrlHelper';
 
 const NavTabs = (props) => (
   <ul className="nav nav-pills pull-left nc-nav-pills">
@@ -16,7 +11,7 @@ const NavTabs = (props) => (
       route.navTab ? (
         <NavLink
           exact={route.exact ? true : false}
-          key={route.name} to={route.path ? route.path : route.paths[0]}>
+          key={route.name} to={route.path}>
           <li>
             <div>{route.name}</div>
           </li>
@@ -26,30 +21,6 @@ const NavTabs = (props) => (
       )
     ))}
   </ul>
-);
-
-
-
-const LoginNav = (props) => (
-  <Route path="*" render={({match}) => (
-    <div>
-      <ul className="nav nav-pills nav-login-btns pull-right nc-nav-pills">
-        <Link to={`${match.url==="/"?"":match.url}/login`}>
-          <li>
-            <div>Login</div>
-          </li>
-        </Link>
-        <Link to={`${match.url==="/"?"":match.url}/register`}>
-          <li>
-            <div>Register</div>
-          </li>
-        </Link>
-      </ul>
-
-      <Route path={'*/register'} component={RegisterDialog}/>
-      <PropsRoute path={'*/login'} onLogin={props.onUserUpdate} component={LoginDialog}/>
-    </div>
-  )}/>
 );
 
 import PhotoDropdown from '@lib/PhotoDropdown/PhotoDropdown';
@@ -79,7 +50,7 @@ export default (props) => {
       jsx = (<UserMenu profile={props.user.profile}
         onSignOut={props.onSignOut}/>);
     else
-      jsx = (<LoginNav onUserUpdate={props.user.updateUser}/>);
+      jsx = (<LoginRegisterNav onUserUpdate={props.user.updateUser}/>);
   }
 
   return (

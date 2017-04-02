@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 
 //custom component imports
-import NcNavBar from '@components/NcNavBar/NcNavBar';
+import NcNavBar from '@components/Navigation/NcNavBar';
 import NcMainView from '@components/NcMainView/NcMainView';
 import Blog from '@components/Blog/Blog';
 import Home from '@components/Home/Home';
@@ -23,11 +23,11 @@ import Ajax from '@services/Ajax';
 class App extends Component {
   constructor(props){
     super(props);
-    //********************* CLIENT TESTING ***************
+    //********************* CLIENT-ONLY TESTING ***************
     /*this.state = {
       user: {
         initialized: true,
-        signedIn: true,
+        signedIn: false,
         profile: {
           username: "AshleyPhillips",
           photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
@@ -65,7 +65,7 @@ class App extends Component {
 
     const tabs = [
       {
-        paths: ["/", "/login", "/register"],
+        path: "/",
         exact: true,
         navTab: true,
         name: "Home",
