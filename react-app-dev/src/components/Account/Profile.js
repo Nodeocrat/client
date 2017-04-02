@@ -5,7 +5,7 @@ import Ajax from '@services/Ajax';
 import Panel from 'react-bootstrap/lib/Panel';
 import './Profile.css';
 
-class Profile extends React.Component {
+export default class Profile extends React.Component {
   constructor(props){
     super(props);
 

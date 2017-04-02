@@ -24,35 +24,35 @@ Ajax.post({
 import SiteConfig from '@global/SiteConfig';
 
 export default class Ajax {
-  static get(config){
-    config.method = "GET";
-    this._sendReq(config);
+  static get(options){
+    options.method = "GET";
+    this.sendReq(options);
   }
-  static post(config){
-    config.method = "POST";
-    this._sendReq(config);
+  static post(options){
+    options.method = "POST";
+    this.sendReq(options);
   }
-  static _sendReq(config){
-    if(!config.url)
+  static sendReq(options){
+    if(!options.url)
       return console.error("url option required in ajax call");
-    if(!config.method)
-      config.method = 'POST';
+    if(!options.method)
+      options.method = 'POST';
 
-    //TODO check if the config.url property is a request to an external domain
+    //TODO check if the options.url property is a request to an external domain
     //Regex.
-    config.url = SiteConfig.apiPrefix + config.url;
+    options.url = SiteConfig.apiPrefix + options.url;
 
     let resFormat = null;
-    if(config.response)
-      resFormat = config.response.toUpperCase();
+    if(options.response)
+      resFormat = options.response.toUpperCase();
     else
       resFormat = 'JSON';
 
 
     const xhr = new XMLHttpRequest();
-    xhr.open(config.method.toUpperCase(), config.url);
+    xhr.open(options.method.toUpperCase(), options.url);
 
-    const rawSendData = config.data;
+    const rawSendData = options.data;
     if(rawSendData){
       let sendData;
       try {
@@ -79,21 +79,21 @@ export default class Ajax {
             try{
               response = JSON.parse(xhr.responseText);
             } catch (e){
-              if(config.error)
-                return config.error({error: e, xhr: xhr, response: xhr.responseText});
+              if(options.error)
+                return options.error({error: e, xhr: xhr, response: xhr.responseText});
             }
           } else if (resFormat === "TEXT" || resFormat === "RAW"){
             response = xhr.responseText;
           } else {
             //Unrecognised desired format
-            if(config.error)
-              return config.error({error: "Unrecognised response format", xhr: xhr, response: xhr.responseText});
+            if(options.error)
+              return options.error({error: "Unrecognised response format", xhr: xhr, response: xhr.responseText});
           }
-          if(config.success)
-            config.success(response);
+          if(options.success)
+            options.success(response);
         } else {
-          if(config.error)
-            config.error({error: xhr.status, xhr: xhr, response: null});
+          if(options.error)
+            options.error({error: xhr.status, xhr: xhr, response: null});
         }
       }
     }
