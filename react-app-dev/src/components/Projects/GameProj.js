@@ -4,7 +4,7 @@ import StatusText from '@lib/StatusText';
 import Center from '@lib/Center';
 import Button from 'react-bootstrap/lib/Button';
 
-export default class GameBlog extends React.Component {
+export default class GameProj extends React.Component {
   constructor(props){
     super(props);
 

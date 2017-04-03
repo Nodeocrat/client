@@ -5,7 +5,7 @@ import './App.css';
 //custom component imports
 import NcNavBar from '@components/Navigation/NcNavBar';
 import NcMainView from '@components/NcMainView/NcMainView';
-import Blog from '@components/Blog/Blog';
+import Projects from '@components/Projects/Projects';
 import Home from '@components/Home/Home';
 import Account from '@components/Account/Account';
 
@@ -23,27 +23,6 @@ import Ajax from '@services/Ajax';
 class App extends Component {
   constructor(props){
     super(props);
-    //********************* CLIENT-ONLY TESTING ***************
-    /*this.state = {
-      user: {
-        initialized: true,
-        signedIn: false,
-        profile: {
-          username: "AshleyPhillips",
-          photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
-          email: 'zukias@hotmail.com',
-          passwordSet: true
-        },
-        linkedProfiles: {
-          google: {
-            name: "狂馬鹿",
-            photoUrl: 'http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg',
-            id: 'hihiuhu89898'
-          }
-        }
-      }
-    };*/
-    //*********************** END **********************
     this.state = {
       user: {
         initialized: false,
@@ -72,10 +51,10 @@ class App extends Component {
         view: Home
       },
       {
-        path: "/blog",
+        path: "/projects",
         navTab: true,
-        name: "Blog",
-        view: Blog,
+        name: "Projects",
+        view: Projects,
         props: {user: this.state.user}
       },
       {
