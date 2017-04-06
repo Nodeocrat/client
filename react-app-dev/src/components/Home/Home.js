@@ -68,9 +68,9 @@ export default (props) => {
               Blogs
             </div>
             <div className="panel-body panel-text">
-              <Link to="/blog/ApBlog">Mini-project: Auslander-Parter algorithm</Link>
+              <Link to="/projects/ApProj">Mini-project: Auslander-Parter algorithm</Link>
               <br/>
-              <a href="/gameblog.html">Mini-project: Game-server without a game loop</a>
+              <Link to="/projects/GameBlog">Mini-project: Game-server without a game loop</Link>
             </div>
         </div>
       </div>
