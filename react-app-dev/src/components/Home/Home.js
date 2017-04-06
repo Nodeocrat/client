@@ -70,7 +70,7 @@ export default (props) => {
             <div className="panel-body panel-text">
               <Link to="/projects/ApProj">Mini-project: Auslander-Parter algorithm</Link>
               <br/>
-              <Link to="/projects/GameBlog">Mini-project: Game-server without a game loop</Link>
+              <Link to="/projects/GameProj">Mini-project: Game-server without a game loop</Link>
             </div>
         </div>
       </div>
