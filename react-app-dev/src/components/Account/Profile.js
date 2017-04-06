@@ -21,10 +21,7 @@ export default class Profile extends React.Component {
     this.state = Object.assign({}, this.initialState, {errors: [], actions: []});
 
     this.editMode = this.editMode.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
-    this.handleCurrentPasswordChange = this.handleCurrentPasswordChange.bind(this);
     this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -43,22 +40,6 @@ export default class Profile extends React.Component {
     });
     this.setState(this.initialState);
   }
-
-  handleUsernameChange(e){
-    this.setState({
-      username: e.target.value
-    });
-  }
-  handleEmailChange(e){
-    this.setState({
-      email: e.target.value
-    });
-  }
-  handleCurrentPasswordChange(e){
-    this.setState({
-      currentPassword: e.target.value
-    });
-  }
   handleNewPasswordChange(e){
     const newState = {
       newPassword: e.target.value
@@ -66,11 +47,6 @@ export default class Profile extends React.Component {
     if(e.target.value === "")
       newState.confirmPassword = "";
     this.setState(newState);
-  }
-  handlePasswordConfirmChange(e){
-    this.setState({
-      confirmPassword: e.target.value
-    });
   }
   handleSubmit(){
     const dataObj = {};
@@ -141,25 +117,41 @@ export default class Profile extends React.Component {
         <div className="panel-body">
           <div className="form-group">
             <div>
-              Username<input type="text" value={this.state.username} onChange={this.handleUsernameChange} readOnly={!this.state.editMode} className="form-control"/>
+              Username
+              <input type="text" value={this.state.username}
+                onChange={(e)=>{this.setState({username: e.target.value})}}
+                readOnly={!this.state.editMode} className="form-control"/>
             </div>
             <br/>
             <div>
-              Email<input type="text" value={this.state.email} readOnly={!this.state.editMode} onChange={this.handleEmailChange} className="form-control"/>
+              Email<input type="text" value={this.state.email} readOnly={!this.state.editMode}
+              onChange={(e)=>{this.setState({email: e.target.value})}}
+              className="form-control"/>
             </div>
             <br/>
             Password
             <div className="panel-group">
               <Panel collapsible expanded={this.state.editMode} header={this.props.profile.passwordSet ? "Password set" : "No password set"}>
-                    <div className="form-group" id="password-update-container">
-                      {this.props.profile.passwordSet ?
-                      (
-                        <div>Current password <input value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} type="password" className="form-control password-update"/><br/></div>
-                      ) : null}
-                      <div>New password<input readOnly={this.props.profile.passwordSet && this.state.currentPassword === ""} type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange} className="form-control password-update"/></div>
+                <div className="form-group" id="password-update-container">
+                  {this.props.profile.passwordSet ?
+                  (
+                    <div>
+                      Current password
+                      <input value={this.state.currentPassword}
+                        onChange={(e)=>{this.setState({currentPassword: e.target.value})}}
+                        type="password" className="form-control password-update"/>
                       <br/>
-                      <div>Confirm new password <input readOnly={this.state.newPassword === "" || (this.props.profile.passwordSet && this.state.currentPassword === "") } type="password" value={this.state.confirmPassword} onChange={this.handlePasswordConfirmChange} className="form-control password-update"/></div>
                     </div>
+                  ) : null}
+                  <div>New password<input readOnly={this.props.profile.passwordSet && this.state.currentPassword === ""} type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange} className="form-control password-update"/></div>
+                  <br/>
+                  <div>
+                    Confirm new password
+                    <input readOnly={this.state.newPassword === "" || (this.props.profile.passwordSet && this.state.currentPassword === "")}
+                      type="password" value={this.state.confirmPassword}
+                      onChange={(e)=>{this.setState({confirmPassword: e.target.value})}}
+                      className="form-control password-update"/></div>
+                </div>
               </Panel>
             </div>
             {this.state.errors.length > 0 ?

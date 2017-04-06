@@ -10,20 +10,14 @@ import Button from 'react-bootstrap/lib/Button';
 import SocialButton from '@components/SocialButton/SocialButton';
 import StatusText from '@lib/StatusText';
 import Center from '@lib/Center';
+import InputField from '@lib/InputField';
 import Ajax from '@services/Ajax';
 import UrlHelper from '@services/UrlHelper';
 
 class LoginDialog extends React.Component {
   constructor(props){
     super(props);
-
-    this.handleGoogleSignIn = this.handleGoogleSignIn.bind(this);
-    this.handleFacebookSignIn = this.handleFacebookSignIn.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.close = this.close.bind(this);
-
     this.state = {
       username: "",
       password: "",
@@ -32,7 +26,7 @@ class LoginDialog extends React.Component {
   }
   render() {
     return (
-      <Modal show onHide={this.close}>
+      <Modal show onHide={this.props.onClose}>
         <div>
           <Modal.Header closeButton>
             <Modal.Title>Sign In</Modal.Title>
@@ -68,17 +62,11 @@ class LoginDialog extends React.Component {
               ))(UrlHelper.parseQuery(this.props.location.search).loginErr)
             }
             <div className="row">
-              <div className="col-lg-12">
-                <div className="form-group">
-                  <label>Username</label>
-                  <input type="text" className="form-control" placeholder="Username"
-                    onChange={this.handleUsernameChange}/>
-                </div>
-                <div className="form-group">
-                  <label>Password</label>
-                  <input type="password" className="form-control"
-                    placeholder="Password" onChange={this.handlePasswordChange}/>
-                </div>
+              <div className="col-sm-offset-2 col-sm-8">
+                <InputField fieldName="username" placeholder="Username"
+                  onChange={(e) => {this.setState({username: e.target.value})}}/>
+                <InputField fieldName="password" placeholder="Password" type="password"
+                  onChange={(e) => {this.setState({password: e.target.value})}}/>
               </div>
             </div>
             {this.state.errors.length > 0 ?
@@ -90,65 +78,13 @@ class LoginDialog extends React.Component {
           <Modal.Footer>
             <Center>
               <Button onClick={this.handleSubmit}>Submit</Button>
-              <Button onClick={this.close}>Cancel</Button>
+              <Button onClick={this.props.onClose}>Cancel</Button>
             </Center>
           </Modal.Footer>
         </div>
       </Modal>
 
     );
-  }
-  close(){
-    this.props.onClose();
-  }
-  handleGoogleSignIn(){
-    Ajax.get({
-      url: '/auth/google',
-      response: 'JSON',
-      success: (response) => {
-        if(response.errors && response.errors.length > 0){
-          this.setState({
-            errors: response.errors
-          });
-        } else if (response.success && response.success.length > 0){
-          console.log(JSON.stringify(response.success));
-          this.props.history.goBack();
-        }
-      },
-      error: (info) => {
-        if(info.xhr.status !== 200)
-          return console.error("Ajax request error on login page: " + info.error);
-      }
-    });
-  }
-  handleFacebookSignIn(){
-    Ajax.get({
-      url: '/auth/facebook',
-      response: 'JSON',
-      success: (response) => {
-        if(response.errors && response.errors.length > 0){
-          this.setState({
-            errors: response.errors
-          });
-        } else if (response.success && response.success.length > 0){
-          this.props.history.goBack();
-        }
-      },
-      error: (info) => {
-        if(info.xhr.status !== 200)
-          return console.error("Ajax request error on login page: " + info.error);
-      }
-    });
-  }
-  handleUsernameChange(e){
-    this.setState({
-      username: e.target.value
-    });
-  }
-  handlePasswordChange(e){
-    this.setState({
-      password: e.target.value
-    });
   }
   handleSubmit(){
     const sendData = {};
@@ -175,8 +111,10 @@ class LoginDialog extends React.Component {
             errors: response.errors
           });
         } else if (response.success){
+          console.log(JSON.stringify(this.props));
+          console.log(this.props);
           this.props.onLogin();
-          this.props.history.goBack();
+          this.props.onClose();
         }
       },
       error: (info) => {

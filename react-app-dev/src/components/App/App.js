@@ -23,6 +23,7 @@ import Ajax from '@services/Ajax';
 class App extends Component {
   constructor(props){
     super(props);
+    this.updateUser = this.updateUser.bind(this);
     this.state = {
       user: {
         initialized: false,
@@ -36,7 +37,6 @@ class App extends Component {
       }
     };
     this.onSignOut = this.onSignOut.bind(this);
-    this.updateUser = this.updateUser.bind(this);
     this.updateUser();
   }
 
@@ -106,7 +106,8 @@ class App extends Component {
             initialized: true,
             signedIn: false,
             profile: null,
-            linkedProfiles: null
+            linkedProfiles: null,
+            updateUser: this.updateUser
           }
         });
       },

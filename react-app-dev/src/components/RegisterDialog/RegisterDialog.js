@@ -10,6 +10,7 @@ import SocialButton from '@components/SocialButton/SocialButton';
 import GRecaptcha from '@lib/GRecaptcha';
 import StatusText from '@lib/StatusText';
 import Center from '@lib/Center';
+import InputField from '@lib/InputField';
 import GoogleOAuthHelper from '@services/GoogleOAuthHelper';
 import FacebookOAuthHelper from '@services/FacebookOAuthHelper';
 import Ajax from '@services/Ajax';
@@ -19,19 +20,13 @@ class RegisterDialog extends React.Component {
     super(props);
 
     this.handleLinkToGoogle = this.handleLinkToGoogle.bind(this);
-    this.handleGoogleUnlink = this.handleGoogleUnlink.bind(this);
     this.handleLinkToFacebook = this.handleLinkToFacebook.bind(this);
-    this.handleFacebookUnlink = this.handleFacebookUnlink.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
-    this.handleGRecaptchaResponse = this.handleGRecaptchaResponse.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.close = this.close.bind(this);
 
     this.state = {
       googleOAuthReady: false,
+      facebookOAuthReady: false,
       facebookProfile: null,
       googleProfile: null,
       username: "",
@@ -47,12 +42,15 @@ class RegisterDialog extends React.Component {
         googleOAuthReady: true
       });
     });
-
-    this.facebookOAuthHelper = new FacebookOAuthHelper();
+    this.facebookOAuthHelper = new FacebookOAuthHelper(() => {
+      this.setState({
+        facebookOAuthReady: true
+      });
+    });
   }
   render() {
     return (
-      <Modal show onHide={this.close}>
+      <Modal show onHide={this.props.onClose}>
         <div>
           <Modal.Header closeButton>
             <Modal.Title>Register</Modal.Title>
@@ -66,7 +64,8 @@ class RegisterDialog extends React.Component {
                     this.state.googleProfile ?
                       (
                         <SocialProfile photoUrl={this.state.googleProfile.photoUrl}
-                          onUnlink={this.handleGoogleUnlink} site="google"
+                          onUnlink={()=>{this.setState({googleProfile: null})}}
+                          site="google"
                           name={this.state.googleProfile.name}/>
                       )
                       :
@@ -87,13 +86,14 @@ class RegisterDialog extends React.Component {
                     this.state.facebookProfile ?
                       (
                         <SocialProfile photoUrl={this.state.facebookProfile.photoUrl}
-                          onUnlink={this.handleFacebookUnlink} site="facebook"
+                          onUnlink={()=>{this.setState({facebookProfile: null})}}
+                          site="facebook"
                           name={this.state.facebookProfile.name}/>
                       )
                       :
                       (
                         <div style={{paddingTop: 68 + 'px'}}>
-                          <SocialButton site="facebook"
+                          <SocialButton disabled={this.facebookOAuthReady} site="facebook"
                             text="Link to Facebook" onClick={this.handleLinkToFacebook}/>
                         </div>
                       )
@@ -104,40 +104,36 @@ class RegisterDialog extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-md-12">
-                <div className="form-group">
-                  <label>Username</label>
-                  <input type="text" className="form-control" placeholder="Required"
-                    value={this.state.username} onChange={this.handleUsernameChange}/>
-                </div>
-                 <div className="form-group">
-                  <label>Email</label>
-                  <input type="email" className="form-control" placeholder="Required"
-                    value={this.state.email} onChange={this.handleEmailChange}/>
-                </div>
-                <div className="form-group">
-                  <label>{"Password" + (this.state.facebookProfile || this.state.googleProfile ?
-                  " (Optional)" : "")}</label>
-                  <input type="password" className="form-control"
-                    placeholder={this.state.facebookProfile || this.state.googleProfile ?
-                    "Optional" : "Required"} onChange={this.handlePasswordChange}/>
-                </div>
-                <div className="form-group">
-                  <label>{"Confirm password" + (this.state.facebookProfile || this.state.googleProfile ?
-                  " (Optional)" : "")}</label>
-                  <input type="password" className="form-control"
-                    placeholder={this.state.facebookProfile || this.state.googleProfile ?
+              <div className="col-sm-8 col-sm-offset-2">
+
+                <InputField fieldName="username" placeholder="Required"
+                  value={this.state.username}
+                  onChange={(e)=>{this.setState({username: e.target.value})}}/>
+
+                <InputField fieldName="email" placeholder="Required"
+                  value={this.state.email}
+                  onChange={(e)=>{this.setState({email: e.target.value})}}/>
+
+                <InputField fieldName="password" label={"Password" + (this.state.facebookProfile || this.state.googleProfile ?
+                  " (Optional)" : "")} type="password"
+                  placeholder={this.state.facebookProfile || this.state.googleProfile ?
+                  "Optional" : "Required"} onChange={this.handlePasswordChange}/>
+
+                <InputField fieldName="confirmPassword" type="password"
+                  label={"Confirm password" + (this.state.facebookProfile ||
+                    this.state.googleProfile ? " (Optional)" : "")}
+                  placeholder={this.state.facebookProfile || this.state.googleProfile ?
                     "Optional" : "Required"}
-                    disabled={this.state.password === ""}
-                    onChange={this.handlePasswordConfirmChange}
-                    value={this.state.passwordConfirm}/>
-                </div>
+                  disabled={this.state.password === ""}
+                  onChange={(e)=>{this.setState({passwordConfirm: e.target.value})}}
+                  value={this.state.passwordConfirm}/>
+
               </div>
             </div>
 
             <div className="row">
               <Center>
-                <GRecaptcha onResponse={this.handleGRecaptchaResponse}/>
+                <GRecaptcha onResponse={(response)=>{this.setState({recaptchaResponse: response})}}/>
               </Center>
             </div>
             {this.state.errors.length > 0 ?
@@ -148,16 +144,13 @@ class RegisterDialog extends React.Component {
           <Modal.Footer>
             <Center>
               <Button onClick={this.handleSubmit}>Submit</Button>
-              <Button onClick={this.close}>Cancel</Button>
+              <Button onClick={this.props.onClose}>Cancel</Button>
             </Center>
           </Modal.Footer>
         </div>
       </Modal>
 
     );
-  }
-  close(){
-    this.props.onClose();
   }
   handleLinkToGoogle(){
     this.GoogleOAuthHelper.signIn({
@@ -176,11 +169,6 @@ class RegisterDialog extends React.Component {
       }
     });
   }
-  handleGoogleUnlink(){
-    this.setState({
-      googleProfile: null
-    })
-  }
   handleLinkToFacebook(){
     this.facebookOAuthHelper.signIn({
       success: (profile) => {
@@ -195,21 +183,6 @@ class RegisterDialog extends React.Component {
       }
     });
   }
-  handleFacebookUnlink(){
-    this.setState({
-      facebookProfile: null
-    });
-  }
-  handleUsernameChange(e){
-    this.setState({
-      username: e.target.value
-    });
-  }
-  handleEmailChange(e){
-    this.setState({
-      email: e.target.value
-    });
-  }
   handlePasswordChange(e){
     const newState = {
       password: e.target.value
@@ -218,18 +191,7 @@ class RegisterDialog extends React.Component {
       newState.passwordConfirm = "";
     this.setState(newState);
   }
-  handlePasswordConfirmChange(e){
-    this.setState({
-      passwordConfirm: e.target.value
-    });
-  }
-  handleGRecaptchaResponse(response){
-    this.setState({
-      recaptchaResponse: response
-    });
-  }
   handleSubmit(){
-    const sendData = {};
 
     const errors = [];
     if(!this.state.username)
@@ -247,6 +209,7 @@ class RegisterDialog extends React.Component {
     if(errors.length > 0)
       return this.setState({ errors: errors});
 
+    const sendData = {};
     sendData.username = this.state.username;
     sendData.password = this.state.password;
     sendData.email = this.state.email;
@@ -266,7 +229,7 @@ class RegisterDialog extends React.Component {
           });
           window.grecaptcha.reset();
         } else if (response.actions && response.actions.length > 0){
-          this.close();
+          this.props.onClose();
         }
       },
       error: (info) => {

@@ -43,7 +43,6 @@ const NavLogo = () => (
 );
 
 export default (props) => {
-
   let jsx = null;
   if(props.user.initialized){
     if(props.user.signedIn)
