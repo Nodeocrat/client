@@ -9,10 +9,16 @@ export default class GameProj extends React.Component {
     super(props);
 
     ScriptLoader(["https://cdn.socket.io/socket.io-1.2.0.js",
-                  "/drawscript.min.js"]);
+                  "/drawscript.min.js"],
+                () => {
+                  this.setState({
+                    gameReady: true
+                  });
+                });
 
     this.handleOnPlay = this.handleOnPlay.bind(this);
     this.state = {
+      gameReady: false,
       gameStarted: false,
       error: null,
       guestName: ""
@@ -68,13 +74,15 @@ export default class GameProj extends React.Component {
         <div>
           <div style={{display: loginDisplay}}>
             <Center>
-              <Button bsStyle="primary" onClick={this.handleOnPlay} disabled={this.props.profile ? false : true} style={{minWidth: 100 + '%'}}>Play as signed in user</Button>
+              <Button bsStyle="primary" onClick={this.handleOnPlay} disabled={!this.props.profile || !this.state.gameReady ? true : false} style={{minWidth: 100 + '%'}}>
+                {`${this.state.gameReady ? "Play as signed in user" : "Loading..."}`}
+              </Button>
               <br/><br/>
               <Center><div>---- OR ----</div></Center>
               <br/>
               <input className="form-control" placeholder="Guest name" onChange={this.handleOnGuestNameChange}/>
-              <Button bsStyle="primary" onClick={this.handleOnPlayAsGuest} style={{minWidth: 100 + '%'}}>
-                Play as guest
+              <Button disabled={!this.state.gameReady} bsStyle="primary" onClick={this.handleOnPlayAsGuest} style={{minWidth: 100 + '%'}}>
+                {`${this.state.gameReady ? "Play as guest" : "Loading..."}`}
               </Button>
             </Center>
             <Center>{this.state.error ? <StatusText type="error" text={this.state.error}/> : null}</Center>
