@@ -22,7 +22,6 @@ export default class Profile extends React.Component {
 
     this.editMode = this.editMode.bind(this);
     this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
-    this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
