@@ -86,6 +86,7 @@ module.exports = {
       '@global': paths.appSrc + '/global/',
       '@lib': paths.appSrc + '/lib/',
       '@services': paths.appSrc + '/services',
+      '@styles': paths.appSrc + '/styles',
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web'
@@ -149,7 +150,7 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
           'style',
-          'css?importLoaders=1!postcss',
+          'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss',
           extractTextPluginOptions
         )
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
