@@ -219,7 +219,7 @@ class RegisterDialog extends React.Component {
     sendData.recaptchaResponse = this.state.recaptchaResponse;
 
     Ajax.post({
-      url: '/register',
+      url: '/account/register',
       data: sendData,
       response: 'JSON',
       success: (response) => {

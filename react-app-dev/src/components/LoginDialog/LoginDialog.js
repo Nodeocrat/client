@@ -102,7 +102,7 @@ class LoginDialog extends React.Component {
     sendData.password = this.state.password;
 
     Ajax.post({
-      url: '/login/local',
+      url: '/auth/local/login',
       data: sendData,
       response: 'JSON',
       success: (response) => {

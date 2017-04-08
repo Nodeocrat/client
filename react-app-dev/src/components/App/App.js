@@ -76,7 +76,7 @@ class App extends Component {
 
   updateUser(){
     Ajax.get({
-      url: '/user',
+      url: '/account/user',
       response: 'JSON',
       success: (user) => {
         this.setState({
@@ -98,7 +98,7 @@ class App extends Component {
 
   onSignOut(){
     Ajax.post({
-      url: '/logout',
+      url: '/auth/logout',
       response: 'JSON',
       success: (response) => {
         this.setState({
