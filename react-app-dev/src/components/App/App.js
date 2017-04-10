@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import './App.css';
 
 //custom component imports
 import NcNavBar from '@components/Navigation/NcNavBar';
 import NcMainView from '@components/NcMainView/NcMainView';
 import Projects from '@components/Projects/Projects';
-import Home from '@components/Home/Home';
+import Home from '@components/Home/Home.js';
 import Account from '@components/Account/Account';
 
 //services

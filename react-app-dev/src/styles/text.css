@@ -1,0 +1,29 @@
+.regular {
+  font-family: Source Sans Pro,Helvetica,Arial,sans-serif,Hiragino Kaku Gothic Pro,Meiryo,Hiragino Sans GB W3,Droid Sans Fallback,-apple-system,'.SFNSDisplay-Regular';
+  line-height: 20px;
+  color: rgba(0,0,0,.7);
+  font-size: 15px;
+}
+
+.bold {
+  composes: regular;
+  font-weight: bold;
+}
+
+.subTitle {
+  composes: regular;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.title {
+  composes: regular;
+  line-height: 30px;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}

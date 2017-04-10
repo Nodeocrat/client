@@ -44,8 +44,8 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-github:before { content: '\f09b'; } /* '' */
-.icon-graduation-cap-1:before { content: '\f19d'; } /* '' */
+.icon-github:before { color: #000000; content: '\f09b'; } /* '' */
+.icon-graduation-cap:before { content: '\f19d'; } /* '' */
 .icon-gplus:before { content: '\e800'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
 .icon-facebook:before { content: '\f300'; } /* '' */
@@ -56,14 +56,36 @@
 .icon-linkedin:before {content: '\f31a'; } /* '' */
 .icon-linkedin-rect:before {color: #0077b5; content: '\f31b'; } /* '' */
 
-.icon-github { composes: icon-font; } /* '' */
-.icon-graduation-cap-1 { composes: icon-font; } /* '' */
-.icon-gplus { composes: icon-font; } /* '' */
-.icon-mail-alt { composes: icon-font; } /* '' */
-.icon-facebook { composes: icon-font; } /* '' */
-.icon-facebook-rect { composes: icon-font; } /* '' */
-.icon-twitter { composes: icon-font; } /* '' */
-.icon-twitter-bird { composes: icon-font; } /* '' */
-.icon-googleplus-rect { composes: icon-font; } /* '' */
-.icon-linkedin { composes: icon-font; } /* '' */
-.icon-linkedin-rect { composes: icon-font; } /* '' */
+.icon-github { composes: icon-font; }
+.icon-graduation-cap { composes: icon-font; }
+.icon-gplus { composes: icon-font; }
+.icon-mail-alt { composes: icon-font; }
+.icon-facebook { composes: icon-font; }
+.icon-facebook-rect { composes: icon-font; }
+.icon-twitter { composes: icon-font; }
+.icon-twitter-bird { composes: icon-font; }
+.icon-googleplus-rect { composes: icon-font; }
+.icon-linkedin { composes: icon-font; }
+.icon-linkedin-rect { composes: icon-font; }
+
+.icon-facebook-symbol {
+  composes: icon-facebook;
+  width: 0.33em;
+  margin-right: 0;
+  margin-left: -0.18em;
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+.icon-linkedin-symbol {
+  composes: icon-linkedin;
+  margin-right: 0;
+  margin-left: -0.43em;
+  width: 0.55em;
+}
+.icon-github-symbol {
+  composes: icon-github;
+  width: 5px;
+  margin-right: 0;
+  margin-left: -0.43em;
+  font-size: 30px;
+  line-height: 11px;
+}

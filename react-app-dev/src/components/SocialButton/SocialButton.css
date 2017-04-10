@@ -1,41 +1,41 @@
 /*Social networking buttons*/
-.social-login-btn {
+:global .social-login-btn {
   color: #fff;
   border-radius: 20px;
   margin-bottom: 10px;
 }
 
-.span-parent {
+:global .span-parent {
  min-width: 100%;
 }
 
-.facebook-bg-color {
+:global .facebook-bg-color {
   background-color: #3b5998;
 }
-.linkedin-bg-color {
+:global .linkedin-bg-color {
   background-color: #0077b5;
 }
-.google-bg-color {
+:global .google-bg-color {
   background-color: #d34836;
 }
-.facebook-border-color {
+:global .facebook-border-color {
   border-color: #3b5998;
 }
-.linkedin-border-color {
+:global .linkedin-border-color {
   border-color: #0077b5;
 }
-.google-border-color {
+:global .google-border-color {
   border-color: #d34836;
 }
-.btn-icon {
+:global .btn-icon {
   float: left;
 }
-.social-btn-text {
+:global .social-btn-text {
   font-weight: 600;
   margin-left: 6px;
   margin-right: 6px;
 }
-.separator {
+:global .separator {
   content: '';
   display: inline-block;
   background: #888;

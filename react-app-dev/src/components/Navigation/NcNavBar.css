@@ -1,18 +1,18 @@
-.nc-nav-pills {
+:global .nc-nav-pills {
   margin-top:11px;
   margin-left: 40px;
 }
-.nc-nav-login-txt {
+:global .nc-nav-login-txt {
   color: white;
 }
-.nc-nav-login-btn {
+:global .nc-nav-login-btn {
   margin-left: 10px;
 }
-.nc-nav-login-btn:hover, .nc-nav-login-btn:focus {
+:global(.nc-nav-login-btn:hover, .nc-nav-login-btn:focus) {
   text-decoration: none;
 }
 
-.nc-nav-bar {
+:global .nc-nav-bar {
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
   background-color: #333333;
@@ -31,43 +31,43 @@
 
 
 /*painstakingly extracted from bootstrap*/
-.nav-pills > a.active > li > div, .nav-pills > a.active > li > div:focus {
+:global(.nav-pills > a.active > li > div, .nav-pills > a.active > li > div:focus) {
     background-color: #339933;
 }
-.nav-pills > a.active > li > div:hover, .nav-pills > a.active > li > div:focus {
+:global(.nav-pills > a.active > li > div:hover, .nav-pills > a.active > li > div:focus) {
     background-color: #55bb55;
 }
-.nav-pills > a > li > div:focus, .nav-pills > a > li > div:hover {
+:global(.nav-pills > a > li > div:focus, .nav-pills > a > li > div:hover) {
   background-color: #777777;
 }
-.nav-pills > a > li > div{
+:global .nav-pills > a > li > div {
   color:white;
   background-color: #555555;
 }
-.nav-pills > a > li {
+:global .nav-pills > a > li{
   margin: 0 5px 0 5px;
 }
-.nav-pills > a > li {
+:global .nav-pills > a > li {
   float: left;
 }
-.nav-pills > a > li > div {
+:global .nav-pills > a > li > div {
   border-radius: 4px;
 }
-.nav-pills > a > li + li {
+:global .nav-pills > a > li + li {
   margin-left: 2px;
 }
-.nav > a > li > div {
+:global .nav > a > li > div {
     position: relative;
     display: block;
     padding: 10px 15px;
 }
 
 
-.nav-login-btns > a > li > div:focus, .nav-login-btns > a > li > div:hover {
+:global(.nav-login-btns > a > li > div:focus, .nav-login-btns > a > li > div:hover) {
   background-color: #494949;
   cursor: pointer;
 }
-.nav-login-btns > a > li > div{
+:global .nav-login-btns > a > li > div {
   color:white;
   background-color: transparent;
 }
