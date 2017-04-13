@@ -15,8 +15,18 @@ export default class Brief extends React.Component {
 
   render() {
 
+    const style = {
+      paddingTop: 30 + 'px',
+      paddingBottom: 30 + 'px',
+      borderWidth: 1 + 'px',
+      borderColor: '#eeeeee',
+      borderRadius: 5 + 'px',
+      borderStyle: 'solid',
+      backgroundColor: '#f5f5f5'
+    }
+
     return (
-      <div style={{padding: 30 + 'px'}} className="well">
+      <div style={style} className="">
         <PhotoWidget/>
         <div className={`${text.title + " " + text.center}`}>
           Ashley Phillips
@@ -27,12 +37,8 @@ export default class Brief extends React.Component {
           <br/>
           <span>University of Brighton</span>
           <br/>
-          <br/>
         </div>
         <div className={text.regular}>
-          Erm... hello there. I am Ashley Phillips. Sort CSS out around social
-          buttons hover. To be defined in same file! And pulled over to social
-          button.
         </div>
       </div>
     );

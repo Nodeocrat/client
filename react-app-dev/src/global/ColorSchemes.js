@@ -1,6 +1,5 @@
+//deprecated: Change SocialProfile (only component which still uses this)
 export default {
   facebook: '#3b5998',
-  linkedin: '#0077b5',
-  google: '#d34836',
-  github: '#ffffff'
+  google: '#d34836'
 }

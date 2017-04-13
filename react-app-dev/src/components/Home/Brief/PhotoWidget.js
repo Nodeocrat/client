@@ -26,8 +26,7 @@ export default class PhotoWidget extends React.Component {
         position: 'absolute',
         top: this.state.coords[0].y - 15,
         left: this.state.coords[0].x - 15,
-        borderWidth: 4 + 'px',
-        borderColor: '#f5f5f5'
+        borderWidth: 4 + 'px'
       };
       githubIcon = (<SocialSymbol style={gitStyle} site="github"/>);
 
@@ -35,20 +34,19 @@ export default class PhotoWidget extends React.Component {
         position: 'absolute',
         top: this.state.coords[1].y - 14.5,
         left: this.state.coords[1].x - 14.5,
-        borderWidth: 3 + 'px',
-        borderColor: '#f5f5f5'
+        borderWidth: 3 + 'px'
       }
       linkedinIcon = (<SocialSymbol style={linkedinStyle} site="linkedin"/>);
     }
     return (
       <Center>
         <img
-          src="https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/11006395_10205842529126734_4431426595515210786_n.jpg?oh=d90b7e376e9f86c2475387fb49d85e73&oe=599948DF"
+          src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAu5AAAAJGJiZmI1NjIyLWNlN2UtNDFkMi1hODgyLWQ4ZWNhZGE4MjU0Mw.jpg"
           style={{borderRadius: 100 + 'px', marginBottom: 20 + 'px'}}
           height="150" width="150" id="home-profile-img"/>
           <br/>
-          {githubIcon ? githubIcon : null}
-          {linkedinIcon ? linkedinIcon : null}
+          {githubIcon ? (<a href="https://github.com/Nodeocrat/client/tree/react-trans/react-app-dev/src" target="_blank">{githubIcon}</a>) : null}
+          {linkedinIcon ? (<a href="https://uk.linkedin.com/in/ashley-phillips-5b5a8599" target="_blank">{linkedinIcon}</a>) : null}
       </Center>
     );
   }

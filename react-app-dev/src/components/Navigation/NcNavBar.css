@@ -1,3 +1,5 @@
+/*NOTE: Multiple selectors separated by comma's isn't possible when wrapped in a :global() modifier due to a bug, so there is lots of duplication*/
+
 :global .nc-nav-pills {
   margin-top:11px;
   margin-left: 40px;
@@ -8,7 +10,10 @@
 :global .nc-nav-login-btn {
   margin-left: 10px;
 }
-:global(.nc-nav-login-btn:hover, .nc-nav-login-btn:focus) {
+:global(.nc-nav-login-btn:hover) {
+  text-decoration: none;
+}
+:global(.nc-nav-login-btn:focus) {
   text-decoration: none;
 }
 
@@ -31,13 +36,22 @@
 
 
 /*painstakingly extracted from bootstrap*/
-:global(.nav-pills > a.active > li > div, .nav-pills > a.active > li > div:focus) {
+:global(.nav-pills > a.active > li > div) {
     background-color: #339933;
 }
-:global(.nav-pills > a.active > li > div:hover, .nav-pills > a.active > li > div:focus) {
+:global(.nav-pills > a.active > li > div:focus) {
+    background-color: #339933;
+}
+:global(.nav-pills > a.active > li > div:hover) {
     background-color: #55bb55;
 }
-:global(.nav-pills > a > li > div:focus, .nav-pills > a > li > div:hover) {
+:global(.nav-pills > a.active > li > div:focus) {
+    background-color: #55bb55;
+}
+:global(.nav-pills > a > li > div:focus) {
+  background-color: #777777;
+}
+:global(.nav-pills > a > li > div:hover) {
   background-color: #777777;
 }
 :global .nav-pills > a > li > div {
@@ -63,7 +77,11 @@
 }
 
 
-:global(.nav-login-btns > a > li > div:focus, .nav-login-btns > a > li > div:hover) {
+:global(.nav-login-btns > a > li > div:focus) {
+  background-color: #494949;
+  cursor: pointer;
+}
+:global(.nav-login-btns > a > li > div:hover) {
   background-color: #494949;
   cursor: pointer;
 }

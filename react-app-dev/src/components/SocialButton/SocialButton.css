@@ -8,25 +8,6 @@
 :global .span-parent {
  min-width: 100%;
 }
-
-:global .facebook-bg-color {
-  background-color: #3b5998;
-}
-:global .linkedin-bg-color {
-  background-color: #0077b5;
-}
-:global .google-bg-color {
-  background-color: #d34836;
-}
-:global .facebook-border-color {
-  border-color: #3b5998;
-}
-:global .linkedin-border-color {
-  border-color: #0077b5;
-}
-:global .google-border-color {
-  border-color: #d34836;
-}
 :global .btn-icon {
   float: left;
 }

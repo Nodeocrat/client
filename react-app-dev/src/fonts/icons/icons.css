@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'fontello';
+  font-family: 'iconic-sans';
   src: url('./fontello.eot?25083029');
   src: url('./fontello.woff2?25083029') format('woff2'),
        url('./fontello.woff?25083029') format('woff'),
@@ -9,8 +9,9 @@
   font-style: normal;
 }
 
+/*ICONS*/
 .icon-font {
-  font-family: fontello;
+  font-family: 'iconic-sans';
   font-style: normal;
   font-weight: normal;
   speak: none;
@@ -20,7 +21,6 @@
   width: 1em;
   margin-right: .2em;
   text-align: center;
-  /* opacity: .8; */
 
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
@@ -44,44 +44,47 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-github:before { color: #000000; content: '\f09b'; } /* '' */
+.icon-github:before { content: '\f09b'; } /* '' */
 .icon-graduation-cap:before { content: '\f19d'; } /* '' */
-.icon-gplus:before { content: '\e800'; } /* '' */
+.icon-google:before { content: '\e800'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
 .icon-facebook:before { content: '\f300'; } /* '' */
-.icon-facebook-rect:before { color: #3b5998; content: '\f301'; } /* '' */
+.icon-facebook-rect:before { content: '\f301'; } /* '' */
 .icon-twitter:before { content: '\f302'; } /* '' */
 .icon-twitter-bird:before {color: #00aced; content: '\f303'; } /* '' */
-.icon-googleplus-rect:before {color: #d34836; content: '\f309'; } /* '' */
+.icon-google-rect:before {content: '\f309'; } /* '' */
 .icon-linkedin:before {content: '\f31a'; } /* '' */
-.icon-linkedin-rect:before {color: #0077b5; content: '\f31b'; } /* '' */
+.icon-linkedin-rect:before {content: '\f31b'; } /* '' */
 
+/*in CSS-modules, classes cannot be exported if there is no tag-less instance of it*/
+/*and inheritance cannot be used in tags*/
 .icon-github { composes: icon-font; }
 .icon-graduation-cap { composes: icon-font; }
-.icon-gplus { composes: icon-font; }
+.icon-google { composes: icon-font; }
 .icon-mail-alt { composes: icon-font; }
 .icon-facebook { composes: icon-font; }
 .icon-facebook-rect { composes: icon-font; }
 .icon-twitter { composes: icon-font; }
 .icon-twitter-bird { composes: icon-font; }
-.icon-googleplus-rect { composes: icon-font; }
+.icon-google-rect { composes: icon-font; }
 .icon-linkedin { composes: icon-font; }
 .icon-linkedin-rect { composes: icon-font; }
 
-.icon-facebook-symbol {
+/*TEXTLESS ICONS*/
+.icon-facebook-textless {
   composes: icon-facebook;
   width: 0.33em;
   margin-right: 0;
   margin-left: -0.18em;
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
-.icon-linkedin-symbol {
+.icon-linkedin-textless {
   composes: icon-linkedin;
   margin-right: 0;
   margin-left: -0.43em;
   width: 0.55em;
 }
-.icon-github-symbol {
+.icon-github-textless {
   composes: icon-github;
   width: 5px;
   margin-right: 0;
@@ -89,3 +92,26 @@
   font-size: 30px;
   line-height: 11px;
 }
+
+/*BUTTONS (this is where the colours should go... better to handle both background and foreground in one place)*/
+.github-btn:hover, .github-btn:focus { color: #767676; }
+.github-btn { background-color: white; color: black; }
+.linkedin-btn:hover, .linkedin-btn:focus { background-color: #33aadd; color: white; }
+.linkedin-btn { color: white; background-color: #0077b5; }
+.google-btn:hover, .gplus-btn:focus { color: white; background-color: #f96a58; }
+.google-btn { color: white; background-color: #d34836; }
+.facebook-btn:hover, .facebook-btn:focus { color: white; background-color: #4e75c5 }
+.facebook-btn { color: white; background-color: #3b5998; }
+
+/*TEXTLESS BUTTONS; the only difference is the inclusion of a border.*/
+/*base class for buttons; allows for multiple colours of an icon, and borders*/
+.btn-textless { border-color: #f5f5f5; }
+
+.github-btn-textless { composes: btn-textless; composes: github-btn; }
+.linkedin-btn-textless { composes: btn-textless; composes: linkedin-btn; }
+
+/*
+facebook: '#3b5998',
+goog,
+twitter: #00aced
+*/
