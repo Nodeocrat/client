@@ -5,6 +5,11 @@
   font-size: 15px;
 }
 
+.small {
+  composes: regular;
+  font-size: 12px;
+}
+
 .bold {
   composes: regular;
   font-weight: bold;

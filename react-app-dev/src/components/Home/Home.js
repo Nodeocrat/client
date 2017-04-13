@@ -11,9 +11,11 @@ import reactLogo from '@media/react-logo.png';
 import mongoLogo from '@media/mongodb-logo.png';
 import nodeLogo from '@media/node-logo.png';
 
+import text from '@styles/text.css';
 
 const Logos = () => (
   <div className="well" style={{backgroundColor: '#eeeeee'}}>
+    <div className={`${text.small} ${text.center}`}>This site has been built using:</div>
     <Center>
         <img className="horizontal-img ext-logo-homepage" height="62" width="100" src={nodeLogo}></img>
         <img className="horizontal-img ext-logo-homepage" height="37" width="110" src={reactLogo}></img>
