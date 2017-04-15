@@ -94,14 +94,15 @@
 }
 
 /*BUTTONS (this is where the colours should go... better to handle both background and foreground in one place)*/
+.btn { transition: all 200ms ease-out; }
 .github-btn:hover, .github-btn:focus { color: #767676; }
-.github-btn { background-color: white; color: black; }
+.github-btn { composes: btn; background-color: white; color: black; }
 .linkedin-btn:hover, .linkedin-btn:focus { background-color: #33aadd; color: white; }
-.linkedin-btn { color: white; background-color: #0077b5; }
+.linkedin-btn { composes: btn; color: white; background-color: #0077b5; }
 .google-btn:hover, .gplus-btn:focus { color: white; background-color: #f96a58; }
-.google-btn { color: white; background-color: #d34836; }
+.google-btn { composes: btn; color: white; background-color: #d34836; }
 .facebook-btn:hover, .facebook-btn:focus { color: white; background-color: #4e75c5 }
-.facebook-btn { color: white; background-color: #3b5998; }
+.facebook-btn { composes: btn; color: white; background-color: #3b5998; }
 
 /*TEXTLESS BUTTONS; the only difference is the inclusion of a border.*/
 /*base class for buttons; allows for multiple colours of an icon, and borders*/

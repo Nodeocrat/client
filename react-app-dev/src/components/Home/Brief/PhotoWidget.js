@@ -1,6 +1,7 @@
 import React from 'react';
 import {SocialSymbol} from '@components/SocialButton/SocialButton';
 import Center from '@lib/Center';
+import {polarToCartesian} from '@services/MathTools';
 
 //services
 import {offsetFromParent} from '@services/DOMTools';
@@ -76,8 +77,8 @@ export default class PhotoWidget extends React.Component {
       return null;
 
     const returnCoords = [];
-    const theta = midTheta || 0.875;
-    const spread = inputSpread || 0.1;
+    const theta = midTheta || 0.875; //Think of angle as a float from 0 -> 1
+    const spread = inputSpread || 0.1; // i.e. symbols will be spaced a tenth of the circle apart if !inputSpread
 
     // Obtain center of element & radius
     const x0 = offsetFromParent(element).x;
@@ -88,16 +89,13 @@ export default class PhotoWidget extends React.Component {
     const originY = y0 + 0.5*height;
     const radius = width/2;
 
-    // Formula for polar coordinates -> cartesian coordinates around
-    // (originX, originY) with inverted y-axis
-    // x = originX + r × cos( θ )
-    // y = originY - r × sin( θ )
     for(let i = 0; i < numItems; i++){
       const thetaI = (theta + spread*(i + 0.5*(1-numItems)))*2*Math.PI;
+      const offsetCoords = polarToCartesian(thetaI, radius);
       returnCoords.push(
         {
-          x: originX + radius*Math.cos(thetaI),
-          y: originY - radius*Math.sin(thetaI)
+          x: originX + offsetCoords.x,
+          y: originY - offsetCoords.y
         });
     }
 
