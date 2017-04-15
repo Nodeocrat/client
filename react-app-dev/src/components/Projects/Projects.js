@@ -52,24 +52,3 @@ export default (props) => {
     </div>
   );
 };
-
-/*.parent {
-    padding: 25px;
-    display:inline-block;
-    background-color:Aqua;
-}
-.child {
-    background-color:Orange;
-}
-.center {
-  text-align: center;
-}*/
-
-/*<div class="parent">
-    <div class="child">
-      <img/>
-      <div class="center">
-        Orange1
-      </div>
-    </div>
-</div>*/

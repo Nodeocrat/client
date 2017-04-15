@@ -1,0 +1,25 @@
+.shadow {
+  box-shadow: 0 0 0 1px #eee, 0 0 0 7px white, 0 0 0 8px #ddd;
+}
+
+.hoverShadow:hover, .hoverShadow:focus{
+  box-shadow: 0 0 0 1px #eee, 0 0 0 7px white, 0 0 8px 8px rgba(35, 173, 255, 1);
+}
+.hoverShadow {
+  transition: all 200ms ease-out;
+}
+
+
+
+/* 0 0 6px rgba(35, 173, 255, 1); */
+
+
+/*    transition: all 200ms cubic-bezier(0.47, 0.12, 0.5, 0.94);
+
+ or ..... all 200ms ease-out;
+
+    transition-property: all;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.47, 0.12, 0.5, 0.94);
+    transition-delay: initial;
+}*/
