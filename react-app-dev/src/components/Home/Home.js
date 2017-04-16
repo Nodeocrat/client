@@ -1,5 +1,6 @@
 import React from 'react';
 import Summary from './Summary/Summary';
+import {ProjectThumbnailsMini} from '@components/ProjectThumbnails/ProjectThumbnails';
 import './Home.css';
 
 import {Link} from 'react-router-dom';
@@ -17,11 +18,11 @@ const Logos = () => (
   <div className="well" style={{backgroundColor: '#eeeeee'}}>
     <div className={`${text.small} ${text.center}`}>This site has been built using:</div>
     <Center>
-        <img className="horizontal-img ext-logo-homepage" height="62" width="100" src={nodeLogo}></img>
-        <img className="horizontal-img ext-logo-homepage" height="37" width="110" src={reactLogo}></img>
-        <img className="horizontal-img ext-logo-homepage" height="37" width="100" src={awsLogo}></img>
-        <img className="horizontal-img ext-logo-homepage" height="59" width="50" src={linuxLogo}></img>
-        <img className="horizontal-img ext-logo-homepage" height="30" width="110" style={{marginTop: 40 + 'px'}} src={mongoLogo}></img>
+        <img alt="logo" className="horizontal-img ext-logo-homepage" height="62" width="100" src={nodeLogo}></img>
+        <img alt="logo" className="horizontal-img ext-logo-homepage" height="37" width="110" src={reactLogo}></img>
+        <img alt="logo" className="horizontal-img ext-logo-homepage" height="37" width="100" src={awsLogo}></img>
+        <img alt="logo" className="horizontal-img ext-logo-homepage" height="59" width="50" src={linuxLogo}></img>
+        <img alt="logo" className="horizontal-img ext-logo-homepage" height="30" width="110" style={{marginTop: 40 + 'px'}} src={mongoLogo}></img>
     </Center>
   </div>
 );
@@ -36,9 +37,7 @@ const ProjectSummary = () => (
       Projects
     </div>
     <div className="panel-body panel-text">
-      <Link to="/projects/ApProj">Mini-project: Auslander-Parter algorithm</Link>
-      <br/>
-      <Link to="/projects/GameProj">Mini-project: Game-server without a game loop</Link>
+      <Center><ProjectThumbnailsMini/></Center>
     </div>
   </div>
 );
