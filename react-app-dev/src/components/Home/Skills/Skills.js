@@ -17,6 +17,8 @@ const keySkills = [
 ];
 
 const otherSkills = [
+  "AngularDart",
+  "Dart",
   "Passport",
   "Npm",
   "Git",
@@ -24,8 +26,6 @@ const otherSkills = [
   "Nginx",
   "Java",
   "PostgreSQL",
-  "Dart",
-  "AngularDart",
   "Qt"
 ];
 
