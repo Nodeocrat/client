@@ -1,7 +1,7 @@
 .regular {
   font-family: Source Sans Pro,Helvetica,Arial,sans-serif,Hiragino Kaku Gothic Pro,Meiryo,Hiragino Sans GB W3,Droid Sans Fallback,-apple-system,'.SFNSDisplay-Regular';
   line-height: 20px;
-  color: rgba(0,0,0,.7);
+  color: rgba(0,0,0,.6);
   font-size: 15px;
 }
 
@@ -31,4 +31,18 @@
 
 .center {
   text-align: center;
+}
+
+.sectionTitle {
+  composes: title;
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,.6);
+}
+
+.link {
+  composes: regular;
+  font-style: italic;
+  color: rgba(40, 137 ,243 ,0.9);
+  text-decoration: underline;
+  cursor: pointer;
 }

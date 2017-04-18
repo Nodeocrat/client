@@ -47,7 +47,7 @@
 .icon-github:before { content: '\f09b'; } /* '' */
 .icon-graduation-cap:before { content: '\f19d'; } /* '' */
 .icon-google:before { content: '\e800'; } /* '' */
-.icon-mail-alt:before { content: '\f0e0'; } /* '' */
+.icon-mail:before { content: '\f0e0'; } /* '' */
 .icon-facebook:before { content: '\f300'; } /* '' */
 .icon-facebook-rect:before { content: '\f301'; } /* '' */
 .icon-twitter:before { content: '\f302'; } /* '' */
@@ -61,7 +61,7 @@
 .icon-github { composes: icon-font; }
 .icon-graduation-cap { composes: icon-font; }
 .icon-google { composes: icon-font; }
-.icon-mail-alt { composes: icon-font; }
+.icon-mail { composes: icon-font; }
 .icon-facebook { composes: icon-font; }
 .icon-facebook-rect { composes: icon-font; }
 .icon-twitter { composes: icon-font; }
@@ -106,7 +106,7 @@
 
 /*TEXTLESS BUTTONS; the only difference is the inclusion of a border.*/
 /*base class for buttons; allows for multiple colours of an icon, and borders*/
-.btn-textless { border-color: #f5f5f5; }
+.btn-textless { border-color: #eee; }
 
 .github-btn-textless { composes: btn-textless; composes: github-btn; }
 .linkedin-btn-textless { composes: btn-textless; composes: linkedin-btn; }

@@ -1,7 +1,10 @@
 import React from 'react';
 import Summary from './Summary/Summary';
+import Brief from './Brief/Brief';
 import {ProjectThumbnailsMini} from '@components/ProjectThumbnails/ProjectThumbnails';
 import './Home.css';
+import Skills from './Skills/Skills';
+import Experience from './Experience/Experience';
 
 import {Link} from 'react-router-dom';
 import Center from '@lib/Center';
@@ -31,44 +34,44 @@ const Logos = () => (
   <Panel header="Updates">Updates</Panel>
 );*/
 
-const ProjectSummary = () => (
-  <div className="panel panel-default">
-    <div className="panel-heading panel-title">
+const SkillsSection = () => (
+  <section className="col-sm-offset-4 col-sm-4">
+    <div className={`${text.subTitle} ${text.center}`}>
+      Proficient with
+    </div>
+    <Skills/>
+  </section>
+);
+
+//  <span className={`glyphicon glyphicon-new-window`} style={{fontSize: '80%'}}/>
+const ProjectSummarySection = () => (
+  <section className="col-sm-offset-3 col-sm-6" style={{marginTop: '40px'}}>
+    <div className={text.sectionTitle}>
       Projects
     </div>
-    <div className="panel-body panel-text">
-      <Center><ProjectThumbnailsMini/></Center>
-    </div>
-  </div>
+    <Center>
+      <ProjectThumbnailsMini/>
+    </Center>
+  </section>
 );
 
-const Contact = () => (
-  <div className="panel panel-default">
-      <div className="panel-heading panel-title">
-        Contact
-      </div>
-      <div className="panel-body panel-text">
-        ashley.phillips@nodeocrat.com
-        <br/><a href="https://www.linkedin.com/in/ashley-phillips-5b5a8599/">linkedin</a>
-      </div>
-  </div>
+const ExperienceSection = () => (
+  <section className="col-sm-offset-3 col-sm-6" style={{marginTop: '40px'}}>
+    <div className={text.sectionTitle}>Title</div>
+    <Center><Experience/></Center>
+  </section>
 );
 
-export default (props) => {
-  return (
-    <div>
-      <div className="col-sm-12">
-        <Summary/>
-      </div>
-      <div className="col-sm-6">
-        <ProjectSummary/>
-      </div>
-      <div className="col-sm-6">
-        <Contact/>
-      </div>
-      <div className="col-sm-12 visible-lg visible-md hidden-sm hidden-xs">
-        <Logos/>
-      </div>
-    </div>
-  );
-}
+export default () => (
+  <section>
+    <Brief/>
+    <SkillsSection/>
+    <section className="col-sm-offset-2 col-sm-8" style={{marginTop: '40px'}}>
+      <Summary/>
+    </section>
+    <ProjectSummarySection/>
+    <section className="col-sm-12 visible-lg visible-md hidden-sm hidden-xs" style={{marginTop: '40px'}}>
+      <Logos/>
+    </section>
+  </section>
+);

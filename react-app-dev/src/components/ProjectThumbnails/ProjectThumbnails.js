@@ -46,7 +46,7 @@ const ProjectThumbnailsMini = () => (
     projects.map((project) => (
       <Link key={project.name} to={`projects/${project.route}`}>
         <div style={{verticalAlign: 'top', margin: 10 + 'px', display: 'inline-block'}}>
-          <Center><img alt="" style={{margin: 15 + 'px'}} height="46.25" width="75" src={project.img} className={`${border.shadow} ${border.hoverShadow}`}/></Center>
+          <Center><img alt="" style={{margin: 20 + 'px'}} height="92.5" width="150" src={project.img} className={`${border.shadow} ${border.hoverShadow}`}/></Center>
           <Center><div style={{width: 120 + 'px'}} className={`${text.center} ${text.regular}`}>{project.name}</div></Center>
         </div>
       </Link>

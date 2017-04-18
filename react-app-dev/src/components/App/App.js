@@ -8,6 +8,8 @@ import Projects from '@components/Projects/Projects';
 import Home from '@components/Home/Home.js';
 import Account from '@components/Account/Account';
 
+import text from '@styles/text.css';
+
 //services
 import Ajax from '@services/Ajax';
 
@@ -65,7 +67,7 @@ class App extends Component {
 
     return (
       <Router>
-        <div>
+        <div className={text.regular}>
           <NcNavBar user={this.state.user} onSignOut={this.onSignOut} routes={tabs}/>
           <NcMainView routes={tabs}/>
         </div>

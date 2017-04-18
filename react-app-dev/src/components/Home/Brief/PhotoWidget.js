@@ -43,7 +43,7 @@ export default class PhotoWidget extends React.Component {
       <Center>
         <img
           src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAu5AAAAJGJiZmI1NjIyLWNlN2UtNDFkMi1hODgyLWQ4ZWNhZGE4MjU0Mw.jpg"
-          style={{borderRadius: 100 + 'px', marginBottom: 20 + 'px'}}
+          style={{borderRadius: 100 + 'px', margin: 20 + 'px'}}
           height="150" width="150" id="home-profile-img"/>
           <br/>
           {githubIcon ? (<a href="https://github.com/Nodeocrat/client/tree/react-trans/react-app-dev/src" target="_blank">{githubIcon}</a>) : null}

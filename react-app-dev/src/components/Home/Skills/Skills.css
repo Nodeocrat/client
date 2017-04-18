@@ -1,0 +1,9 @@
+.skillPill {
+  display: inline-block;
+  border-radius: 4px;
+  margin: 1px;
+  padding: 3px 6px 3px 6px;
+
+  background-color: #4595c3;
+  color: white;
+}
