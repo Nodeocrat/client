@@ -4,18 +4,18 @@ import StatusText from '@lib/StatusText';
 import Center from '@lib/Center';
 import Button from 'react-bootstrap/lib/Button';
 
+import position from '@styles/position.css';
+
 export default class GameProj extends React.Component {
   constructor(props){
     super(props);
 
-    ScriptLoader(["https://cdn.socket.io/socket.io-1.2.0.js",
-                  "/drawscript.min.js"],
-                () => {
-                  this.setState({
-                    gameReady: true
-                  });
-                });
+    ScriptLoader(
+      ["https://cdn.socket.io/socket.io-1.2.0.js", "/drawscript.min.js"],
+      () => this.setState({gameReady: true})
+    );
 
+    this.handleOnPlayAsGuest = this.handleOnPlayAsGuest.bind(this);
     this.handleOnPlay = this.handleOnPlay.bind(this);
     this.state = {
       gameReady: false,
@@ -23,15 +23,6 @@ export default class GameProj extends React.Component {
       error: null,
       guestName: ""
     }
-
-    this.handleOnGuestNameChange = this.handleOnGuestNameChange.bind(this);
-    this.handleOnPlayAsGuest = this.handleOnPlayAsGuest.bind(this);
-  }
-
-  handleOnGuestNameChange(e){
-    this.setState({
-      guestName: e.target.value
-    });
   }
 
   handleOnPlay(){
@@ -70,22 +61,22 @@ export default class GameProj extends React.Component {
     const canvasDisplay = this.state.gameStarted ? "block" : "none";
     const loginDisplay = this.state.gameStarted ? "none" : "block";
     return (
-      <div>
+      <section>
         <div>
           <div style={{display: loginDisplay}}>
             <Center>
-              <Button bsStyle="primary" onClick={this.handleOnPlay} disabled={!this.props.profile || !this.state.gameReady ? true : false} style={{minWidth: 100 + '%'}}>
+              <Button bsStyle="primary" onClick={this.handleOnPlay} disabled={!this.props.profile || !this.state.gameReady ? true : false} className={position.spanParent}>
                 {`${this.state.gameReady ? "Play as signed in user" : "Loading..."}`}
               </Button>
               <br/><br/>
-              <Center><div>---- OR ----</div></Center>
+              <div className={position.center}>---- OR ----</div>
               <br/>
-              <input className="form-control" placeholder="Guest name" onChange={this.handleOnGuestNameChange}/>
+              <input className="form-control" placeholder="Guest name" onChange={e => this.setState({guestName: e.target.value})}/>
               <Button disabled={!this.state.gameReady} bsStyle="primary" onClick={this.handleOnPlayAsGuest} style={{minWidth: 100 + '%'}}>
                 {`${this.state.gameReady ? "Play as guest" : "Loading..."}`}
               </Button>
             </Center>
-            <Center>{this.state.error ? <StatusText type="error" text={this.state.error}/> : null}</Center>
+            {this.state.error ? <StatusText className={position.center} type="error" text={this.state.error}/> : null}
           </div>
           <div style={{display: canvasDisplay}} id="game_container">
             <canvas style={{borderStyle: 'solid', borderWidth: 5 + 'px'}} id="canvas" width="800" height="800"></canvas>
@@ -103,89 +94,8 @@ export default class GameProj extends React.Component {
 
         <p>It works best with slower paced games with not too many players/NPCs where events will (on avg.) occur less than 20 times per second. If there are more than ~25 events occuring per second then it may start to perform worse than the traditional method. For now, I have only made it to work between circular objects. Objects of other shapes (maybe except ellipses) will likely require a completely different algorithm. Modifying the current algorithm to work with ellipses and an algorithm to work with any polygon (with all angles &lt;180 degrees) should be able to cover all cases.</p>
 
-      </div>
+      </section>
     );
   }
 
 };
-
-//TODO Get the following to render in react
-/*<br>
-<br>
-<b>Summary of algorithm: </b>
-<p>When an event occurs (player shoot, player move, player resize), this triggers the update of every game object and the search for possible collisions. Updating game objects is trivial; just multiply its speed in the y and x directions by the difference in time since it was last updated:
-  <code><br>var updateEntity = function(entityKey){<br>
-    &emsp;var entity = entities[entityKey];<br>
-    &emsp;var multiplier;<br>
-    &emsp;if(playerInfo[entityKey].lastUpdated === undefined)<br>
-    &emsp;{<br>
-      &emsp;&emsp;multiplier = 0.0167;<br>
-    &emsp;} else {<br>
-      &emsp;&emsp;var diff = process.hrtime(playerInfo[entityKey].lastUpdated);<br>
-      &emsp;&emsp;var deltaTimeNs = diff[0] * 1e9 + diff[1];<br>
-      &emsp;&emsp;multiplier = deltaTimeNs/1000000000;<br>
-    &emsp;}<br>
-<br>
-    &emsp;entity.y += multiplier*(entity.dy);<br>
-    &emsp;entity.x += multiplier*(entity.dx);<br>
-    &emsp;playerInfo[entityKey].lastUpdated = process.hrtime();<br>
-<br>
-    &emsp;//checks/validation<br>
-    &emsp;if(entity.x > canvasWidth)<br>
-      &emsp;&emsp;entity.x = canvasWidth;<br>
-    &emsp;else if (entity.x < 0)<br>
-      &emsp;&emsp;entity.x = 0;<br>
-<br>
-    &emsp;if(entity.y > canvasHeight)<br>
-      &emsp;&emsp;entity.y = canvasHeight;<br>
-    &emsp;else if(entity.y < 0)<br>
-      &emsp;&emsp;entity.y = 0;<br>
-  }</code></p>
-<br>
-<p>To test for a collision between two objects, the algorithm is as follows (will provide explanations soon):
-<br><code>
-  var testForCollision = function(causeEntityKey, causeEntity, destEntityKey, destEntity)<br>
-  {<br>
-    &emsp;var collX;<br>
-    &emsp;var collY;<br>
-    &emsp;var collT;<br>
-<br>
-    &emsp;var x1 = causeEntity.x;<br>
-    &emsp;var y1 = -causeEntity.y;<br>
-    &emsp;var x2 = destEntity.x;<br>
-    &emsp;var y2 = -destEntity.y;<br>
-    &emsp;var r = causeEntity.radius + destEntity.radius; //radius<br>
-    &emsp;var dx1 = (causeEntity.dx)/1000;<br>
-    &emsp;var dy1 = -(causeEntity.dy)/1000;<br>
-    &emsp;var dx2 = (destEntity.dx)/1000;<br>
-    &emsp;var dy2 = -(destEntity.dy)/1000;<br>
-<br>
-    &emsp;if(dx1 == 0 && dx2 == 0 && dy1 == 0 && dy2 == 0)<br>
-      &emsp;&emsp;return;<br>
-<br>
-    &emsp;var A = (dx1-dx2)*(dx1-dx2) + (dy1-dy2)*(dy1-dy2);<br>
-    &emsp;var B = 2*(dx1-dx2)*(x1-x2) + 2*(dy1-dy2)*(y1-y2);<br>
-    &emsp;var C = (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) - r*r;<br>
-    &emsp;var det = B*B - 4*A*C<br>
-    &emsp;if(det < 0)<br>
-      &emsp;&emsp;return;<br>
-<br>
-    &emsp;collT = (-B - Math.sqrt(det))/(2*A);<br>
-    &emsp;if(collT < 0)<br>
-      &emsp;&emsp;return;<br>
-    &emsp;collX = x1 + collT*dx1;<br>
-    &emsp;collY = y1 + collT*dy1;<br>
-<br>
-    &emsp;var collID = setTimeout(collision, collT, causeEntityKey, destEntityKey);<br>
-    &emsp;if(!entToCollIDs.hasOwnProperty(causeEntityKey))<br>
-      &emsp;&emsp;entToCollIDs[causeEntityKey] = [collID];<br>
-    &emsp;else<br>
-      &emsp;&emsp;entToCollIDs[causeEntityKey].push(collID);<br>
-<br>
-    &emsp;if(!entToCollIDs.hasOwnProperty(destEntityKey))<br>
-      &emsp;&emsp;entToCollIDs[destEntityKey] = [collID];<br>
-    &emsp;else<br>
-      &emsp;&emsp;entToCollIDs[destEntityKey].push(collID);<br>
-  };
-
-</code></p>*/

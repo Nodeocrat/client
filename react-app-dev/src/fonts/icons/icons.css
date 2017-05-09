@@ -1,3 +1,6 @@
+@value facebookPrim, facebookPrimHl, facebookFg, googlePrim, googlePrimHl, googleFg, linkedinPrim, linkedinPrimHl, linkedinFg, githubPrim, githubPrimHl, githubFg from "@styles/colors/sites.css";
+@value backgroundPrim from '@styles/colors/colors.css';
+
 @font-face {
   font-family: 'iconic-sans';
   src: url('./fontello.eot?25083029');
@@ -33,15 +36,9 @@
   /* remove if not needed */
   margin-left: .2em;
 
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
-
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
 .icon-github:before { content: '\f09b'; } /* '' */
@@ -95,24 +92,18 @@
 
 /*BUTTONS (this is where the colours should go... better to handle both background and foreground in one place)*/
 .btn { transition: all 200ms ease-out; }
-.github-btn:hover, .github-btn:focus { color: #767676; }
-.github-btn { composes: btn; background-color: white; color: black; }
-.linkedin-btn:hover, .linkedin-btn:focus { background-color: #33aadd; color: white; }
-.linkedin-btn { composes: btn; color: white; background-color: #0077b5; }
-.google-btn:hover, .gplus-btn:focus { color: white; background-color: #f96a58; }
-.google-btn { composes: btn; color: white; background-color: #d34836; }
-.facebook-btn:hover, .facebook-btn:focus { color: white; background-color: #4e75c5 }
-.facebook-btn { composes: btn; color: white; background-color: #3b5998; }
+.github-btn:hover, .github-btn:focus { color: githubPrimHl; }
+.github-btn { composes: btn; background-color: githubFg; color: githubPrim; }
+.linkedin-btn:hover, .linkedin-btn:focus { background-color: linkedinPrimHl; color: linkedinFg; }
+.linkedin-btn { composes: btn; color: linkedinFg; background-color: linkedinPrim; }
+.google-btn:hover, .gplus-btn:focus { color: googleFg; background-color: googlePrimHl; }
+.google-btn { composes: btn; color: googleFg; background-color: googlePrim; }
+.facebook-btn:hover, .facebook-btn:focus { color: facebookFg; background-color: facebookPrimHl }
+.facebook-btn { composes: btn; color: facebookFg; background-color: facebookPrim; }
 
 /*TEXTLESS BUTTONS; the only difference is the inclusion of a border.*/
 /*base class for buttons; allows for multiple colours of an icon, and borders*/
-.btn-textless { border-color: #eee; }
+.btn-textless { border-color: backgroundPrim; }
 
 .github-btn-textless { composes: btn-textless; composes: github-btn; }
 .linkedin-btn-textless { composes: btn-textless; composes: linkedin-btn; }
-
-/*
-facebook: '#3b5998',
-goog,
-twitter: #00aced
-*/

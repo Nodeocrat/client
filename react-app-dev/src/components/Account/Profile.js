@@ -1,9 +1,47 @@
 import React from 'react';
 import StatusText from '@lib/StatusText';
-import Center from '@lib/Center';
 import Ajax from '@services/Ajax';
 import Panel from 'react-bootstrap/lib/Panel';
+
+//styles
 import './Profile.css';
+import position from '@styles/position.css';
+import text from '@styles/text.css';
+
+//props: expanded, currentPassword, newPassword, confirmPassword
+const PasswordEdit = props => (
+  <section>
+    Password
+    <div className="panel-group">
+      <Panel collapsible expanded={props.expand} header={props.passwordSet ? "Password set" : "No password set"}>
+        <div className="form-group" id="password-update-container">
+          {props.passwordSet ?
+          (
+            <div>
+              Current password
+              <input value={props.currentPassword}
+                onChange={props.onCurrentPasswordChange}
+                type="password" className="form-control password-update"/>
+              <br/>
+            </div>
+          ) : null}
+          <div>
+            New password
+            <input readOnly={props.passwordSet && props.currentPassword === ""} type="password" value={props.newPassword} onChange={props.onNewPasswordChange} className="form-control password-update"/>
+          </div>
+          <br/>
+          <div>
+            Confirm new password
+            <input readOnly={props.newPassword === "" || (props.passwordSet && props.currentPassword === "")}
+              type="password" value={props.confirmPassword}
+              onChange={props.onConfirmPasswordChange}
+              className="form-control password-update"/>
+          </div>
+        </div>
+      </Panel>
+    </div>
+  </section>
+);
 
 export default class Profile extends React.Component {
   constructor(props){
@@ -67,7 +105,6 @@ export default class Profile extends React.Component {
       }
     }
 
-
     dataObj.email = newEmail;
     dataObj.username = newUsername;
     dataObj.newPassword = newPassword;
@@ -108,10 +145,8 @@ export default class Profile extends React.Component {
     return (
       <div className="panel panel-info">
         <div className="panel-heading">
-          <div>
-            <u className="h4">Account Details</u>
-            <button type="button" className="btn-link" style={this.state.editMode ? {display: 'none'} : {borderWidth: 0 + 'px', padding: 0 + 'px', color: 'blue', marginLeft: 8 + 'px'}} onClick={()=>this.editMode(true)}>[Edit]</button>
-          </div>
+          <span className={`${text.subTitle}`}>Account Details</span>
+          <button type="button" className="btn-link" style={this.state.editMode ? {display: 'none'} : {borderWidth: 0 + 'px', padding: 0 + 'px', color: 'blue', marginLeft: 8 + 'px'}} onClick={()=>this.editMode(true)}>[Edit]</button>
         </div>
         <div className="panel-body">
           <div className="form-group">
@@ -128,44 +163,23 @@ export default class Profile extends React.Component {
               className="form-control"/>
             </div>
             <br/>
-            Password
-            <div className="panel-group">
-              <Panel collapsible expanded={this.state.editMode} header={this.props.profile.passwordSet ? "Password set" : "No password set"}>
-                <div className="form-group" id="password-update-container">
-                  {this.props.profile.passwordSet ?
-                  (
-                    <div>
-                      Current password
-                      <input value={this.state.currentPassword}
-                        onChange={(e)=>{this.setState({currentPassword: e.target.value})}}
-                        type="password" className="form-control password-update"/>
-                      <br/>
-                    </div>
-                  ) : null}
-                  <div>New password<input readOnly={this.props.profile.passwordSet && this.state.currentPassword === ""} type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange} className="form-control password-update"/></div>
-                  <br/>
-                  <div>
-                    Confirm new password
-                    <input readOnly={this.state.newPassword === "" || (this.props.profile.passwordSet && this.state.currentPassword === "")}
-                      type="password" value={this.state.confirmPassword}
-                      onChange={(e)=>{this.setState({confirmPassword: e.target.value})}}
-                      className="form-control password-update"/></div>
-                </div>
-              </Panel>
-            </div>
+            <PasswordEdit
+              onCurrentPasswordChange={(e)=>{this.setState({currentPassword: e.target.value})}}
+              passwordSet={this.props.profile.passwordSet}
+              expand={this.state.editMode}
+              currentPassword={this.state.currentPassword}
+              newPassword={this.state.newPassword}
+              onNewPasswordChange={this.handleNewPasswordChange}
+              confirmPassword={this.state.confirmPassword}
+              onConfirmPasswordChange={(e)=>{this.setState({confirmPassword: e.target.value})}}
+            />
             {this.state.errors.length > 0 ?
-              (<Center><StatusText type="error" text={this.state.errors}/></Center>)
-              : null
-            }
+              <StatusText type="error" text={this.state.errors}/> : null}
             {this.state.actions.length > 0 ?
-              (<Center><StatusText type="success" text={this.state.actions}/></Center>)
-              : null
-            }
-            <Center>
+              <StatusText type="success" text={this.state.actions}/> : null}
+            <div className={position.center}>
               <button type="button" className="btn btn-default form-submission" onClick={this.handleSubmit} disabled={!this.state.editMode} style={{marginRight: 10 + 'px'}}>Submit</button>
               <button type="button" className="btn btn-default form-submission" onClick={this.handleCancel} disabled={!this.state.editMode}>Cancel</button>
-            </Center>
-            <div id="message-container">
             </div>
           </div>
         </div>

@@ -15,6 +15,10 @@
   font-weight: bold;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .subTitle {
   composes: regular;
   line-height: 25px;
@@ -31,6 +35,10 @@
 
 .center {
   text-align: center;
+}
+
+.left {
+  text-align: left;
 }
 
 .sectionTitle {

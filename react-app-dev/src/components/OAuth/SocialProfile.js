@@ -1,22 +1,22 @@
 import React from 'react';
 
+//components
 import Photo from '@lib/Photo';
-import Center from '@lib/Center';
-import ColorSchemes from '@global/ColorSchemes';
-
 import Button from 'react-bootstrap/lib/Button';
 
-function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+//styles
+import position from '@styles/position.css';
+import siteColors from '@styles/colors/sites.css';
 
-//TODO if no text supplied just return a button with the site icon
+//services
+import {capitalize} from '@services/StringTools';
+
 const SocialProfile = (props) => (
   <div>
-    <Center><label>Linked with {capitalize(props.site)}</label></Center>
-    <Center><Button bsStyle="link" style={{padding: 1 + 'px'}} onClick={props.onUnlink}>(Unlink)</Button></Center>
-    <Center><Photo url={props.photoUrl} color={ColorSchemes[props.site]}/></Center>
-    <Center>{props.name}</Center>
+    <div className={position.center}><label>Linked with {capitalize(props.site)}</label></div>
+    <div className={position.center}><Button bsStyle="link" style={{padding: 1 + 'px'}} onClick={props.onUnlink}>(Unlink)</Button></div>
+    <div className={position.center}><Photo url={props.photoUrl} color={siteColors[props.site]}/></div>
+    <div className={position.center}>{props.name}</div>
   </div>
 );
 
@@ -28,6 +28,3 @@ SocialProfile.propTypes = {
 }
 
 export default SocialProfile;
-
-
-//<button type='button' onClick={props.onUnlink} className='link-button'>(Unlink)</button>

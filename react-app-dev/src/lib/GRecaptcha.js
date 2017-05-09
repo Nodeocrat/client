@@ -17,7 +17,9 @@ export default class GRecaptcha extends React.Component {
   }
   render(){
     return (
-      <div id="g-recaptcha"/>
+      <div className={this.props.className}>
+        <div style={{display: 'inline-block'}} id="g-recaptcha"/>
+      </div>
     );
   }
 };

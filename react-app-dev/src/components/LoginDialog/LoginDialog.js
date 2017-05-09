@@ -7,12 +7,14 @@ import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 
 //custom components
-import SocialButton from '@components/SocialButton/SocialButton';
+import SocialButton from '@lib/SocialButton/SocialButton';
 import StatusText from '@lib/StatusText';
-import Center from '@lib/Center';
 import InputField from '@lib/InputField';
 import Ajax from '@services/Ajax';
 import UrlHelper from '@services/UrlHelper';
+
+//styles
+import position from '@styles/position.css';
 
 class LoginDialog extends React.Component {
   constructor(props){
@@ -32,33 +34,21 @@ class LoginDialog extends React.Component {
             <Modal.Title>Sign In</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div style={{margin: 15 + 'px'}} className="row">
-              <div className="col-lg-12">
-                <Center>
-                  <div>
-                    <a href="/api/auth/google">
-                      <SocialButton spanParent site="google"
-                        text="Sign in with Google"/>
-                    </a>
-                  </div>
-                  <div>
-                    <a href="/api/auth/facebook">
-                      <SocialButton spanParent site="facebook"
-                        text="Sign in with Facebook"/>
-                    </a>
-                  </div>
-                </Center>
+            <div className={position.center}>
+              <div style={{margin: 15 + 'px', display: 'inline-block'}}>
+                <a href="/api/auth/google">
+                  <SocialButton spanParent site="google"
+                    text="Sign in with Google"/>
+                </a>
+                <a href="/api/auth/facebook">
+                  <SocialButton spanParent site="facebook"
+                    text="Sign in with Facebook"/>
+                </a>
               </div>
             </div>
             {
-              ((err) => (err ?
-                (
-                  <Center>
-                    <StatusText type="error" text={`That ${err} account is not linked to a Nodeocrat account`}/>
-                  </Center>
-                )
-                :
-                null
+              (err => (err ?
+                <StatusText className={position.center} type="error" text={`That ${err} account is not linked to a Nodeocrat account`}/> : null
               ))(UrlHelper.parseQuery(this.props.location.search).loginErr)
             }
             <div className="row">
@@ -70,16 +60,14 @@ class LoginDialog extends React.Component {
               </div>
             </div>
             {this.state.errors.length > 0 ?
-              (<Center><StatusText type="error" text={this.state.errors}/></Center>)
-              :
-              null
+              <StatusText className={position.center} type="error" text={this.state.errors}/> : null
             }
           </Modal.Body>
           <Modal.Footer>
-            <Center>
+            <div className={position.center}>
               <Button onClick={this.handleSubmit}>Submit</Button>
               <Button onClick={this.props.onClose}>Cancel</Button>
-            </Center>
+            </div>
           </Modal.Footer>
         </div>
       </Modal>

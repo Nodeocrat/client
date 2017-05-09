@@ -1,9 +1,7 @@
 import React from 'react';
-import {SocialSymbol} from '@components/SocialButton/SocialButton';
-import Center from '@lib/Center';
+import {SocialSymbol} from '@lib/SocialButton/SocialButton';
+import position from '@styles/position.css';
 import {polarToCartesian} from '@services/MathTools';
-
-//services
 import {offsetFromParent} from '@services/DOMTools';
 
 export default class PhotoWidget extends React.Component {
@@ -40,15 +38,16 @@ export default class PhotoWidget extends React.Component {
       linkedinIcon = (<SocialSymbol style={linkedinStyle} site="linkedin"/>);
     }
     return (
-      <Center>
+      <div className={position.center}>
         <img
           src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAu5AAAAJGJiZmI1NjIyLWNlN2UtNDFkMi1hODgyLWQ4ZWNhZGE4MjU0Mw.jpg"
           style={{borderRadius: 100 + 'px', margin: 20 + 'px'}}
+          className={position.center}
           height="150" width="150" id="home-profile-img"/>
           <br/>
           {githubIcon ? (<a href="https://github.com/Nodeocrat/client/tree/react-trans/react-app-dev/src" target="_blank">{githubIcon}</a>) : null}
           {linkedinIcon ? (<a href="https://uk.linkedin.com/in/ashley-phillips-5b5a8599" target="_blank">{linkedinIcon}</a>) : null}
-      </Center>
+      </div>
     );
   }
 

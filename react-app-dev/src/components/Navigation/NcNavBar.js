@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './NcNavBar.css';
 import logo from '@media/nclogosmall.png';
-import { Link, NavLink, Route, withRouter } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import LoginRegisterNav from './LoginRegisterNav';
 
 
@@ -24,7 +24,7 @@ const NavTabs = (props) => (
 );
 
 import PhotoDropdown from '@lib/PhotoDropdown/PhotoDropdown';
-const UserMenu = withRouter((props) => {
+const UserMenu = withRouter(props => {
   const dropDown = [
     {label: 'Account', onClick: () => props.history.push('/account')},
     {label: 'divider'},
@@ -42,14 +42,13 @@ const NavLogo = () => (
   </Link>
 );
 
-export default (props) => {
+export default props => {
   let jsx = null;
   if(props.user.initialized){
     if(props.user.signedIn)
-      jsx = (<UserMenu profile={props.user.profile}
-        onSignOut={props.onSignOut}/>);
+      jsx = <UserMenu profile={props.user.profile} onSignOut={props.onSignOut}/>;
     else
-      jsx = (<LoginRegisterNav onUserUpdate={props.user.updateUser}/>);
+      jsx = <LoginRegisterNav onUserUpdate={props.user.updateUser}/>;
   }
 
   return (

@@ -1,20 +1,18 @@
 import React from 'react';
 import './PhotoDropdown.css';
 
-export default class PhotoDropdown extends React.Component {
+export default class extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       showDropdown: false
     }
-
-    this.dropDownToggle = this.dropDownToggle.bind(this);
   }
   render(){
     let dividerCount = 0;
     return (
       <div className="dropdown pull-right">
-        <button style={{margin: 10 + 'px', border: 'none', background: 'none'}} onClick={this.dropDownToggle} type="button">
+        <button style={{margin: 10 + 'px', border: 'none', background: 'none'}} onClick={() => this.setState({showDropdown: !this.state.showDropdown})} type="button">
           <span style={{color: '#999', paddingRight: 5 + 'px'}} className="glyphicon glyphicon-triangle-bottom acc-drop-down"/>
           <img className="acc-drop-down" style={{borderRadius: 50 + '%'}} height="40px" width="40px"
             src={this.props.photoUrl}/>
@@ -40,17 +38,12 @@ export default class PhotoDropdown extends React.Component {
   }
 
   setupDropdown(){
-    window.onclick = (event) => {
+    window.onclick = event => {
       if (!event.target.matches('.acc-drop-down'))
         this.setState({
           showDropdown: false
         });
     }
-  }
-  dropDownToggle(){
-    this.setState({
-      showDropdown: !this.state.showDropdown
-    });
   }
 
 }

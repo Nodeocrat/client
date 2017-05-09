@@ -1,6 +1,4 @@
 import React from 'react';
-import './NcMainView.css';
-import { Route } from 'react-router-dom';
 import {PropsRoute} from '@lib/CustomRoutes';
 
 export default (props) => (

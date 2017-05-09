@@ -6,9 +6,6 @@ import './Home.css';
 import Skills from './Skills/Skills';
 import Experience from './Experience/Experience';
 
-import {Link} from 'react-router-dom';
-import Center from '@lib/Center';
-
 import awsLogo from '@media/aws-logo.png';
 import linuxLogo from '@media/linux-logo.png';
 import reactLogo from '@media/react-logo.png';
@@ -16,17 +13,18 @@ import mongoLogo from '@media/mongodb-logo.png';
 import nodeLogo from '@media/node-logo.png';
 
 import text from '@styles/text.css';
+import position from '@styles/position.css';
 
 const Logos = () => (
   <div className="well" style={{backgroundColor: '#eeeeee'}}>
     <div className={`${text.small} ${text.center}`}>This site has been built using:</div>
-    <Center>
+    <div className={position.center}>
         <img alt="logo" className="horizontal-img ext-logo-homepage" height="62" width="100" src={nodeLogo}></img>
         <img alt="logo" className="horizontal-img ext-logo-homepage" height="37" width="110" src={reactLogo}></img>
         <img alt="logo" className="horizontal-img ext-logo-homepage" height="37" width="100" src={awsLogo}></img>
         <img alt="logo" className="horizontal-img ext-logo-homepage" height="59" width="50" src={linuxLogo}></img>
         <img alt="logo" className="horizontal-img ext-logo-homepage" height="30" width="110" style={{marginTop: 40 + 'px'}} src={mongoLogo}></img>
-    </Center>
+    </div>
   </div>
 );
 
@@ -45,20 +43,18 @@ const SkillsSection = () => (
 
 //  <span className={`glyphicon glyphicon-new-window`} style={{fontSize: '80%'}}/>
 const ProjectSummarySection = () => (
-  <section className="col-sm-offset-3 col-sm-6" style={{marginTop: '40px'}}>
+  <div className="col-sm-offset-3 col-sm-6" style={{marginTop: '40px'}}>
     <div className={text.sectionTitle}>
       Projects
     </div>
-    <Center>
-      <ProjectThumbnailsMini/>
-    </Center>
-  </section>
+    <ProjectThumbnailsMini className={position.center}/>
+  </div>
 );
 
 const ExperienceSection = () => (
   <section className="col-sm-offset-3 col-sm-6" style={{marginTop: '40px'}}>
     <div className={text.sectionTitle}>Title</div>
-    <Center><Experience/></Center>
+    <Experience className={position.center}/>
   </section>
 );
 

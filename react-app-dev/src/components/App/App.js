@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter} from 'react-router-dom';
 
 //custom component imports
 import NcNavBar from '@components/Navigation/NcNavBar';
@@ -8,20 +8,13 @@ import Projects from '@components/Projects/Projects';
 import Home from '@components/Home/Home.js';
 import Account from '@components/Account/Account';
 
+//styles
 import text from '@styles/text.css';
 
 //services
 import Ajax from '@services/Ajax';
 
-// tab format:
-// path
-// [renderPath]
-// [exact]
-// [navTab]: if true, it'll be placed on the navigation bar @ top of page
-// [name]: name of tab on navigation bar
-// view: view to be rendered
-
-class App extends Component {
+export default class extends React.Component {
   constructor(props){
     super(props);
     this.updateUser = this.updateUser.bind(this);
@@ -39,6 +32,25 @@ class App extends Component {
     };
     this.onSignOut = this.onSignOut.bind(this);
     this.updateUser();
+
+    //Dev only
+    /*this.state = {
+      user: {
+        initialized: true,
+        signedIn: true,
+        profile: {
+          username: "SillyBoy",
+          email: "admin@nodeocrat.com",
+          photoUrl: "https://delmarva.streetlightoutages.com/common/images/organizations/_default/unavailablePhoto.png",
+          passwordSet: false
+        },
+        linkedProfiles: {
+          facebook: null,
+          google: null
+        },
+        updateUser: () => console.log('update user called')
+      }
+    };*/
   }
 
   render() {
@@ -66,12 +78,12 @@ class App extends Component {
     ];
 
     return (
-      <Router>
+      <BrowserRouter>
         <div className={text.regular}>
           <NcNavBar user={this.state.user} onSignOut={this.onSignOut} routes={tabs}/>
           <NcMainView routes={tabs}/>
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 
@@ -119,5 +131,3 @@ class App extends Component {
     });
   }
 }
-
-export default App;

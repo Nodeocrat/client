@@ -6,16 +6,17 @@ import Button from 'react-bootstrap/lib/Button';
 
 //custom components
 import SocialProfile from '@components/OAuth/SocialProfile';
-import SocialButton from '@components/SocialButton/SocialButton';
+import SocialButton from '@lib/SocialButton/SocialButton';
 import GRecaptcha from '@lib/GRecaptcha';
 import StatusText from '@lib/StatusText';
-import Center from '@lib/Center';
 import InputField from '@lib/InputField';
 import GoogleOAuthHelper from '@services/GoogleOAuthHelper';
 import FacebookOAuthHelper from '@services/FacebookOAuthHelper';
 import Ajax from '@services/Ajax';
 
-class RegisterDialog extends React.Component {
+import position from '@styles/position.css';
+
+export default class extends React.Component {
   constructor(props){
     super(props);
 
@@ -37,16 +38,8 @@ class RegisterDialog extends React.Component {
       errors: []
     }
 
-    this.GoogleOAuthHelper = new GoogleOAuthHelper(() => {
-      this.setState({
-        googleOAuthReady: true
-      });
-    });
-    this.facebookOAuthHelper = new FacebookOAuthHelper(() => {
-      this.setState({
-        facebookOAuthReady: true
-      });
-    });
+    this.GoogleOAuthHelper = new GoogleOAuthHelper(() => this.setState({googleOAuthReady: true}));
+    this.facebookOAuthHelper = new FacebookOAuthHelper(() => this.setState({facebookOAuthReady: true}));
   }
   render() {
     return (
@@ -56,96 +49,67 @@ class RegisterDialog extends React.Component {
             <Modal.Title>Register</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="row">
-              <div className="col-sm-6">
-                <div className="well" style={{height: 210 + 'px'}}>
-                  <Center>
-                  {
-                    this.state.googleProfile ?
-                      (
-                        <SocialProfile photoUrl={this.state.googleProfile.photoUrl}
-                          onUnlink={()=>{this.setState({googleProfile: null})}}
-                          site="google"
-                          name={this.state.googleProfile.name}/>
-                      )
-                      :
-                      (
-                        <div style={{paddingTop: 68 + 'px'}}>
-                          <SocialButton disabled={this.googleOAuthReady} site="google"
-                            text="Link to Google" onClick={this.handleLinkToGoogle}/>
-                        </div>
-                      )
-                  }
-                  </Center>
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div className="well" style={{height: 210 + 'px'}}>
-                  <Center>
-                  {
-                    this.state.facebookProfile ?
-                      (
-                        <SocialProfile photoUrl={this.state.facebookProfile.photoUrl}
-                          onUnlink={()=>{this.setState({facebookProfile: null})}}
-                          site="facebook"
-                          name={this.state.facebookProfile.name}/>
-                      )
-                      :
-                      (
-                        <div style={{paddingTop: 68 + 'px'}}>
-                          <SocialButton disabled={this.facebookOAuthReady} site="facebook"
-                            text="Link to Facebook" onClick={this.handleLinkToFacebook}/>
-                        </div>
-                      )
-                  }
-                  </Center>
-                </div>
+            <div className="col-sm-6">
+              <div className={'well ' + position.center} style={{height: 210 + 'px'}}>
+              {this.state.googleProfile ?
+                <SocialProfile photoUrl={this.state.googleProfile.photoUrl}
+                  onUnlink={() => this.setState({googleProfile: null})}
+                  site="google"
+                  name={this.state.googleProfile.name}/>
+                :
+                <SocialButton disabled={this.googleOAuthReady} site="google"
+                  text="Link to Google" onClick={this.handleLinkToGoogle}
+                  style={{paddingTop: 68 + 'px'}}/>
+              }
               </div>
             </div>
-
-            <div className="row">
-              <div className="col-sm-8 col-sm-offset-2">
-
-                <InputField fieldName="username" placeholder="Required"
-                  value={this.state.username}
-                  onChange={(e)=>{this.setState({username: e.target.value})}}/>
-
-                <InputField fieldName="email" placeholder="Required"
-                  value={this.state.email}
-                  onChange={(e)=>{this.setState({email: e.target.value})}}/>
-
-                <InputField fieldName="password" label={"Password" + (this.state.facebookProfile || this.state.googleProfile ?
-                  " (Optional)" : "")} type="password"
-                  placeholder={this.state.facebookProfile || this.state.googleProfile ?
-                  "Optional" : "Required"} onChange={this.handlePasswordChange}/>
-
-                <InputField fieldName="confirmPassword" type="password"
-                  label={"Confirm password" + (this.state.facebookProfile ||
-                    this.state.googleProfile ? " (Optional)" : "")}
-                  placeholder={this.state.facebookProfile || this.state.googleProfile ?
-                    "Optional" : "Required"}
-                  disabled={this.state.password === ""}
-                  onChange={(e)=>{this.setState({passwordConfirm: e.target.value})}}
-                  value={this.state.passwordConfirm}/>
-
+            <div className="col-sm-6">
+              <div className={'well ' + position.center} style={{height: 210 + 'px'}}>
+              {this.state.facebookProfile ?
+                <SocialProfile photoUrl={this.state.facebookProfile.photoUrl}
+                  onUnlink={() => this.setState({facebookProfile: null})}
+                  site="facebook"
+                  name={this.state.facebookProfile.name}/>
+                :
+                <SocialButton disabled={this.facebookOAuthReady} site="facebook"
+                  text="Link to Facebook" onClick={this.handleLinkToFacebook}
+                  style={{paddingTop: 68 + 'px'}}/>
+              }
               </div>
             </div>
+            <div className="col-sm-8 col-sm-offset-2">
 
-            <div className="row">
-              <Center>
-                <GRecaptcha onResponse={(response)=>{this.setState({recaptchaResponse: response})}}/>
-              </Center>
+              <InputField fieldName="username" placeholder="Required"
+                value={this.state.username}
+                onChange={e => this.setState({username: e.target.value})}/>
+
+              <InputField fieldName="email" placeholder="Required"
+                value={this.state.email}
+                onChange={e => this.setState({email: e.target.value})}/>
+
+              <InputField fieldName="password" label={"Password" + (this.state.facebookProfile || this.state.googleProfile ?
+                " (Optional)" : "")} type="password"
+                placeholder={this.state.facebookProfile || this.state.googleProfile ?
+                "Optional" : "Required"} onChange={this.handlePasswordChange}/>
+
+              <InputField fieldName="confirmPassword" type="password"
+                label={"Confirm password" + (this.state.facebookProfile ||
+                  this.state.googleProfile ? " (Optional)" : "")}
+                placeholder={this.state.facebookProfile || this.state.googleProfile ?
+                  "Optional" : "Required"}
+                disabled={this.state.password === ""}
+                onChange={e => this.setState({passwordConfirm: e.target.value})}
+                value={this.state.passwordConfirm}/>
+
             </div>
-            {this.state.errors.length > 0 ?
-              (<Center><StatusText type="error" text={this.state.errors}/></Center>)
-              : null
-            }
+            <GRecaptcha className={position.center} onResponse={response => this.setState({recaptchaResponse: response})}/>
+            {this.state.errors.length > 0 ? <StatusText className={position.center} type="error" text={this.state.errors}/> : null}
           </Modal.Body>
           <Modal.Footer>
-            <Center>
+            <div className={position.center}>
               <Button onClick={this.handleSubmit}>Submit</Button>
               <Button onClick={this.props.onClose}>Cancel</Button>
-            </Center>
+            </div>
           </Modal.Footer>
         </div>
       </Modal>
@@ -222,7 +186,7 @@ class RegisterDialog extends React.Component {
       url: '/account/register',
       data: sendData,
       response: 'JSON',
-      success: (response) => {
+      success: response => {
         if(response.errors && response.errors.length > 0){
           this.setState({
             errors: response.errors
@@ -232,12 +196,10 @@ class RegisterDialog extends React.Component {
           this.props.onClose();
         }
       },
-      error: (info) => {
+      error: info => {
         if(info.xhr.status !== 200)
           return console.error("Ajax request error on login page: " + info.error);
       }
     });
   }
 };
-
-export default RegisterDialog;

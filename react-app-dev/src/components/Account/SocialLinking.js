@@ -2,10 +2,12 @@ import React from 'react';
 import GoogleOAuthHelper from '@services/GoogleOAuthHelper';
 import FacebookOAuthHelper from '@services/FacebookOAuthHelper';
 import Ajax from '@services/Ajax';
-import SocialButton from '@components/SocialButton/SocialButton';
+import SocialButton from '@lib/SocialButton/SocialButton';
 import SocialProfile from '@components/OAuth/SocialProfile';
-import Center from '@lib/Center';
 import StatusText from '@lib/StatusText';
+
+import text from '@styles/text.css';
+import position from '@styles/position.css';
 
 export default class SocialLinking extends React.Component {
   constructor(props){
@@ -120,7 +122,7 @@ export default class SocialLinking extends React.Component {
     return (
       <div id="facebook-details" className="panel panel-info">
         <div className="panel-heading">
-          <div><u className="h4">Account linking</u></div>
+          <span className={`${text.subTitle}`}>Account Details</span>
         </div>
         <div className="panel-body">
           <div className="col-sm-6">
@@ -135,8 +137,8 @@ export default class SocialLinking extends React.Component {
                 :
                 (
                   <div style={{paddingTop: 68 + 'px'}}>
-                    <Center><SocialButton site="google"
-                      text="Link to Google" onClick={this.handleLinkToGoogle}/></Center>
+                    <SocialButton className={position.center} site="google"
+                      text="Link to Google" onClick={this.handleLinkToGoogle}/>
                   </div>
                 )
             }
@@ -157,8 +159,8 @@ export default class SocialLinking extends React.Component {
                 :
                 (
                   <div style={{paddingTop: 68 + 'px'}}>
-                    <Center><SocialButton site="facebook"
-                      text="Link to Facebook" onClick={this.handleLinkToFacebook}/></Center>
+                    <SocialButton className={position.center} site="facebook"
+                      text="Link to Facebook" onClick={this.handleLinkToFacebook}/>
                   </div>
                 )
             }

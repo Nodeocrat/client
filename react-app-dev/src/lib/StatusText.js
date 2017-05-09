@@ -1,5 +1,5 @@
 import React from 'react';
-import Center from '@lib/Center';
+import text from '@styles/text.css';
 
 const typeToDetails = {
   error: {
@@ -15,7 +15,8 @@ const typeToDetails = {
 }
 
 const StatusText = (props) => {
-  const status = typeToDetails[props.type];
+  const {type, ...otherProps} = props;
+  const status = typeToDetails[type];
   let texts = [];
   if(Array.isArray(props.text))
     texts = props.text;
@@ -25,15 +26,17 @@ const StatusText = (props) => {
     texts = ["Unspecified error"];
 
   return (
-    <div style={{marginTop: 12 + 'px', marginBottom: 12 + 'px'}} role="alert" className={`alert alert-${status.className}`}>
-      {texts.map((text, index) => (
-        <span key={text}>
-          {index !== 0 ? <br/> : null}
-          <span className={`glyphicon glyphicon-${status.icon}-sign`} aria-hidden="true"/>
-          <span className="sr-only">{status.prefix}</span>
-          {" " + text}
-        </span>
-      ))}
+    <div {...otherProps}>
+      <div style={{display: 'inline-block', marginTop: 12 + 'px', marginBottom: 12 + 'px'}} role="alert" className={`alert alert-${status.className} ${text.left}`}>
+        {texts.map((text, index) => (
+          <span key={text}>
+            {index !== 0 ? <br/> : null}
+            <span className={`glyphicon glyphicon-${status.icon}-sign`} aria-hidden="true"/>
+            <span className="sr-only">{status.prefix}</span>
+            {" " + text}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
