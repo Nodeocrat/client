@@ -9,6 +9,7 @@ process.env.PUBLIC_URL = '';
 // https://github.com/motdotla/dotenv
 require('dotenv').config({silent: true});
 
+//JEST HAS BEEN REMOVED FROM PROJECT. REPLACE WITH MOCHA INSTEAD.
 const jest = require('jest');
 const argv = process.argv.slice(2);
 
