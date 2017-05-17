@@ -83,6 +83,9 @@ module.exports = {
       '@lib': paths.appSrc + '/lib/',
       '@services': paths.appSrc + '/services',
       '@styles': paths.appSrc + '/styles',
+      '@reducers': paths.appSrc + '/reducers',
+      '@store': paths.appSrc + '/store',
+      '@actions': paths.appSrc + '/actions',
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web'

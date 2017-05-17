@@ -87,6 +87,9 @@ module.exports = {
       '@lib': paths.appSrc + '/lib/',
       '@services': paths.appSrc + '/services',
       '@styles': paths.appSrc + '/styles',
+      '@reducers': paths.appSrc + '/reducers',
+      '@store': paths.appSrc + '/store',
+      '@actions': paths.appSrc + '/actions',
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web'
@@ -134,7 +137,6 @@ module.exports = {
         loader: 'babel',
 
       },
-      // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
       // "style" loader normally turns CSS into JS modules injecting <style>,
@@ -189,7 +191,7 @@ module.exports = {
           '>1%',
           'last 4 versions',
           'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
+          'not ie < 9',
         ]
       }),
     ];
@@ -230,7 +232,7 @@ module.exports = {
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        screw_ie8: true, // React doesn't support IE8
+        screw_ie8: true,
         warnings: false
       },
       mangle: {
