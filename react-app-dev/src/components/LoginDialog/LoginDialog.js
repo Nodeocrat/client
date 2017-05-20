@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/lib/Button';
 //custom components
 import SocialButton from '@lib/SocialButton/SocialButton';
 import StatusText from '@lib/StatusText';
-import InputField from '@lib/InputField';
+import TextField from '@lib/TextField';
 import Ajax from '@services/Ajax';
 import UrlHelper from '@services/UrlHelper';
 
@@ -53,9 +53,9 @@ class LoginDialog extends React.Component {
             }
             <div className="row">
               <div className="col-sm-offset-2 col-sm-8">
-                <InputField fieldName="username" placeholder="Username"
+                <TextField name="username" placeholder="Username"
                   onChange={(e) => {this.setState({username: e.target.value})}}/>
-                <InputField fieldName="password" placeholder="Password" type="password"
+                <TextField name="password" placeholder="Password" type="password"
                   onChange={(e) => {this.setState({password: e.target.value})}}/>
               </div>
             </div>

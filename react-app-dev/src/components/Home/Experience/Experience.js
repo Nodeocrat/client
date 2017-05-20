@@ -4,7 +4,7 @@ import text from '@styles/text.css';
 import ancoaLogo from '@media/ancoa-logo.png';
 import swordLogo from '@media/sword-apak-logo.png';
 
-export default class extends React.Component {
+export default class extends React.PureComponent {
   constructor(props){
     super(props);
   }
