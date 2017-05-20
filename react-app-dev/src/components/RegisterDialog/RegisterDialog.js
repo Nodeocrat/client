@@ -9,7 +9,7 @@ import SocialProfile from '@components/OAuth/SocialProfile';
 import SocialButton from '@lib/SocialButton/SocialButton';
 import GRecaptcha from '@lib/GRecaptcha';
 import StatusText from '@lib/StatusText';
-import InputField from '@lib/InputField';
+import TextField from '@lib/TextField';
 import GoogleOAuthHelper from '@services/GoogleOAuthHelper';
 import FacebookOAuthHelper from '@services/FacebookOAuthHelper';
 import Ajax from '@services/Ajax';
@@ -79,20 +79,20 @@ export default class extends React.Component {
             </div>
             <div className="col-sm-8 col-sm-offset-2">
 
-              <InputField fieldName="username" placeholder="Required"
+              <TextField name="username" placeholder="Required"
                 value={this.state.username}
                 onChange={e => this.setState({username: e.target.value})}/>
 
-              <InputField fieldName="email" placeholder="Required"
+              <TextField name="email" placeholder="Required"
                 value={this.state.email}
                 onChange={e => this.setState({email: e.target.value})}/>
 
-              <InputField fieldName="password" label={"Password" + (this.state.facebookProfile || this.state.googleProfile ?
+              <TextField name="password" label={"Password" + (this.state.facebookProfile || this.state.googleProfile ?
                 " (Optional)" : "")} type="password"
                 placeholder={this.state.facebookProfile || this.state.googleProfile ?
                 "Optional" : "Required"} onChange={this.handlePasswordChange}/>
 
-              <InputField fieldName="confirmPassword" type="password"
+              <TextField name="confirmPassword" type="password"
                 label={"Confirm password" + (this.state.facebookProfile ||
                   this.state.googleProfile ? " (Optional)" : "")}
                 placeholder={this.state.facebookProfile || this.state.googleProfile ?
