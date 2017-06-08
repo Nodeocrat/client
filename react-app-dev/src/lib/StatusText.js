@@ -14,14 +14,14 @@ const typeToDetails = {
   }
 }
 
-const StatusText = (props) => {
-  const {type, ...otherProps} = props;
+const StatusText = props => {
+  const {type, text, ...otherProps} = props;
   const status = typeToDetails[type];
   let texts = [];
-  if(Array.isArray(props.text))
-    texts = props.text;
-  else if (typeof props.text === 'string' || props.text instanceof String)
-    texts = [props.text];
+  if(Array.isArray(text))
+    texts = text;
+  else if (typeof text === 'string' || text instanceof String)
+    texts = [text];
   else
     texts = ["Unspecified error"];
 

@@ -1,37 +1,23 @@
 import {Route} from 'react-router-dom';
 import React from 'react';
+import {connect} from 'react-redux';
+import StatusText from '@lib/StatusText';
 
-
-// from http://stackoverflow.com/questions/27864720/react-router-pass-props-to-handler-component
-function renderMergedProps(component, ...rest){
+function mergeProps(Component, ...rest){
   const finalProps = Object.assign({}, ...rest);
-  return (
-    React.createElement(component, finalProps)
-  );
+  return <Component {...finalProps}/>;
 }
 
-function PropsRoute({ component, ...rest }){
-  return (
-    <Route {...rest} render={routeProps => {
-      return renderMergedProps(component, routeProps, rest);
-    }}/>
-  );
-}
-
-/* TODO once Redux/have a singleton user service
-const PrivateRoute = ({ component, redirectTo, ...rest }) => {
-  return (
-    <Route {...rest} render={routeProps => {
-      return auth.loggedIn() ? (
-        renderMergedProps(component, routeProps, rest)
-      ) : (
-        <Redirect to={{
-          pathname: redirectTo,
-          state: { from: routeProps.location }
-        }}/>
-      );
-    }}/>
+const PropsRoute = ({ component, ...rest }) => (
+  <Route {...rest} render={routeProps => mergeProps(component, routeProps, rest)}/>
 );
-};*/
 
-export {PropsRoute}
+const mapStateToProps = (state, ownProps) => ({user: state.user, ...ownProps});
+const AuthRoute = connect(mapStateToProps, {}, null, {pure:false})(({user, component, ...rest}) => (
+  <Route {...rest} render={routeProps => user.profile ?
+    mergeProps(component, routeProps, rest) :
+    <StatusText type="error" text="You must be logged in to view this page"/>
+  }/>
+));
+
+export {PropsRoute, AuthRoute};

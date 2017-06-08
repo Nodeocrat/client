@@ -1,6 +1,9 @@
 import React from 'react';
-
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+
+import * as userActions from '@actions/userActions';
 
 //react-bootstrap
 import Modal from 'react-bootstrap/lib/Modal';
@@ -10,7 +13,6 @@ import Button from 'react-bootstrap/lib/Button';
 import SocialButton from '@lib/SocialButton/SocialButton';
 import StatusText from '@lib/StatusText';
 import TextField from '@lib/TextField';
-import Ajax from '@services/Ajax';
 import UrlHelper from '@services/UrlHelper';
 
 //styles
@@ -22,13 +24,14 @@ class LoginDialog extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       username: "",
-      password: "",
-      errors: []
+      password: ""
     }
   }
+  
   render() {
+    //if (this.props.loggedIn) this.props.onClose();
     return (
-      <Modal show onHide={this.props.onClose}>
+      <Modal show={!this.props.loggedIn} onHide={this.props.onClose}>
         <div>
           <Modal.Header closeButton>
             <Modal.Title>Sign In</Modal.Title>
@@ -59,8 +62,8 @@ class LoginDialog extends React.Component {
                   onChange={(e) => {this.setState({password: e.target.value})}}/>
               </div>
             </div>
-            {this.state.errors.length > 0 ?
-              <StatusText className={position.center} type="error" text={this.state.errors}/> : null
+            {this.props.errors.other && this.props.errors.other.length > 0 ?
+              <StatusText className={position.center} type="error" text={this.props.errors.other}/> : null
             }
           </Modal.Body>
           <Modal.Footer>
@@ -75,8 +78,6 @@ class LoginDialog extends React.Component {
     );
   }
   handleSubmit(){
-    const sendData = {};
-
     const errors = [];
     if(!this.state.username)
       errors.push("Username must be provided");
@@ -84,33 +85,23 @@ class LoginDialog extends React.Component {
       errors.push("Password must be provided");
 
     if(errors.length > 0)
-      return this.setState({ errors: errors});
+      return this.props.actions.localLoginError(errors);
 
-    sendData.username = this.state.username;
-    sendData.password = this.state.password;
-
-    Ajax.post({
-      url: '/auth/local/login',
-      data: sendData,
-      response: 'JSON',
-      success: (response) => {
-        if(response.errors && response.errors.length > 0){
-          this.setState({
-            errors: response.errors
-          });
-        } else if (response.success){
-          console.log(JSON.stringify(this.props));
-          console.log(this.props);
-          this.props.onLogin();
-          this.props.onClose();
-        }
-      },
-      error: (info) => {
-        if(info.xhr.status !== 200)
-          return console.error("Ajax request error on login page: " + info.error);
-      }
-    });
+    this.props.actions.localLogin(this.state.username, this.state.password);
   }
 };
 
-export default withRouter(LoginDialog);
+function mapStateToProps(state, ownProps){
+  return {
+    loggedIn: state.user.profile ? true : false,
+    ...state.login
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    actions: bindActionCreators(userActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginDialog));

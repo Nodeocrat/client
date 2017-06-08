@@ -4,7 +4,7 @@ import position from '@styles/position.css';
 import {polarToCartesian} from '@services/MathTools';
 import {offsetFromParent} from '@services/DOMTools';
 
-export default class PhotoWidget extends React.Component {
+export default class PhotoWidget extends React.PureComponent {
 
   constructor(props){
       super(props);

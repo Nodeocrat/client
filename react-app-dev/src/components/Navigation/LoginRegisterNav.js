@@ -33,7 +33,7 @@ class LoginRegisterNav extends React.Component {
           </a>
         </ul>
         {this.state.showLoginDialog ?
-          <LoginDialog onLogin={this.props.onUserUpdate} onClose={() => (this.setState({showLoginDialog: false}))}/>
+          <LoginDialog onClose={() => (this.setState({showLoginDialog: false}))}/>
           : null
         }
         {this.state.showRegisterDialog ?

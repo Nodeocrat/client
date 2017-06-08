@@ -1,7 +1,10 @@
 import React from 'react';
 import StatusText from '@lib/StatusText';
-import Ajax from '@services/Ajax';
 import Panel from 'react-bootstrap/lib/Panel';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as userActions from '@actions/userActions';
+import * as accountActions from '@actions/accountActions';
 
 //styles
 import './Profile.css';
@@ -43,40 +46,27 @@ const PasswordEdit = props => (
   </section>
 );
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   constructor(props){
     super(props);
+    this.initialFieldValues = this.initialFieldValues.bind(this);
+    this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.state = this.initialFieldValues();
+  }
 
-    const profile = props.profile;
-    this.initialState = {
-      editMode: false,
+  initialFieldValues(){
+    const profile = this.props.profile;
+    return {
       username: profile.username,
       email: profile.email,
       newPassword: "",
       currentPassword: "",
       confirmPassword: ""
     };
-    this.state = Object.assign({}, this.initialState, {errors: [], actions: []});
-
-    this.editMode = this.editMode.bind(this);
-    this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
   }
 
-  componentWillReceiveProps(nextProps){
-    const profile = nextProps.profile;
-    const newState = {};
-    if(this.username !== profile.username)
-      newState.username = profile.username;
-    if(this.email !== profile.email)
-      newState.email = profile.email;
-    this.initialState = Object.assign({}, this.initialState, {
-      username: profile.username,
-      email: profile.email
-    });
-    this.setState(this.initialState);
-  }
   handleNewPasswordChange(e){
     const newState = {
       newPassword: e.target.value
@@ -109,36 +99,12 @@ export default class Profile extends React.Component {
     dataObj.username = newUsername;
     dataObj.newPassword = newPassword;
 
-    Ajax.post({
-      url: '/account/update',
-      data: dataObj,
-      response: 'JSON',
-      success: (response) => {
-        if(response.actions && response.actions.length > 0) {
-          this.props.onUserUpdate();
-          this.setState({actions: response.actions, errors: []});
-
-        } else if(response.errors && response.errors.length > 0) {
-          this.setState({errors: response.errors});
-        }
-      },
-      error: (info) => {
-        if(info.xhr.status !== 200)
-          return console.error("Ajax request error on account update: " + info.error);
-      }
-    });
+    this.props.actions.updateProfile(dataObj);
   }
+
   handleCancel(){
-    this.setState(
-      Object.assign({}, this.initialState, {errors: []})
-    );
-  }
-
-  editMode(state){
-    this.setState({
-      editMode: state,
-      actions: []
-    });
+    this.props.actions.exitProfileEditMode();
+    this.setState(this.initialFieldValues());
   }
 
   render(){
@@ -146,7 +112,7 @@ export default class Profile extends React.Component {
       <div className="panel panel-info">
         <div className="panel-heading">
           <span className={`${text.subTitle}`}>Account Details</span>
-          <button type="button" className="btn-link" style={this.state.editMode ? {display: 'none'} : {borderWidth: 0 + 'px', padding: 0 + 'px', color: 'blue', marginLeft: 8 + 'px'}} onClick={()=>this.editMode(true)}>[Edit]</button>
+          <button type="button" className="btn-link" style={this.props.editMode ? {display: 'none'} : {borderWidth: 0 + 'px', padding: 0 + 'px', color: 'blue', marginLeft: 8 + 'px'}} onClick={this.props.actions.enterProfileEditMode}>[Edit]</button>
         </div>
         <div className="panel-body">
           <div className="form-group">
@@ -154,11 +120,11 @@ export default class Profile extends React.Component {
               Username
               <input type="text" value={this.state.username}
                 onChange={(e)=>{this.setState({username: e.target.value})}}
-                readOnly={!this.state.editMode} className="form-control"/>
+                readOnly={!this.props.editMode} className="form-control"/>
             </div>
             <br/>
             <div>
-              Email<input type="text" value={this.state.email} readOnly={!this.state.editMode}
+              Email<input type="text" value={this.state.email} readOnly={!this.props.editMode}
               onChange={(e)=>{this.setState({email: e.target.value})}}
               className="form-control"/>
             </div>
@@ -166,20 +132,20 @@ export default class Profile extends React.Component {
             <PasswordEdit
               onCurrentPasswordChange={(e)=>{this.setState({currentPassword: e.target.value})}}
               passwordSet={this.props.profile.passwordSet}
-              expand={this.state.editMode}
+              expand={this.props.editMode}
               currentPassword={this.state.currentPassword}
               newPassword={this.state.newPassword}
               onNewPasswordChange={this.handleNewPasswordChange}
               confirmPassword={this.state.confirmPassword}
               onConfirmPasswordChange={(e)=>{this.setState({confirmPassword: e.target.value})}}
             />
-            {this.state.errors.length > 0 ?
-              <StatusText type="error" text={this.state.errors}/> : null}
-            {this.state.actions.length > 0 ?
-              <StatusText type="success" text={this.state.actions}/> : null}
+            {this.props.errors.other && this.props.errors.other.length > 0 ?
+              <StatusText type="error" text={this.props.errors.other}/> : null}
+            {this.props.actions.length > 0 ?
+              <StatusText type="success" text={this.props.actions}/> : null}
             <div className={position.center}>
-              <button type="button" className="btn btn-default form-submission" onClick={this.handleSubmit} disabled={!this.state.editMode} style={{marginRight: 10 + 'px'}}>Submit</button>
-              <button type="button" className="btn btn-default form-submission" onClick={this.handleCancel} disabled={!this.state.editMode}>Cancel</button>
+              <button type="button" className="btn btn-default form-submission" onClick={this.handleSubmit} disabled={!this.props.editMode} style={{marginRight: 10 + 'px'}}>Submit</button>
+              <button type="button" className="btn btn-default form-submission" onClick={this.handleCancel} disabled={!this.props.editMode}>Cancel</button>
             </div>
           </div>
         </div>
@@ -187,3 +153,18 @@ export default class Profile extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state, ownProps){
+  return {
+    profile: state.user.profile,
+    ...state.account.profile
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    actions: bindActionCreators({...userActions, ...accountActions}, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
