@@ -25,21 +25,21 @@ function profileReducer(state = initialState.account.profile, action){
     case Types.PROFILE_UPDATE_ERROR:
       return Object.assign({}, state, {
           errors: {other: action.errors},
-          actions: []
+          updatedSuccess: []
         });
 
     case Types.PROFILE_UPDATE_SUCCESS:
       return Object.assign({}, state, {
         editMode: false,
         errors: {},
-        actions: action.actions
+        updatedSuccess: action.actions
       });
 
     case Types.EXIT_PROFILE_EDIT_MODE:
-      return Object.assign({}, state, {editMode: false, errors: {}, actions: []});
+      return Object.assign({}, state, {editMode: false, errors: {}, updatedSuccess: []});
 
     case Types.ENTER_PROFILE_EDIT_MODE:
-      return Object.assign({}, state, {editMode: true, errors: {}, actions: []});
+      return Object.assign({}, state, {editMode: true, errors: {}, updatedSuccess: []});
 
     default:
       return null;
@@ -52,7 +52,7 @@ function linkedProfilesReducer(state = initialState.account.linkedProfiles, acti
       return Object.assign({}, state, {
         [action.site]: {
           errors: action.errors,
-          actions: []
+          updatedSuccess: []
         }
       });
 
@@ -60,7 +60,7 @@ function linkedProfilesReducer(state = initialState.account.linkedProfiles, acti
       return Object.assign({}, state, {
         [action.site]: {
           errors: [],
-          actions: [`Unlinked from ${action.site}`]
+          updatedSuccess: [`Unlinked from ${action.site}`]
         }
       });
 
@@ -68,7 +68,7 @@ function linkedProfilesReducer(state = initialState.account.linkedProfiles, acti
       return Object.assign({}, state, {
         [action.site]: {
           errors: action.errors,
-          actions: []
+          updatedSuccess: []
         }
       });
 
@@ -76,7 +76,7 @@ function linkedProfilesReducer(state = initialState.account.linkedProfiles, acti
       return Object.assign({}, state, {
         [action.site]: {
           errors: [],
-          actions: [`Linked to ${action.site}`]
+          updatedSuccess: [`Linked to ${action.site}`]
         }
       });
 

@@ -140,11 +140,11 @@ export function link(site){
   };
 }
 
-function updateProfileSuccess(newProfile){
-  return {type: Types.PROFILE_UPDATE_SUCCESS, profile: newProfile};
+function updateProfileSuccess(newProfile, actions){
+  return {type: Types.PROFILE_UPDATE_SUCCESS, profile: newProfile, actions};
 }
 
-function updateProfileError(errors){
+export function updateProfileError(errors){
   return {type: Types.PROFILE_UPDATE_ERROR, errors};
 }
 
@@ -156,7 +156,7 @@ export function updateProfile(data){
       response: 'JSON',
       success: response => {
         if(!response.errors && response.profile) {
-          return dispatch(updateProfileSuccess(response.profile));
+          return dispatch(updateProfileSuccess(response.profile, response.actions));
         } else if(response.errors && response.errors.length > 0) {
           return dispatch(updateProfileError(response.errors));
         }

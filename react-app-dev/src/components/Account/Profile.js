@@ -53,6 +53,7 @@ class Profile extends React.Component {
     this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.onEdit = this.onEdit.bind(this);
     this.state = this.initialFieldValues();
   }
 
@@ -65,6 +66,11 @@ class Profile extends React.Component {
       currentPassword: "",
       confirmPassword: ""
     };
+  }
+
+  onEdit(){
+    this.setState(this.initialFieldValues());
+    this.props.actions.enterProfileEditMode();
   }
 
   handleNewPasswordChange(e){
@@ -85,11 +91,11 @@ class Profile extends React.Component {
 
     if(newPassword || confirmPassword){
       if(newPassword !== confirmPassword)
-        return this.setState({errors: ["New password and password confirmation do not match"]});
+        return this.props.actions.updateProfileError(["New password and password confirmation do not match"]);
 
       if(this.props.profile.passwordSet){
         if(currentPassword === "")
-          return this.setState({errors: ["Must enter current password"]});
+          return this.props.actions.updateProfileError(["Must enter current password"]);
         else
           dataObj.currentPassword = currentPassword;
       }
@@ -112,7 +118,7 @@ class Profile extends React.Component {
       <div className="panel panel-info">
         <div className="panel-heading">
           <span className={`${text.subTitle}`}>Account Details</span>
-          <button type="button" className="btn-link" style={this.props.editMode ? {display: 'none'} : {borderWidth: 0 + 'px', padding: 0 + 'px', color: 'blue', marginLeft: 8 + 'px'}} onClick={this.props.actions.enterProfileEditMode}>[Edit]</button>
+          <button type="button" className="btn-link" style={this.props.editMode ? {display: 'none'} : {borderWidth: 0 + 'px', padding: 0 + 'px', color: 'blue', marginLeft: 8 + 'px'}} onClick={this.onEdit}>[Edit]</button>
         </div>
         <div className="panel-body">
           <div className="form-group">
@@ -141,8 +147,8 @@ class Profile extends React.Component {
             />
             {this.props.errors.other && this.props.errors.other.length > 0 ?
               <StatusText type="error" text={this.props.errors.other}/> : null}
-            {this.props.actions.length > 0 ?
-              <StatusText type="success" text={this.props.actions}/> : null}
+            {this.props.updatedSuccess.length > 0 ?
+              <StatusText type="success" text={this.props.updatedSuccess}/> : null}
             <div className={position.center}>
               <button type="button" className="btn btn-default form-submission" onClick={this.handleSubmit} disabled={!this.props.editMode} style={{marginRight: 10 + 'px'}}>Submit</button>
               <button type="button" className="btn btn-default form-submission" onClick={this.handleCancel} disabled={!this.props.editMode}>Cancel</button>

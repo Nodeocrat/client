@@ -12,21 +12,21 @@ export default {
     profile: {
       editMode: false,
       errors: {},
-      actions: []
+      updatedSuccess: []
     },
     linkedProfiles: {
       facebook: {
         errors: [],
-        actions: []
+        updatedSuccess: []
       },
       google: {
         errors: [],
-        actions: []
+        updatedSuccess: []
       }
     }
   },
 
   login: {
-    errors: {}  
+    errors: {}
   }
 };

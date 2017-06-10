@@ -42,8 +42,11 @@ class SocialLinking extends React.Component {
                 </div>
             }
             </div>
-            {this.state.googleErrors.length > 0 ?
-              <StatusText type="error" text={this.state.googleErrors}/> : null
+            {this.props.notifications.google.errors.length > 0 ?
+              <StatusText type="error" text={this.props.notifications.google.errors}/> : null
+            }
+            {this.props.notifications.google.updatedSuccess.length > 0 ?
+              <StatusText type="success" text={this.props.notifications.google.updatedSuccess}/> : null
             }
           </div>
           <div className="col-sm-6">
@@ -65,8 +68,11 @@ class SocialLinking extends React.Component {
                 </div>
             }
             </div>
-            {this.state.facebookErrors.length > 0 ?
-              <StatusText type="error" text={this.state.facebookErrors}/> : null
+            {this.props.notifications.facebook.errors.length > 0 ?
+              <StatusText type="error" text={this.props.notifications.facebook.errors}/> : null
+            }
+            {this.props.notifications.facebook.updatedSuccess.length > 0 ?
+              <StatusText type="success" text={this.props.notifications.facebook.updatedSuccess}/> : null
             }
           </div>
         </div>
@@ -77,7 +83,8 @@ class SocialLinking extends React.Component {
 
 function mapStateToProps(state, ownProps){
   return {
-    linkedProfiles: state.user.linkedProfiles
+    linkedProfiles: state.user.linkedProfiles,
+    notifications: state.account.linkedProfiles
   };
 }
 
