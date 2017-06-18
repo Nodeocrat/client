@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import configureStore from '@store/configureStore';
+import store from '@store/store';
 import {initiateUser} from '@actions/userActions';
 
 //custom component imports
@@ -22,7 +22,7 @@ export default class extends React.Component {
     super(props);
 
     //Initialize store
-    this.store = configureStore();
+    this.store = store;
     this.store.dispatch(initiateUser());
   }
 

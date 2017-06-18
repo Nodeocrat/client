@@ -13,11 +13,11 @@ const PropsRoute = ({ component, ...rest }) => (
 );
 
 const mapStateToProps = (state, ownProps) => ({user: state.user, ...ownProps});
-const AuthRoute = connect(mapStateToProps, {}, null, {pure:false})(({user, component, ...rest}) => (
-  <Route {...rest} render={routeProps => user.profile ?
-    mergeProps(component, routeProps, rest) :
-    <StatusText type="error" text="You must be logged in to view this page"/>
-  }/>
+const AuthRoute = connect(mapStateToProps, {}, null, {pure:false})(({user, component, unauthComponent, ...rest}) => (
+    <Route {...rest} render={routeProps => user.profile ?
+      mergeProps(component, routeProps, rest) :
+      (unauthComponent || <StatusText type="error" text="You must be logged in to view this page"/>)
+    }/>
 ));
 
 export {PropsRoute, AuthRoute};

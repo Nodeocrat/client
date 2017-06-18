@@ -1,6 +1,6 @@
 export default {
   user: {
-    initialized: true,
+    initialized: false,
     profile: null,
     linkedProfiles: {
       facebook: null,

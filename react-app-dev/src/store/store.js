@@ -2,6 +2,7 @@ import {combineReducers, applyMiddleware, createStore} from 'redux';
 import userReducer from '@reducers/userReducer';
 import accountReducer from '@reducers/accountReducer';
 import loginReducer from '@reducers/loginReducer';
+import NodeSocialReducers from '@components/Projects/NodeSocial/reducers';
 
 //middleware
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
@@ -27,15 +28,36 @@ TODO: Test it actually works this way /w comments
 const rootReducer = combineReducers({
   account: accountReducer,
   login: loginReducer,
-  user: userReducer
+  user: userReducer,
+  ...NodeSocialReducers
 });
 
 // must use require since es6 imports do not support coniditional imports.
 
-export default function configureStore(initialState){
+function configureStore(initialState){
   return createStore(
     rootReducer,
     initialState,
     applyMiddleware(thunk, reduxImmutableStateInvariant())
   );
 }
+
+//TODO remove this for production
+const testData = {
+  user: {
+    initialized: true,
+    profile: {
+      username: "TestAcc",
+      email: "test@nodeocrat.com",
+      photoUrl: "https://i.vimeocdn.com/portrait/58832_300x300",
+      passwordSet: true
+    },
+    linkedProfiles: {
+      facebook: null,
+      google: null
+    }
+  }
+};
+const store = configureStore(testData);
+
+export {store as default};

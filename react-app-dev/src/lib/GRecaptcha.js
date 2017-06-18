@@ -1,13 +1,13 @@
 import React from 'react';
 import ScriptLoader from '@services/ScriptLoader';
-import SiteConfig from '@global/SiteConfig';
+import {gRecaptchaKey} from '@global/SiteConfig';
 
 export default class GRecaptcha extends React.Component {
   constructor(props){
     super(props);
     window.greOnloadCallback = function(){
       window.grecaptcha.render("g-recaptcha", {
-        'sitekey' : SiteConfig.gRecaptchaKey,
+        'sitekey' : gRecaptchaKey,
         'callback' : props.onResponse
       });
     }

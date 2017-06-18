@@ -1,0 +1,2 @@
+export const SEND_MESSAGE_ERROR = 'SEND_MESSAGE_ERROR';
+export const ADD_MESSAGE = 'ADD_MESSAGE';

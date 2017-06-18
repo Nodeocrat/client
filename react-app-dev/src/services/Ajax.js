@@ -21,7 +21,7 @@ Ajax.post({
 });
 */
 
-import SiteConfig from '@global/SiteConfig';
+import {apiPrefix} from '@global/SiteConfig';
 
 export default class Ajax {
   static get(options){
@@ -40,7 +40,7 @@ export default class Ajax {
 
     //TODO check if the options.url property is a request to an external domain
     //Regex.
-    options.url = SiteConfig.apiPrefix + options.url;
+    options.url = apiPrefix + options.url;
 
     let resFormat = null;
     if(options.response)
