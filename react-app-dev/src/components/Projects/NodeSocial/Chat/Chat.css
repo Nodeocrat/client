@@ -1,0 +1,47 @@
+.main {
+  margin-top: 100px;
+  background-color: gray;
+  min-width: 100%;
+}
+
+.sendForm {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+
+.input {
+  flex: 1;
+}
+
+.sendBtn {
+  flex: initial;
+}
+
+.flexContainer {
+  display: flex;
+  height: 500px;
+}
+.output {
+  overflow: auto;
+  flex: 4;
+  border: solid;
+  border-width: 2px;
+  border-color: black;
+}
+.message {
+
+}
+
+.userList {
+  overflow: auto;
+  flex: 1;
+  min-width: 100px;
+  border: solid;
+  border-width: 2px;
+  border-color: black;
+}
+
+.userListItem {
+
+}

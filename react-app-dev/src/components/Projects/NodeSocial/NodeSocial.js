@@ -46,13 +46,11 @@ class NodeSocial extends React.Component {
 
   render(){
 
-    console.log(JSON.stringify(this.props.chatMessages));
-
     return (
       <section>
         <ChatView
           onSendMessage={this.sendMessage}
-          chatMessages={this.props.chatMessages}
+          chatMessages={[]}
           sendText={this.state.sendText}
           onSendTextChange={this.handleSendTextChange}/>
       </section>
