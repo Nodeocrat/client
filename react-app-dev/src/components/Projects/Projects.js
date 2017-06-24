@@ -26,7 +26,7 @@ export default props => {
       )}/>
       <Route path={`${props.match.url}/ApProj`} component={ApProj}/>
       <Route path={`${props.match.url}/GameProj`} component={NbProj}/>
-      <AuthRoute path={`${props.match.url}/NodeSocial`} component={NodeSocial}/>
+      <AuthRoute style={{marginTop: 100 + 'px'}} path={`${props.match.url}/NodeSocial`} component={NodeSocial}/>
     </div>
   );
 };

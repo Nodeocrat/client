@@ -19,6 +19,8 @@ class SocketHandler {
             this.delayedTasks.shift()();
         }
       );
+    } else {
+      this._socket.connect();
     }
   }
 

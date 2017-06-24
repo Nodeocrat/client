@@ -1,74 +1,67 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {apiPrefix} from '@global/SiteConfig';
-import * as chatActions from './actions/chatActions';
-import ChatView from './Chat/ChatView';
-
 import socket from './SocketHandler';
 import IncomingMessageHandler from './IncomingMessageHandler';
+import Lobby from './Lobby/Lobby';
 
-class NodeSocial extends React.Component {
+export const Views = {
+  LOADING: 'LOADING',
+  LOBBY: 'LOBBY',
+  GAME: 'GAME'
+};
+
+const Loading = props => (
+  <div>Loading...</div>
+);
+
+const Game = props => (
+  <div>Game</div>
+);
+
+export default class NodeSocial extends React.Component {
   constructor(props){
     super(props);
 
     this.socket = null;
     this.messageHandler = null;
-    this.sendMessage = this.sendMessage.bind(this);
-    this.handleSendTextChange = this.handleSendTextChange.bind(this);
     this.state = {
-      sendText: "",
-      currentMatchId: 0
+      view: Views.LOADING
     };
+    this.setView = this.setView.bind(this);
+  }
+
+  setView(view){
+    this.setState({view});
   }
 
   componentWillMount(){
     this.socket = socket;
     this.socket.connect();
-    this.incomingMessageHandler = IncomingMessageHandler(this.socket);
+    this.incomingMessageHandler = IncomingMessageHandler(this.socket, this.setView);
   }
 
   componentWillUnmount(){
     this.socket.disconnect();
   }
 
-  sendMessage(){
-    this.props.actions.sendMessage({text: this.state.sendText, matchId: this.state.currentMatchId});
-    this.setState({
-      sendText: "",
-      currentMatchId: this.state.currentMatchId++
-    });
-  }
-
-  handleSendTextChange(e){
-    this.setState({sendText: e.target.value});
-  }
-
   render(){
 
+    let mainView = null;
+    switch(this.state.view){
+      case Views.LOBBY:
+        mainView = <Lobby/>;
+        break;
+      case Views.GAME:
+        mainView = <Game/>
+        break;
+      default:
+        mainView = <Loading/>;
+    }
+
     return (
-      <section>
-        <ChatView
-          onSendMessage={this.sendMessage}
-          chatMessages={[]}
-          sendText={this.state.sendText}
-          onSendTextChange={this.handleSendTextChange}/>
+      <section style={this.props.style}>
+        {mainView}
       </section>
     );
   }
 
 };
-
-function mapStateToProps(state, ownProps){
-  return {
-    chatMessages: state.chat
-  };
-}
-
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(chatActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NodeSocial);

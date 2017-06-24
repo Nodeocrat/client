@@ -1,0 +1,17 @@
+.dark1{
+	overflow: auto;
+}
+.dark1::-webkit-scrollbar-track
+{
+	background-color: rgb(75,75,75);
+}
+.dark1::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+.dark1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: rgb(120,120,120);
+}

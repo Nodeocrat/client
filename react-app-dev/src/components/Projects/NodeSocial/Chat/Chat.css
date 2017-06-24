@@ -1,47 +1,81 @@
-.main {
-  margin-top: 100px;
-  background-color: gray;
-  min-width: 100%;
-}
-
-.sendForm {
-  display: flex;
-  flex-direction: row-reverse;
-  width: 100%;
-}
-
-.input {
-  flex: 1;
-}
-
-.sendBtn {
-  flex: initial;
-}
-
 .flexContainer {
   display: flex;
   height: 500px;
+  min-width: 100%;
+  background-color: #36393e;
 }
-.output {
-  overflow: auto;
+
+/*Styles for position here*/
+
+
+/*.outputInputContainer {
+  position: relative;
   flex: 4;
-  border: solid;
-  border-width: 2px;
-  border-color: black;
+  color: #cccccc;
+}*/
+
+.outputInputContainer {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  color: #cccccc;
+}
+
+.output {
+  flex: 1;
+  border-bottom: 1px solid hsla(0,0%,100%,.06);
 }
 .message {
-
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
+
+
+.sendForm {
+  display: flex;
+  width: calc(100% - 20px);
+
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+
+  border-color: hsla(0,0%,100%,.06);
+  background-color: hsla(0,0%,100%,.06);
+
+  margin: 10px;
+  padding: 5px;
+  padding-left: 10px;
+}
+.input {
+  border: none;
+  margin-right: 5px;
+  background-color: transparent;
+  outline-color: transparent;
+  width: 100%;
+  flex: 1;
+}
+.sendBtn {
+   padding: 3px 7px;
+   background-color: LightBlue;
+   border: 2px solid CornflowerBlue;
+   border-radius: 5px;
+   color: SteelBlue;
+   cursor: pointer;
+}
+
+
 
 .userList {
-  overflow: auto;
+  white-space: nowrap;
+  padding: 20px;
+  background-color: #2f3136;
   flex: 1;
   min-width: 100px;
-  border: solid;
-  border-width: 2px;
-  border-color: black;
 }
-
-.userListItem {
-
+.playerListItem {
+  padding: 5px;
+}
+.playerListName {
+  color: white;
+  font-weight: bold;
 }
