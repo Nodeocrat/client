@@ -41,7 +41,7 @@ class NodeSocial extends React.Component {
 
     return (
       <section>
-        <button type="button" onClick={this.props.actions.joinGame}>Join Game</button>
+        <button type="button" onClick={this.props.onJoinGame}>Join Game</button>
         <ChatView
           onSendMessage={this.sendMessage}
           players={this.props.players}

@@ -1,7 +1,7 @@
 import {apiPrefix} from '@global/SiteConfig';
 import ScriptLoader from '@services/ScriptLoader';
 
-const scriptUrl = "https://cdn.socket.io/socket.io-1.2.0.js";
+const scriptUrl = "https://cdn.socket.io/socket.io-1.7.3.js";
 
 class SocketHandler {
   constructor(){
@@ -36,6 +36,20 @@ class SocketHandler {
       this._socket.on(event, callback);
     else
       this.delayedTasks.push(() => this._socket.on(event, callback));
+  }
+
+  off(event, callback){
+    const offTask = () => {
+      if(callback)
+        this._socket.off(event, callback);
+      else
+        this._socket.off(event);
+    };
+
+    if(this.isLoaded())
+      offTask();
+    else
+      this.delayedTasks.push(offTask);
   }
 
   emit(event, ...params){

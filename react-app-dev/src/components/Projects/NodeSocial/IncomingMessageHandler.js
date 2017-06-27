@@ -6,7 +6,6 @@ import {Views} from './NodeSocial';
 
 const EventTypes = {
   INIT_LOBBY: 'INIT_LOBBY',
-  INIT_GAME: 'INIT_GAME',
   DISCONNECT: 'disconnect',
   CONNECT: 'connect',
   CHAT_MESSAGE_RECEIVED: 'CHAT_MESSAGE_RECEIVED',
@@ -33,11 +32,6 @@ export default (socket, setView) => {
     const playersContainer = new OrderedHash({JSON: players});
     store.dispatch(chatActions.setPlayers(playersContainer));
     setView(Views.LOBBY);
-  });
-
-  socket.on(EventTypes.INIT_GAME, data => {
-    store.dispatch(lobbyActions.joinGameSuccess(data));
-    setView(Views.GAME);
   });
 
   socket.on(EventTypes.PLAYERS_LEFT, usernames => {

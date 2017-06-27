@@ -3,6 +3,7 @@ import {SocialSymbol} from '@lib/SocialButton/SocialButton';
 import position from '@styles/position.css';
 import {polarToCartesian} from '@services/MathTools';
 import {offsetFromParent} from '@services/DOMTools';
+import NcLogoLarge from '@media/nclogolarge.png';
 
 export default class PhotoWidget extends React.PureComponent {
 
@@ -40,8 +41,8 @@ export default class PhotoWidget extends React.PureComponent {
     return (
       <div className={position.center}>
         <img
-          src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAu5AAAAJGJiZmI1NjIyLWNlN2UtNDFkMi1hODgyLWQ4ZWNhZGE4MjU0Mw.jpg"
-          style={{borderRadius: 100 + 'px', margin: 20 + 'px'}}
+          src={NcLogoLarge}
+          style={{borderRadius: 100 + 'px', margin: 20 + 'px', backgroundColor: 'rgb(102, 204, 51)'}}
           className={position.center}
           height="150" width="150" id="home-profile-img"/>
           <br/>
