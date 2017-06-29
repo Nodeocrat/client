@@ -25,12 +25,25 @@
   flex: 1;
   border-bottom: 1px solid hsla(0,0%,100%,.06);
 }
-.message {
-  padding: 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+
+/* Messages */
+.messageContainer {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.messageImage {
+  border-radius: 50%;
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+}
+.messageUsername {
+  font-weight: bold;
+  color: white;
 }
 
-
+/* Input & send form */
 .sendForm {
   display: flex;
   width: calc(100% - 20px);
@@ -74,8 +87,11 @@
 }
 .playerListItem {
   padding: 5px;
+  display: flex;
 }
 .playerListName {
+  margin-left: 8px;
+  margin-top: 5px;
   color: white;
   font-weight: bold;
 }

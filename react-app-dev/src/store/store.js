@@ -43,7 +43,7 @@ function configureStore(initialState){
 }
 
 //TODO remove this for production
-const testData = {
+/*const testData = {
   user: {
     initialized: true,
     profile: {
@@ -57,7 +57,7 @@ const testData = {
       google: null
     }
   }
-};
-const store = configureStore(testData);
+};*/
+const store = configureStore();
 
 export {store as default};

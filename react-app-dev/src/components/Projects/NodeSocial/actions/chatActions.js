@@ -15,10 +15,6 @@ export function sendMessage(message){
   return {type: 'PLACEHOLDER'};
 }
 
-export function setPlayers(players){
-  return ({type: Types.SET_PLAYERS, players});
-}
-
 export function addPlayers(players){
   return ({type: Types.ADD_PLAYERS, players});
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import socket from './SocketHandler';
-import IncomingMessageHandler from './IncomingMessageHandler';
 import * as Emit from './EmitHandler';
 import Lobby from './Lobby/Lobby';
 import Game from './Game/Game';
@@ -8,6 +7,7 @@ import store from '@store/store';
 import * as lobbyActions from './actions/lobbyActions';
 import NodeShooter from './NodeShooter/NodeShooter';
 import Ajax from '@services/Ajax';
+import EventTypes from './EventTypes';
 
 export const Views = {
   LOADING: 'LOADING',
@@ -15,6 +15,7 @@ export const Views = {
   GAME: 'GAME'
 };
 
+//temporary placeholder
 const Loading = props => (
   <div>Loading...</div>
 );
@@ -24,9 +25,8 @@ export default class NodeSocial extends React.Component {
     super(props);
 
     this.socket = null;
-    this.messageHandler = null;
     this.state = {
-      view: Views.LOADING
+      view: Views.LOBBY
     };
     this.setView = this.setView.bind(this);
     this.handleJoinGame = this.handleJoinGame.bind(this);
@@ -38,12 +38,15 @@ export default class NodeSocial extends React.Component {
 
   componentWillMount(){
     this.socket = socket;
+    this.socket.on(EventTypes.CONNECT, () => console.log('Succesfully connected to server'));
+    this.socket.on(EventTypes.DISCONNECT, () => console.log('Disconnected from socket.io'));
     this.socket.connect();
-    this.incomingMessageHandler = IncomingMessageHandler(this.socket, this.setView);
   }
 
   componentWillUnmount(){
     this.socket.disconnect();
+    this.socket.off(EventTypes.CONNECT);
+    this.socket.off(EventTypes.DISCONNECT);
   }
 
   handleJoinGame(){
@@ -81,10 +84,10 @@ export default class NodeSocial extends React.Component {
     let mainView = null;
     switch(this.state.view){
       case Views.LOBBY:
-        mainView = <Lobby onJoinGame={this.handleJoinGame}/>;
+        mainView = <Lobby socket={this.socket} onJoinGame={this.handleJoinGame}/>;
         break;
       case Views.GAME:
-        mainView = <Game onLeave={() => this.setView(Views.LOADING)} socket={this.socket}/>
+        mainView = <Game onLeave={() => this.setView(Views.LOBBY)} socket={this.socket}/>
         break;
       default:
         mainView = <Loading/>;

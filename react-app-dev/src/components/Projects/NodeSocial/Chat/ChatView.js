@@ -1,7 +1,7 @@
 import React from 'react';
 import chat from './Chat.css';
 import scrollbar from '@styles/scrollbar.css';
-
+import Avatar from './Avatar';
 /*
 <span class="all">
     <span class="group-1">
@@ -21,32 +21,54 @@ import scrollbar from '@styles/scrollbar.css';
 
 const PlayerItem = ({player}) => (
   <div className={chat.playerListItem}>
-    <img alt="profile pic" style={{borderRadius: 50 + '%', marginRight: 10 + 'px'}} height="30px" width="30px"
-      src={player.picUrl}/>
+    <Avatar picUrl={player.picUrl} status={player.status}/>
     <span className={chat.playerListName}>{player.username}</span>
   </div>
 );
 
 const ChatMessage = ({player, message}) => (
-  <div>
-    <img alt="profile pic" style={{borderRadius: 50 + '%', marginRight: 10 + 'px'}} height="30px" width="30px"
+  <div className={chat.messageContainer}>
+    <img alt="profile pic" className={chat.messageImage}
       src={player.picUrl}/>
     <span>
-      <span>{player.username}</span>
-      <div>{message.text}</div>
+      <span className={chat.messageUsername}>{player.username}</span>
+      {
+        message.text.constructor === Array ?
+          message.text.map((line, index) => <div key={line.concat(index)}>{line}</div>)
+          : <div>{message.text}</div>
+      }
     </span>
   </div>
 );
 
 export default class extends React.Component {
   render(){
+    let lastPoster = null;
+    let chatMessages = [];
+    for(let msg of this.props.chatMessages){
+      if(lastPoster === msg.username){
+        let lastMsg = chatMessages.pop();
+        let revisedMsg = null;
+        if(lastMsg.text.constructor === Array){
+          revisedMsg = lastMsg;
+          revisedMsg.text.push(msg.text);
+        } else {
+          revisedMsg = Object.assign({}, lastMsg, {text: [lastMsg.text, msg.text]});
+        }
+        chatMessages.push(revisedMsg);
+      } else {
+        chatMessages.push(msg);
+      }
+      lastPoster = msg.username;
+    }
+
     return (
       <div className={chat.main}>
         <div className={chat.flexContainer}>
           <div className={chat.outputInputContainer}>
             <div className={`${chat.output} ${scrollbar.dark1}`} ref={el => { this.chatBody = el; }}>
               {
-                this.props.chatMessages.map(msg => <ChatMessage key={msg.id} player={this.props.players.get(msg.username)} message={msg}/>)
+                chatMessages.map(msg => <ChatMessage key={msg.id} player={this.props.players.get(msg.username)} message={msg}/>)
               }
             </div>
             <span className={chat.sendForm}>
@@ -55,9 +77,9 @@ export default class extends React.Component {
             </span>
 
           </div>
-          <div className={`${chat.userList} ${scrollbar.dark1}`} id="lolly">
+          <div className={`${chat.userList} ${scrollbar.dark1}`} style={{position: 'relative'}}>
             {
-              this.props.players.map(player => player.status !== 'offline' ? <PlayerItem key={player.username} player={player}/> : null)
+              this.props.players.map(player => player.status !== 'OFFLINE' ? <PlayerItem key={player.username} player={player}/> : null)
             }
           </div>
         </div>

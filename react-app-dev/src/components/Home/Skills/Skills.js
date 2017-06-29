@@ -6,7 +6,7 @@ const keySkills = [
   "Node.js",
   "React.js",
   "ES6",
-  "C++",
+  "Redux",
   "CSS Modules",
   "HTML5",
   "Webpack",
@@ -17,6 +17,7 @@ const keySkills = [
 ];
 
 const otherSkills = [
+  "C++",
   "AngularDart",
   "Dart",
   "Passport",
@@ -24,6 +25,7 @@ const otherSkills = [
   "Git",
   "Mocha",
   "Nginx",
+  "Website Hosting",
   "Java",
   "PostgreSQL",
   "Qt"

@@ -1,5 +1,5 @@
-import chatReducer from './chatReducer';
+import lobbyReducer from './lobbyReducer';
 
 export default {
-  chat: chatReducer
+  lobby: lobbyReducer
 };

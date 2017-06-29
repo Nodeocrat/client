@@ -2,26 +2,21 @@ import * as Types from '../actions/actionTypes';
 import initialState from './initialState';
 import OrderedHash from '@lib/OrderedHash';
 
-export default function loginReducer(state = initialState.chat, action){
+export default function lobbyReducer(state = initialState.lobby, action){
 
   switch(action.type){
     case Types.ADD_MESSAGE:
-      return Object.assign({}, state, {messages: [...state.messages, action.message]});
+      return Object.assign({}, state, {chatMessages: [...state.chatMessages, action.message]});
 
     case Types.SEND_MESSAGE_ERROR:
       //TODO implement
       console.log('SEND_MESSAGE_ERROR');
       return state;
 
-    case Types.SET_PLAYERS:
-      //action.players.print('SET_PLAYERS');
-      return Object.assign({}, state, {players: action.players});
-
     case Types.ADD_PLAYERS:
       //state.players.print('ADD_PLAYERS_START');
       const newPlayers = new OrderedHash({clone: state.players});
       newPlayers.insertMany(action.players, 'username');
-      //newPlayers.print('ADD_PLAYERS_END');
       return Object.assign({}, state, {players: newPlayers});
 
     case Types.REMOVE_PLAYERS:
@@ -31,12 +26,30 @@ export default function loginReducer(state = initialState.chat, action){
       return Object.assign({}, state, {players: newPlayersRemoved});
 
     case Types.SET_PLAYERS_OFFLINE:
-      state.players.print('SET_PLAYERS_OFFLINE_START');
       const newPlayersSetOffline = new OrderedHash({clone: state.players});
       for(let username of action.usernames)
-        newPlayersSetOffline.get(username).status = 'offline';
-      newPlayersSetOffline.print('SET_PLAYERS_OFFLINE_START');
+        newPlayersSetOffline.get(username).status = 'OFFLINE';
       return Object.assign({}, state, {players: newPlayersSetOffline});
+
+    case Types.UPDATE_PLAYERS:
+      const newPlayersSetInGame = new OrderedHash({clone: state.players});
+      for(let player of action.players)
+        newPlayersSetInGame.insert(player.username, player);
+      return Object.assign({}, state, {players: newPlayersSetInGame});
+
+    case Types.UPDATE_GAME:
+      const gameToUpdate = action.game;
+      const gameListAfterUpdate = new OrderedHash({clone: state.gameList});
+      gameListAfterUpdate.insert(gameToUpdate.id, gameToUpdate);
+      return Object.assign({}, state, {gameList: gameListAfterUpdate});
+
+    case Types.ADD_GAMES:
+      const newGameList = new OrderedHash({clone: state.gameList});
+      newGameList.insertMany(action.games, 'id');
+      return Object.assign({}, state, {gameList: newGameList});
+
+    case Types.LEFT_LOBBY:
+      return initialState.lobby;
 
     default:
       return state;

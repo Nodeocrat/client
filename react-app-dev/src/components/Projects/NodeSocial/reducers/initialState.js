@@ -1,8 +1,9 @@
 import OrderedHash from '@lib/OrderedHash';
 
 export default {
-  chat: {
-    messages: [], //{id, username, timestamp (ISO), text, group}
-    players: new OrderedHash() //{username: user}
+  lobby: {
+    chatMessages: [], //{id, username, timestamp (ISO), text, group}
+    players: new OrderedHash(), //{username: user}
+    gameList: new OrderedHash()
   }
 };

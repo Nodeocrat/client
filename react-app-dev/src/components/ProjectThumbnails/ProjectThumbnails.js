@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 //media
+import socialAppThumbnail from '@media/social-app-thumbnail.png';
 import nbThumbnail from '@media/nb-thumbnail.png';
 import apThumbnail from '@media/ap-thumbnail.png';
 
@@ -11,6 +12,12 @@ import text from '@styles/text.css';
 import position from '@styles/position.css';
 
 const projects = [
+  {
+    name: "Social App",
+    summary: "Lobby integrated with Node Shooter",
+    img: socialAppThumbnail,
+    route: "NodeSocial"
+  },
   {
     name: "Node Shooter",
     summary: "Loopless game server experiment",
