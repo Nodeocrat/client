@@ -8,6 +8,7 @@ import * as lobbyActions from './actions/lobbyActions';
 import NodeShooter from './NodeShooter/NodeShooter';
 import Ajax from '@services/Ajax';
 import EventTypes from './EventTypes';
+import NodeSocialDescription from './NodeSocialDescription';
 
 export const Views = {
   LOADING: 'LOADING',
@@ -94,7 +95,8 @@ export default class NodeSocial extends React.Component {
     }
 
     return (
-      <section style={this.props.style}>
+      <section>
+        <NodeSocialDescription/>
         {mainView}
       </section>
     );
