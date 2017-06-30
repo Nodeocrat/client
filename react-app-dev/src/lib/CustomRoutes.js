@@ -1,7 +1,8 @@
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
 import StatusText from '@lib/StatusText';
+import LoginDialog from '@components/LoginDialog/LoginDialog';
 
 function mergeProps(Component, ...rest){
   const finalProps = Object.assign({}, ...rest);
@@ -13,11 +14,12 @@ const PropsRoute = ({ component, ...rest }) => (
 );
 
 const mapStateToProps = (state, ownProps) => ({user: state.user, ...ownProps});
-const AuthRoute = connect(mapStateToProps, {}, null, {pure:false})(({user, component, unauthComponent, ...rest}) => (
+const AuthRouteComponent = ({user, component, unauthComponent, history, ...rest}) => (
     <Route {...rest} render={routeProps => user.profile ?
       mergeProps(component, routeProps, rest) :
-      (unauthComponent || <StatusText type="error" text="You must be logged in to view this page"/>)
+      (unauthComponent || <LoginDialog onClose={() => history ? history.goBack() : null } error="You must be logged in to view this page"/>)
     }/>
-));
+);
 
+const AuthRoute = connect(mapStateToProps, {}, null, {pure:false})(withRouter(AuthRouteComponent));
 export {PropsRoute, AuthRoute};

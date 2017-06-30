@@ -24,19 +24,39 @@ class LoginDialog extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      show: true
     }
   }
-  
+
+  onClose(){
+    this.setState({show: false});
+    if(this.props.onClose)
+      this.props.onClose();
+  }
+
   render() {
     //if (this.props.loggedIn) this.props.onClose();
+    const loginErr = UrlHelper.parseQuery(this.props.location.search).loginErr;
+    let err = null;
+
+    if(this.props.error){
+      err = this.props.error;
+    } else if(loginErr)
+      err = `That ${loginErr} account is not linked to a Nodeocrat account`;
+
+
     return (
-      <Modal show={!this.props.loggedIn} onHide={this.props.onClose}>
+      <Modal show={!this.props.loggedIn && this.state.show} onHide={this.props.onClose}>
         <div>
           <Modal.Header closeButton>
             <Modal.Title>Sign In</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {
+               err ?
+                <StatusText className={position.center} type="error" text={err}/> : null
+            }
             <div className={position.center}>
               <div style={{margin: 15 + 'px', display: 'inline-block'}}>
                 <a href="/api/auth/google">
@@ -49,11 +69,6 @@ class LoginDialog extends React.Component {
                 </a>
               </div>
             </div>
-            {
-              (err => (err ?
-                <StatusText className={position.center} type="error" text={`That ${err} account is not linked to a Nodeocrat account`}/> : null
-              ))(UrlHelper.parseQuery(this.props.location.search).loginErr)
-            }
             <div className="row">
               <div className="col-sm-offset-2 col-sm-8">
                 <TextField name="username" placeholder="Username"
