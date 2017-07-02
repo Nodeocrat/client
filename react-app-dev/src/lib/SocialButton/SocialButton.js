@@ -1,5 +1,5 @@
 import React from 'react';
-import './SocialButton.css';
+import {guestLogin} from './SocialButton.css';
 import socialFonts from '@fonts/icons/icons.css';
 
 const SocialButton = (props) => {
@@ -26,4 +26,18 @@ const SocialSymbol = (props) => (
   </button>
 );
 
-export {SocialButton as default, SocialSymbol};
+const TextBtn = props => {
+  const {color, backgroundColor, spanParent, disabled, onClick, text, ...otherProps} = props;
+  return (
+    <div {...otherProps}>
+      <button disabled={disabled} type="button" className={`btn social-login-btn ${guestLogin} ${spanParent ? 'span-parent' : null}`} onClick={onClick} style={{color, backgroundColor}}>
+        <span className="social-btn-text">{text}</span>
+      </button>
+    </div>
+  );
+};
+TextBtn.propTypes = {
+  text: React.PropTypes.string.isRequired
+};
+
+export {SocialButton as default, SocialSymbol, TextBtn};

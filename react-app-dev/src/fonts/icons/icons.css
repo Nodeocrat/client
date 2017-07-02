@@ -91,7 +91,7 @@
 }
 
 /*BUTTONS (this is where the colours should go... better to handle both background and foreground in one place)*/
-.btn { transition: all 200ms ease-out; }
+.btn { transition: all 200ms ease-out;}
 .github-btn:hover, .github-btn:focus { color: githubPrimHl; }
 .github-btn { composes: btn; background-color: githubFg; color: githubPrim; }
 .linkedin-btn:hover, .linkedin-btn:focus { background-color: linkedinPrimHl; color: linkedinFg; }

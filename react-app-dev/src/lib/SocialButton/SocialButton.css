@@ -26,3 +26,6 @@
   vertical-align: top;
   float: left;
 }
+
+.guestLogin {transition: all 200ms ease-out;}
+.guestLogin:hover, .guestLogin:focus {-webkit-filter: brightness(130%); filter: brightness(130%);}
