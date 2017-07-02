@@ -46,7 +46,7 @@ export default class PhotoWidget extends React.PureComponent {
           className={position.center}
           height="150" width="150" id="home-profile-img"/>
           <br/>
-          {githubIcon ? (<a href="https://github.com/Nodeocrat/client/tree/react-trans/react-app-dev/src" target="_blank">{githubIcon}</a>) : null}
+          {githubIcon ? (<a href="https://github.com/Nodeocrat/client/tree/redux/react-app-dev/src" target="_blank">{githubIcon}</a>) : null}
           {linkedinIcon ? (<a href="https://uk.linkedin.com/in/ashley-phillips-5b5a8599" target="_blank">{linkedinIcon}</a>) : null}
       </div>
     );
