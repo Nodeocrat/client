@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 import * as userActions from '@actions/userActions';
+import * as loginActions from '@actions/loginActions';
 
 //react-bootstrap
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 
 //custom components
-import SocialButton from '@lib/SocialButton/SocialButton';
+import SocialButton, {TextBtn} from '@lib/SocialButton/SocialButton';
 import StatusText from '@lib/StatusText';
 import TextField from '@lib/TextField';
 import UrlHelper from '@services/UrlHelper';
@@ -59,6 +60,7 @@ class LoginDialog extends React.Component {
             }
             <div className={position.center}>
               <div style={{margin: 15 + 'px', display: 'inline-block'}}>
+                <TextBtn spanParent onClick={this.props.actions.guestLogin} color='white' backgroundColor='#999' text='Continue as guest'/>
                 <a href="/api/auth/google">
                   <SocialButton spanParent site="google"
                     text="Sign in with Google"/>
@@ -92,6 +94,9 @@ class LoginDialog extends React.Component {
 
     );
   }
+  componentWillUnmount(){
+    this.props.actions.loginDialogClosed();
+  }
   handleSubmit(){
     const errors = [];
     if(!this.state.username)
@@ -115,7 +120,7 @@ function mapStateToProps(state, ownProps){
 
 function mapDispatchToProps(dispatch){
   return {
-    actions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators({...userActions, ...loginActions}, dispatch)
   };
 }
 

@@ -68,6 +68,25 @@ export function localLogin(username, password){
   };
 }
 
+export function guestLogin(){
+  return dispatch => {
+    Ajax.post({
+      url: '/auth/guest',
+      response: 'JSON',
+      success: res => {
+        if(res.errors && res.errors.length > 0){
+          dispatch(localLoginError(res.errors));
+        } else if (res.user){
+          dispatch(localLoginSuccess(res.user));
+        }
+      },
+      error: err => {
+        throw new Error(err);
+      }
+    });
+  };
+}
+
 function unlinkSuccess(site){
   return {type: Types.UNLINK_SUCCESS, site};
 }

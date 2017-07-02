@@ -10,11 +10,8 @@ export default function loginReducer(state = initialState.login, action){
     case Types.LOCAL_LOGIN_SUCCESS:
       return {errors: {}};
 
-    case Types.OPEN_LOGIN_DIALOG:
-      return state;
-
-    case Types.CLOSE_LOGIN_DIALOG:
-      return state;
+    case Types.LOGIN_DIALOG_CLOSED:
+      return {errors: {}};
 
     default:
       return state;
