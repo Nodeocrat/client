@@ -47,10 +47,20 @@ const ProjectThumbnails = () => (
   </div>
 );
 
-const ProjectThumbnailsMini = props => (
+const HomePageProjectThumbnails = props => (
   <div {...props}>
   {
-    projects.map((project) => (
+    <div>
+      <Link to={`projects/${projects[0].route}`}>
+        <figure style={{marginTop: 25 + 'px', marginBottom: 10 + 'px', display: 'inline-block'}} className={`${border.shadow} ${border.hoverShadow}`}>
+          <img alt="" height="185" width="300" src={projects[0].img}/>
+        </figure>
+      </Link>
+      <div className={`${text.center} ${text.subTitle}`}>{projects[0].name}</div>
+    </div>
+  }
+  {
+    projects.slice(1).map((project) => (
       <Link key={project.name} to={`projects/${project.route}`}>
         <div style={{verticalAlign: 'top', margin: 10 + 'px', display: 'inline-block'}}>
           <figure className={position.center}><img alt="" style={{margin: 20 + 'px'}} height="92.5" width="150" src={project.img} className={`${border.shadow} ${border.hoverShadow}`}/></figure>
@@ -62,4 +72,4 @@ const ProjectThumbnailsMini = props => (
   </div>
 );
 
-export {ProjectThumbnails as default, ProjectThumbnailsMini}
+export {ProjectThumbnails as default, HomePageProjectThumbnails}

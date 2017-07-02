@@ -1,7 +1,7 @@
 import React from 'react';
 import Summary from './Summary/Summary';
 import Brief from './Brief/Brief';
-import {ProjectThumbnailsMini} from '@components/ProjectThumbnails/ProjectThumbnails';
+import {HomePageProjectThumbnails} from '@components/ProjectThumbnails/ProjectThumbnails';
 import './Home.css';
 import Skills from './Skills/Skills';
 import Experience from './Experience/Experience';
@@ -47,7 +47,7 @@ const ProjectSummarySection = () => (
     <div className={text.sectionTitle}>
       Projects
     </div>
-    <ProjectThumbnailsMini className={position.center}/>
+    <HomePageProjectThumbnails className={position.center}/>
   </div>
 );
 
