@@ -1,76 +1,61 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as chatActions from '../actions/chatActions';
-import * as lobbyActions from '../actions/lobbyActions';
 import ChatView from '../Chat/ChatView';
 import EventTypes from '../EventTypes';
 import Ajax from '@services/Ajax';
 import OrderedHash from '@lib/OrderedHash';
 import GameCreation from './GameCreation';
+import WsComponent from '@NodeSocial/utils/WsComponent';
 
-class NodeSocial extends React.Component {
+class NodeSocial extends WsComponent {
   constructor(props){
     super(props);
 
     this.handleSendMessage = this.handleSendMessage.bind(this);
     this.handleSendTextChange = this.handleSendTextChange.bind(this);
     this.state = {
-      sendText: "",
-      currentMatchId: 0
+      loading: true,
+      sendText: ""
     };
-    this.socketEventsMap = new Map(this.socketEventHandlers);
-  }
-
-  get socketEventHandlers() {
-    return [
-      [
-        EventTypes.CHAT_MESSAGE_RECEIVED,
-        message => this.props.actions.addMessage(message)
-      ],
-      [
-        EventTypes.PLAYERS_JOINED,
-        players => this.props.actions.addPlayers(players)
-      ],
-      [
-        EventTypes.PLAYERS_LEFT,
-        usernames => this.props.actions.setPlayersOffline(usernames)
-      ],
-      [
-        EventTypes.PLAYER_JOINED_GAME,
-        (players, game) => {
-          this.props.actions.updatePlayers(players);
-          this.props.actions.updateGame(game);
-        }
-      ],
-      [
-        EventTypes.UPDATE_GAME,
-        game => this.props.actions.updateGame(game)
-      ],
-      [
-        EventTypes.ADD_GAMES,
-        games => this.props.actions.addGames(games)
-      ]
-    ];
+    this.roomId = '!lobby!';
   }
 
   componentWillMount(){
+
     const self = this;
     //TODO Set loading screen
-    for(let [event, handler] of this.socketEventsMap)
-      this.props.socket.on(event, handler);
     Ajax.post({
       url: '/socialapp/lobby/join',
       data: {},
       response: 'JSON',
       success: response => {
-        if(response.result === 'success'){
-
-          const lobbyPlayers = new OrderedHash({JSON: response.players});
-          const gameList = new OrderedHash({JSON: response.gameList});
-          self.props.actions.addPlayers(lobbyPlayers);
-          self.props.actions.addGames(gameList);
-        } else if (response.result === 'error'){
+        if(response.result.success){
+          self.on(`${self.roomId}${EventTypes.CHAT_MESSAGE_RECEIVED}`,
+            message => self.props.actions.addMessage(message));
+          self.on(`${self.roomId}${EventTypes.PLAYERS_JOINED}`,
+            players => self.props.actions.addPlayers(players));
+          self.on(`${self.roomId}${EventTypes.PLAYERS_LEFT}`,
+            usernames => self.props.actions.setPlayersOffline(usernames));
+          self.on(`${self.roomId}${EventTypes.PLAYER_JOINED_GAME}`,
+            (players, game) => {
+              self.props.actions.updatePlayers(players);
+              self.props.actions.updateGame(game);
+            });
+          self.on(`${self.roomId}${EventTypes.UPDATE_GAME}`,
+            game => self.props.actions.updateGame(game));
+          self.on(`${self.roomId}${EventTypes.ADD_GAMES}`,
+            games => self.props.actions.addGames(games));
+          self.on(`${self.roomId}START`, response => {
+            const players = new OrderedHash({array: response.players});
+            const gameList = new OrderedHash({array: response.gameList});
+            self.props.actions.addPlayers(players);
+            self.props.actions.addGames(gameList);
+            self.setState({loading: false});
+          });
+          console.log(`${self.roomId}emitting CLIENT_INITIALIZED`);
+          self._socket.emit(`${self.roomId}CLIENT_INITIALIZED`);
+        } else if (response.error){
           //TODO implement
         } else {
           console.log('unspecified error');
@@ -83,17 +68,16 @@ class NodeSocial extends React.Component {
     });
   }
 
-  componentWillUnmount(){
-    for(let [event, handler] of this.socketEventsMap)
-      this.props.socket.off(event, handler);
+  componentWillUnmount(...args){
+    super.componentWillUnmount(...args);
+    this._socket.emit(`${this.roomId}EXIT`);
     this.props.actions.leftLobby();
   }
 
   handleSendMessage(){
-    this.props.actions.sendMessage({text: this.state.sendText, matchId: this.state.currentMatchId});
+    this._socket.emit(`${this.roomId}SEND_MESSAGE`, this.state.sendText);
     this.setState({
-      sendText: "",
-      currentMatchId: this.state.currentMatchId++
+      sendText: ""
     });
   }
 
@@ -110,20 +94,23 @@ class NodeSocial extends React.Component {
     for(let i = 0; i < 100; i++)
       testMsgs.push({id: i, username: `TestUser${Math.floor(i/2)+1}`, text: `asdf oia jsdfoiaj sdfiaojsdf ${i}`});*/
 
-    const gameListTest = [{name: "Test Game", id: "testgame", players: 0}];
     /*players={this.props.players}
     chatMessages={this.props.chatMessages}
     <GameCreation gameList={this.props.gameList}/>*/
     return (
       <section>
-        <GameCreation gameList={this.props.gameList} onJoinGame={this.props.onJoinGame}/>
-        <ChatView
-          onSendMessage={this.sendMessage}
-          players={this.props.players}
-          chatMessages={this.props.chatMessages}
-          onSendMessage={this.handleSendMessage}
-          onSendTextChange={this.handleSendTextChange}
-          sendText={this.state.sendText}/>
+        {this.state.loading ?
+          <div>Loading lobby...</div> :
+          <div>
+            <GameCreation gameList={this.props.gameList} onJoinGame={this.props.onJoinGame}/>
+            <ChatView
+              players={this.props.players}
+              chatMessages={this.props.chatMessages}
+              onSendMessage={this.handleSendMessage}
+              onSendTextChange={this.handleSendTextChange}
+              sendText={this.state.sendText}/>
+          </div>
+        }
       </section>
     );
   }
@@ -138,6 +125,8 @@ function mapStateToProps(state, ownProps){
   };
 }
 
+import * as chatActions from '../actions/chatActions';
+import * as lobbyActions from '../actions/lobbyActions';
 function mapDispatchToProps(dispatch){
   return {
     actions: bindActionCreators({...chatActions, ...lobbyActions}, dispatch)

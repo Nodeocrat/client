@@ -1,6 +1,6 @@
 import React from 'react';
-import socket from './SocketHandler';
-import * as Emit from './EmitHandler';
+import socket from '@NodeSocial/utils/SocketHandler';
+import * as Emit from '@NodeSocial/utils/EmitHandler';
 import Lobby from './Lobby/Lobby';
 import Game from './Game/Game';
 import store from '@store/store';
@@ -11,14 +11,14 @@ import EventTypes from './EventTypes';
 import NodeSocialDescription from './NodeSocialDescription';
 
 export const Views = {
-  LOADING: 'LOADING',
+  CONNECTING: 'CONNECTING',
   LOBBY: 'LOBBY',
   GAME: 'GAME'
 };
 
 //temporary placeholder
-const Loading = props => (
-  <div>Loading...</div>
+const Connecting = props => (
+  <div>Establishing connection...</div>
 );
 
 export default class NodeSocial extends React.Component {
@@ -27,7 +27,7 @@ export default class NodeSocial extends React.Component {
 
     this.socket = null;
     this.state = {
-      view: Views.LOBBY
+      view: Views.LOADING
     };
     this.setView = this.setView.bind(this);
     this.handleJoinGame = this.handleJoinGame.bind(this);
@@ -39,8 +39,14 @@ export default class NodeSocial extends React.Component {
 
   componentWillMount(){
     this.socket = socket;
-    this.socket.on(EventTypes.CONNECT, () => console.log('Succesfully connected to server'));
-    this.socket.on(EventTypes.DISCONNECT, () => console.log('Disconnected from socket.io'));
+    this.socket.on(EventTypes.CONNECT, () => {
+      console.log('connected to socket.io');
+      this.setState({view: Views.LOBBY});
+    });
+    this.socket.on(EventTypes.DISCONNECT, () => {
+      console.log('Disconnected from socket.io');
+      this.setState({view: Views.CONNECTING});
+    });
     this.socket.connect();
   }
 
@@ -55,17 +61,17 @@ export default class NodeSocial extends React.Component {
     this.setView(Views.LOADING);
     Ajax.post({
       url: '/socialapp/joingame',
-      data: {},
+      data: {id: "testgame"},
       response: 'JSON',
       success: response => {
-        if(response.result === 'success'){
+        if(response.success){
           console.log('join game success');
           store.dispatch(lobbyActions.joinGameSuccess());
           const nodeShooter = NodeShooter()(socket);
           Emit.initFinish();
           nodeShooter.onStart(() => self.setView(Views.GAME));
           console.log('join game success fn leaving');
-        } else if (response.result === 'error'){
+        } else if (response.error){
           //self.setView(Views.LOBBY);
           //store.dispatch(lobbyActions.joinGameError(response.reason));
         } else {
@@ -91,7 +97,7 @@ export default class NodeSocial extends React.Component {
         mainView = <Game onLeave={() => this.setView(Views.LOBBY)} socket={this.socket}/>
         break;
       default:
-        mainView = <Loading/>;
+        mainView = <Connecting/>;
     }
 
     return (

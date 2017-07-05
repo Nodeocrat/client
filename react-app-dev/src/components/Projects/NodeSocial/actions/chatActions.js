@@ -1,5 +1,5 @@
 import * as Types from './actionTypes';
-import * as Emit from '../EmitHandler';
+import * as Emit from '@NodeSocial/utils/EmitHandler';
 
 export function addMessage(message){
   return {type: Types.ADD_MESSAGE, message};
@@ -7,12 +7,6 @@ export function addMessage(message){
 
 function sendMessageError(msgId){
   return {type: Types.SEND_MESSAGE_ERROR};
-}
-
-export function sendMessage(message){
-  Emit.sendMessage(message);
-  //return {type: Types.ADD_MESSAGE, message};
-  return {type: 'PLACEHOLDER'};
 }
 
 export function addPlayers(players){

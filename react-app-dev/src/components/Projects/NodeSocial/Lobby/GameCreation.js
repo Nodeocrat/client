@@ -9,7 +9,7 @@ export default ({gameList, onJoinGame}) => (
         gameList.map(game => {
           return (<div key={game.id} className={styles.gameWrap}>
             <div className={styles.gameName}>{game.name}</div>
-            <div style={{textAlign: 'center'}}>players: {game.players}</div>
+            <div style={{textAlign: 'center'}}>players: {game.playerCount}</div>
             <div className={styles.joinBtn} onClick={onJoinGame}>Join</div>
           </div>);
         })

@@ -39,7 +39,6 @@ export default class Avatar extends React.PureComponent {
         height: 13 + 'px',
         width: 13 + 'px'
       };
-      console.log(JSON.stringify(statusIconStyle));
       statusIcon = <div alt='avatar' style={statusIconStyle}/>
 
     }

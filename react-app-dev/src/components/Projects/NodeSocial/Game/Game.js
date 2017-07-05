@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Emit from '../EmitHandler';
+import * as Emit from '@NodeSocial/utils/EmitHandler';
 
 export default class Game extends React.Component {
   constructor(props){

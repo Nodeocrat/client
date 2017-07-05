@@ -14,7 +14,6 @@ export default function lobbyReducer(state = initialState.lobby, action){
       return state;
 
     case Types.ADD_PLAYERS:
-      //state.players.print('ADD_PLAYERS_START');
       const newPlayers = new OrderedHash({clone: state.players});
       newPlayers.insertMany(action.players, 'username');
       return Object.assign({}, state, {players: newPlayers});

@@ -22,6 +22,8 @@ export default class OrderedHash {
           else
             this.insert(key, value);
         }
+      } else if(options.array){
+        this._data = new Map(options.array);
       }
 
       if(options.init){
@@ -86,7 +88,6 @@ export default class OrderedHash {
   //TEST
   print(msg){
     console.log(msg);
-    console.log(`_data: ${JSON.stringify(this._data)}`);
-    console.log(`_map: ${JSON.stringify(this._map)}`);
+    console.log(`_data: ${JSON.stringify([...this._data.values()])}`);
   }
 }
