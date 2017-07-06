@@ -24,16 +24,14 @@ export default function lobbyReducer(state = initialState.lobby, action){
         newPlayersRemoved.remove(username);
       return Object.assign({}, state, {players: newPlayersRemoved});
 
-    case Types.SET_PLAYERS_OFFLINE:
+    case Types.SET_PLAYER_OFFLINE:
       const newPlayersSetOffline = new OrderedHash({clone: state.players});
-      for(let username of action.usernames)
-        newPlayersSetOffline.get(username).status = 'OFFLINE';
+      newPlayersSetOffline.get(action.username).status = 'OFFLINE';
       return Object.assign({}, state, {players: newPlayersSetOffline});
 
-    case Types.UPDATE_PLAYERS:
+    case Types.UPDATE_PLAYER:
       const newPlayersSetInGame = new OrderedHash({clone: state.players});
-      for(let player of action.players)
-        newPlayersSetInGame.insert(player.username, player);
+      newPlayersSetInGame.insert(action.player.username, action.player);
       return Object.assign({}, state, {players: newPlayersSetInGame});
 
     case Types.UPDATE_GAME:

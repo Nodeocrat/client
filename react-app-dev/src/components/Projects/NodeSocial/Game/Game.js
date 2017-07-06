@@ -1,5 +1,4 @@
 import React from 'react';
-import * as Emit from '@NodeSocial/utils/EmitHandler';
 
 export default class Game extends React.Component {
   constructor(props){
@@ -8,7 +7,7 @@ export default class Game extends React.Component {
   }
   leave(){
     this.props.onLeave();
-    Emit.leaveGame();
+    this.props.socket.emit(`${this.props.roomId}EXIT`);
   }
   render(){
     return (

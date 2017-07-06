@@ -1,6 +1,5 @@
 import React from 'react';
 import socket from '@NodeSocial/utils/SocketHandler';
-import * as Emit from '@NodeSocial/utils/EmitHandler';
 import Lobby from './Lobby/Lobby';
 import Game from './Game/Game';
 import store from '@store/store';
@@ -27,7 +26,8 @@ export default class NodeSocial extends React.Component {
 
     this.socket = null;
     this.state = {
-      view: Views.LOADING
+      view: Views.LOADING,
+      roomId: ""
     };
     this.setView = this.setView.bind(this);
     this.handleJoinGame = this.handleJoinGame.bind(this);
@@ -56,20 +56,20 @@ export default class NodeSocial extends React.Component {
     this.socket.off(EventTypes.DISCONNECT);
   }
 
-  handleJoinGame(){
+  handleJoinGame(id){
     const self = this;
     this.setView(Views.LOADING);
     Ajax.post({
       url: '/socialapp/joingame',
-      data: {id: "testgame"},
+      data: {id},
       response: 'JSON',
       success: response => {
         if(response.success){
           console.log('join game success');
           store.dispatch(lobbyActions.joinGameSuccess());
-          const nodeShooter = NodeShooter()(socket);
-          Emit.initFinish();
-          nodeShooter.onStart(() => self.setView(Views.GAME));
+          const nodeShooter = NodeShooter()(socket, id);
+          self.socket.emit(`${id}CLIENT_INITIALIZED`);
+          nodeShooter.onStart(() => self.setState({view: Views.GAME, roomId: id}));
           console.log('join game success fn leaving');
         } else if (response.error){
           //self.setView(Views.LOBBY);
@@ -94,7 +94,7 @@ export default class NodeSocial extends React.Component {
         mainView = <Lobby socket={this.socket} onJoinGame={this.handleJoinGame}/>;
         break;
       case Views.GAME:
-        mainView = <Game onLeave={() => this.setView(Views.LOBBY)} socket={this.socket}/>
+        mainView = <Game onLeave={() => this.setView(Views.LOBBY)} socket={this.socket} roomId={this.state.roomId}/>
         break;
       default:
         mainView = <Connecting/>;

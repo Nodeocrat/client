@@ -17,8 +17,8 @@ export function leftLobby(){
   return {type: Types.LEFT_LOBBY};
 }
 
-export function updatePlayers(players){
-  return {type: Types.UPDATE_PLAYERS, players};
+export function updatePlayer(player){
+  return {type: Types.UPDATE_PLAYER, player};
 }
 
 export function addGames(games){

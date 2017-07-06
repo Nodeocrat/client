@@ -30,16 +30,16 @@ class NodeSocial extends WsComponent {
       data: {},
       response: 'JSON',
       success: response => {
-        if(response.result.success){
+        if(response.success){
           self.on(`${self.roomId}${EventTypes.CHAT_MESSAGE_RECEIVED}`,
             message => self.props.actions.addMessage(message));
-          self.on(`${self.roomId}${EventTypes.PLAYERS_JOINED}`,
-            players => self.props.actions.addPlayers(players));
-          self.on(`${self.roomId}${EventTypes.PLAYERS_LEFT}`,
-            usernames => self.props.actions.setPlayersOffline(usernames));
+          self.on(`${self.roomId}${EventTypes.PLAYER_JOINED}`,
+            player => self.props.actions.addPlayers([player]));
+          self.on(`${self.roomId}${EventTypes.PLAYER_LEFT}`,
+            player => self.props.actions.setPlayerOffline(player.username));
           self.on(`${self.roomId}${EventTypes.PLAYER_JOINED_GAME}`,
-            (players, game) => {
-              self.props.actions.updatePlayers(players);
+            (player, game) => {
+              self.props.actions.updatePlayer(player);
               self.props.actions.updateGame(game);
             });
           self.on(`${self.roomId}${EventTypes.UPDATE_GAME}`,

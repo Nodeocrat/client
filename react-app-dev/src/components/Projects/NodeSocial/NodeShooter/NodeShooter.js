@@ -59,7 +59,7 @@ let Bullet = class Bullet extends CircularEntity
 }
 
 export default function(){
-  return function initClient(socket) {
+  return function initClient(socket, roomId) {
     // 0. DECLARATIONS
     let canvasInFocus = false;
     let canvasClicked = false;
@@ -89,7 +89,7 @@ export default function(){
     let cleanupTasks = [];
     function cleanup() {
       window.yolo = socket;
-      socket.off('START_GAME');
+      socket.off(`${roomId}START`);
       socket.off('disconnect', onDisconnect);
       socket.off('player joined');
       socket.off('player left');
@@ -112,7 +112,7 @@ export default function(){
     }
     const onStart = [];
 
-  	socket.on('START_GAME', function(entitiesOnServer, myNameOnServer, playerCon, bulletCon){
+  	socket.on(`${roomId}START`, function(entitiesOnServer, myNameOnServer, playerCon, bulletCon){
       console.log('booting up game');
   		myName = myNameOnServer;
   		entities = entitiesOnServer;
