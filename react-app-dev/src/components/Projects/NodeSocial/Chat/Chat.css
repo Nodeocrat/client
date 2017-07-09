@@ -69,16 +69,6 @@
   width: 100%;
   flex: 1;
 }
-.sendBtn {
-   padding: 3px 7px;
-   background-color: LightBlue;
-   border: 2px solid CornflowerBlue;
-   border-radius: 5px;
-   color: SteelBlue;
-   cursor: pointer;
-}
-
-
 
 .userList {
   white-space: nowrap;

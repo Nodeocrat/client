@@ -2,6 +2,7 @@ import React from 'react';
 import chat from './Chat.css';
 import scrollbar from '@styles/scrollbar.css';
 import Avatar from './Avatar';
+import button from '@styles/button.css';
 /*
 <span class="all">
     <span class="group-1">
@@ -73,7 +74,7 @@ export default class extends React.Component {
             </div>
             <span className={chat.sendForm}>
               <input type="text" className={chat.input} onKeyDown={e => {if(e.keyCode === 13) this.props.onSendMessage()}} onChange={this.props.onSendTextChange} value={this.props.sendText} />
-              <span className={chat.sendBtn} onClick={this.props.onSendMessage}>Send</span>
+              <span className={`${button.bordered} ${button.blue}`} onClick={this.props.onSendMessage}>Send</span>
             </span>
 
           </div>

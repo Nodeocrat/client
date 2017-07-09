@@ -13,6 +13,7 @@ class NodeSocial extends WsComponent {
     super(props);
 
     this.handleSendMessage = this.handleSendMessage.bind(this);
+    this.handleCreateGame = this.handleCreateGame.bind(this);
     this.handleSendTextChange = this.handleSendTextChange.bind(this);
     this.state = {
       loading: true,
@@ -44,8 +45,8 @@ class NodeSocial extends WsComponent {
             });
           self.on(`${self.roomId}${EventTypes.UPDATE_GAME}`,
             game => self.props.actions.updateGame(game));
-          self.on(`${self.roomId}${EventTypes.ADD_GAMES}`,
-            games => self.props.actions.addGames(games));
+          self.on(`${self.roomId}${EventTypes.ADD_GAME}`,
+            game => self.props.actions.addGames([game]));
           self.on(`${self.roomId}START`, response => {
             const players = new OrderedHash({array: response.players});
             const gameList = new OrderedHash({array: response.gameList});
@@ -70,8 +71,13 @@ class NodeSocial extends WsComponent {
 
   componentWillUnmount(...args){
     super.componentWillUnmount(...args);
-    this._socket.emit(`${this.roomId}EXIT`);
+    this._socket.emit(`${this.roomId}${EventTypes.EXIT}`);
     this.props.actions.leftLobby();
+  }
+
+  handleCreateGame(options){
+    console.log('options: ' + JSON.stringify(options));
+    this._socket.emit(`${this.roomId}${EventTypes.CREATE_GAME}`, {options});
   }
 
   handleSendMessage(){
@@ -97,12 +103,18 @@ class NodeSocial extends WsComponent {
     /*players={this.props.players}
     chatMessages={this.props.chatMessages}
     <GameCreation gameList={this.props.gameList}/>*/
+
+    //const gameList = [{id: "testgame", name: "Test Game", playerCount: 5}];
+
     return (
-      <section>
+      <section style={{position: 'relative'}}>
+        <div id="node-social-popup"/>
         {this.state.loading ?
           <div>Loading lobby...</div> :
           <div>
-            <GameCreation gameList={this.props.gameList} onJoinGame={this.props.onJoinGame}/>
+            <GameCreation gameList={this.props.gameList}
+              onCreateGame={this.handleCreateGame}
+              onJoinGame={this.props.onJoinGame}/>
             <ChatView
               players={this.props.players}
               chatMessages={this.props.chatMessages}

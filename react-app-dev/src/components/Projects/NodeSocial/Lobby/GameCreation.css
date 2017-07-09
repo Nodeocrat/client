@@ -14,23 +14,16 @@
   font-size: 25px;
 }
 
-.joinBtn {
-   text-align: center;
-   padding: 3px 7px;
-   background-color: #7fd485;
-   border: 2px solid #499456;
-   border-radius: 5px;
-   color: #499456;
-   cursor: pointer;
-}
-
-
 .gameWrap {
   background-color: #558eca;
   border-radius: 5px;
   padding: 5px;
+  width: 150px;
+  display: inline-block;
+  margin-right: 5px;
 }
 .gameName {
   font-weight: bold;
   font-size: 17px;
+  text-align: center;
 }
