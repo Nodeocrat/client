@@ -15,9 +15,9 @@ and it structured as:
 3. '@store/configureStore' resolves to file where the store is configured and
 exported as a default export (so that NodeSocial has access to store.dispatch)
 
-Things client code must do to get it working:
+To get it working properly, client code must:
 --------------------------------------------
-1. add NodeSocial/reducers to root reducer as follows:
+1. add NodeSocial/reducers to root reducer, e.g.:
 
 import NodeSocialReducers from '@components/Projects/NodeSocial/reducers';
 const rootReducer = combineReducers({

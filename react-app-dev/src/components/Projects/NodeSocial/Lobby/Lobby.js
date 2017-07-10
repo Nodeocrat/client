@@ -7,6 +7,7 @@ import Ajax from '@services/Ajax';
 import OrderedHash from '@lib/OrderedHash';
 import GameCreation from './GameCreation';
 import WsComponent from '@NodeSocial/utils/WsComponent';
+import StatusDialog from '@NodeSocial/utils/StatusDialog';
 
 class NodeSocial extends WsComponent {
   constructor(props){
@@ -16,6 +17,8 @@ class NodeSocial extends WsComponent {
     this.handleCreateGame = this.handleCreateGame.bind(this);
     this.handleSendTextChange = this.handleSendTextChange.bind(this);
     this.state = {
+      showStatusDialog: false,
+      statusText: "",
       loading: true,
       sendText: ""
     };
@@ -77,7 +80,10 @@ class NodeSocial extends WsComponent {
 
   handleCreateGame(options){
     console.log('options: ' + JSON.stringify(options));
-    this._socket.emit(`${this.roomId}${EventTypes.CREATE_GAME}`, {options});
+    this._socket.emit(`${this.roomId}${EventTypes.CREATE_GAME}`, {options}, res => {
+      if(res.error)
+        this.setState({showStatusDialog: true, statusText: res.error});
+    });
   }
 
   handleSendMessage(){
@@ -121,6 +127,10 @@ class NodeSocial extends WsComponent {
               onSendMessage={this.handleSendMessage}
               onSendTextChange={this.handleSendTextChange}
               sendText={this.state.sendText}/>
+            { this.state.showStatusDialog ?
+              <StatusDialog text={this.state.statusText} root="node-social-popup" onClose={()=>{this.setState({showStatusDialog: false})}}/>
+              : null
+            }
           </div>
         }
       </section>
