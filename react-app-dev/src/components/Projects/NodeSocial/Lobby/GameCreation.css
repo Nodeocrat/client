@@ -27,4 +27,6 @@
   font-weight: bold;
   font-size: 17px;
   text-align: center;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
