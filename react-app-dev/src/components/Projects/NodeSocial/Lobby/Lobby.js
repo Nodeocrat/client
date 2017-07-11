@@ -50,6 +50,8 @@ class NodeSocial extends WsComponent {
             game => self.props.actions.updateGame(game));
           self.on(`${self.roomId}${EventTypes.ADD_GAME}`,
             game => self.props.actions.addGames([game]));
+          self.on(`${self.roomId}${EventTypes.GAME_ENDED}`,
+            game => self.props.actions.removeGame(game));
           self.on(`${self.roomId}START`, response => {
             const players = new OrderedHash({array: response.players});
             const gameList = new OrderedHash({array: response.gameList});

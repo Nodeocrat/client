@@ -27,6 +27,7 @@ export default class GameCreation extends React.Component {
                 return (<div key={game.id} className={`${styles.gameWrap} ${text.center}`}>
                   <div className={styles.gameName}>{game.name}</div>
                   <div>players: {game.playerCount}</div>
+                  <div ref={e => this.setupTimer(e, game)}>∞</div>
                   <div className={`${button.bordered} ${button.green}`} onClick={() => this.props.onJoinGame(game.id)}>Join</div>
                 </div>);
               })
@@ -43,5 +44,23 @@ export default class GameCreation extends React.Component {
       </div>
     );
   }
+
+  setupTimer(ele, game){
+
+    console.log(`registering element: ${JSON.stringify(game)}`);
+
+    setInterval(()=>{
+      if(!game.timer || !game.timeCreated || !ele || !ele.innerHTML)
+        return;
+
+      let timeLeft = Math.floor(game.timer - ((new Date().getTime() / 1000) - game.timeCreated));
+      if(timeLeft < 0)
+        timeLeft = 0;
+      const seconds = new Date(null);
+      seconds.setSeconds(timeLeft);
+      ele.innerHTML = seconds.toISOString().substr(11, 8);
+    }, 1000);
+  }
+
 
 };

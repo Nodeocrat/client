@@ -45,6 +45,15 @@ export default function lobbyReducer(state = initialState.lobby, action){
       newGameList.insertMany(action.games, 'id');
       return Object.assign({}, state, {gameList: newGameList});
 
+    case Types.REMOVE_GAME:
+      const gameListPostRemoval = new OrderedHash({clone: state.gameList});
+      if(!(action.game && action.game.id)){
+        console.log('Game or Game ID not found');
+        return state;
+      }
+      gameListPostRemoval.remove(action.game.id);
+      return Object.assign({}, state, {gameList: gameListPostRemoval});
+
     case Types.LEFT_LOBBY:
       return initialState.lobby;
 

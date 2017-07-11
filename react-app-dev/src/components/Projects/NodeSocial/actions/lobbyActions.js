@@ -25,6 +25,10 @@ export function addGames(games){
   return {type: Types.ADD_GAMES, games};
 }
 
+export function removeGame(game){
+  return {type: Types.REMOVE_GAME, game};
+}
+
 export function updateGame(game){
   return {type: Types.UPDATE_GAME, game};
 }

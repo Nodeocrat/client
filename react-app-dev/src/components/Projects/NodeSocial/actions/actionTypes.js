@@ -14,4 +14,5 @@ export const JOIN_GAME_ERROR = 'JOIN_GAME_ERROR';
 export const LEFT_LOBBY = 'LEFT_LOBBY';
 export const UPDATE_PLAYER = 'UPDATE_PLAYER';
 export const ADD_GAMES = 'ADD_GAMES';
+export const REMOVE_GAME = 'REMOVE_GAME';
 export const UPDATE_GAME = 'UPDATE_GAME';
