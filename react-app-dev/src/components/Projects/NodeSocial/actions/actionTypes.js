@@ -16,3 +16,4 @@ export const UPDATE_PLAYER = 'UPDATE_PLAYER';
 export const ADD_GAMES = 'ADD_GAMES';
 export const REMOVE_GAME = 'REMOVE_GAME';
 export const UPDATE_GAME = 'UPDATE_GAME';
+export const JOINED_LOBBY = 'JOINED_LOBBY';

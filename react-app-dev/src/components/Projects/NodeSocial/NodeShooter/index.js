@@ -59,7 +59,7 @@ let Bullet = class Bullet extends CircularEntity
 }
 
 export default function(){
-  return function initClient(socket, roomId) {
+  return function initClient(room, ops) {
     // 0. DECLARATIONS
     let canvasInFocus = false;
     let canvasClicked = false;
@@ -87,93 +87,73 @@ export default function(){
     let entities = {};
 
     let cleanupTasks = [];
+
     function cleanup() {
-      window.yolo = socket;
-      socket.off(`${roomId}START`);
-      socket.off('disconnect', onDisconnect);
-      socket.off('player joined');
-      socket.off('player left');
-      socket.off('move left');
-      socket.off('stop move left');
-      socket.off('move right');
-      socket.off('stop move right');
-      socket.off('move up');
-      socket.off('stop move up');
-      socket.off('move down');
-      socket.off('player shot');
-      socket.off('stop move down');
-      socket.off('collision');
-      cleanupTasks.forEach(task => task());
+      while(cleanupTasks.length)
+        cleanupTasks.shift()();
       if(wraf) window.cancelAnimationFrame(wraf);
       window.onclick = null;
     }
-    function onDisconnect(){
-      cleanup();
-    }
-    const onStart = [];
 
-  	socket.on(`${roomId}START`, function(entitiesOnServer, myNameOnServer, playerCon, bulletCon){
+  	room.on('START', function({entitiesOnServer, myNameOnServer}){
       console.log('booting up game');
   		myName = myNameOnServer;
   		entities = entitiesOnServer;
   		SELF = entities[myName];
   		canvasInFocus = true;
-      while(onStart.length > 0)
-        onStart.shift()();
-  		initGame(socket);
+  		initGame(room);
   	});
-  	socket.on('disconnect', onDisconnect);
-  	socket.on('player joined', function(player){
+  	room.on('player joined', function(player){
   		entities[player.name] = player;
   	});
-  	socket.on('player left', function(playerId){
+  	room.on('player left', function(playerId){
   		delete entities[playerId];
   	});
-  	socket.on('move left', function(playerId){
+  	room.on('move left', function(playerId){
   		let player = entities[playerId];
   		player.dx = -player.speed;
   	});
-  	socket.on('stop move left', function(playerId, atX, atY){
+  	room.on('stop move left', function({playerId, atX, atY}){
   		let player = entities[playerId];
   		player.dx = 0;
   		player.x = atX;
   		player.y = atY;
   	});
-  	socket.on('move right', function(playerId){
+  	room.on('move right', function(playerId){
   		let player = entities[playerId];
   		player.dx = player.speed;
   	});
-  	socket.on('stop move right', function(playerId, atX, atY){
+  	room.on('stop move right', function({playerId, atX, atY}){
   		let player = entities[playerId];
   		player.dx = 0;
   		player.x = atX;
   		player.y = atY;
   	});
-  	socket.on('move up', function(playerId){
+  	room.on('move up', function(playerId){
   		let player = entities[playerId];
   		player.dy = -player.speed;
   	});
-  	socket.on('stop move up', function(playerId, atX, atY){
+  	room.on('stop move up', function({playerId, atX, atY}){
   		let player = entities[playerId];
   		player.dy = 0;
   		player.x = atX;
   		player.y = atY;
   	});
-  	socket.on('move down', function(playerId){
+  	room.on('move down', function(playerId){
   		let player = entities[playerId];
   		player.dy = player.speed;
   	});
-  	socket.on('stop move down', function(playerId, atX, atY){
+  	room.on('stop move down', function({playerId, atX, atY}){
   		let player = entities[playerId];
   		player.dy = 0;
   		player.x = atX;
   		player.y = atY;
   	});
-  	socket.on('player shot', function(bulletKey, originatorKey, clickX, clickY){
+  	room.on('player shot', function({bulletKey, originatorKey, clickX, clickY}){
   		let originator = entities[originatorKey];
   		entities[bulletKey] = new Bullet(originator, clickX, clickY);
   	});
-  	socket.on('collision', function(entityKey, destKey){
+  	room.on('collision', function({entityKey, destKey}){
 
   		let entity = entities[entityKey];
   		let dest = entities[destKey];
@@ -199,14 +179,9 @@ export default function(){
   		}
   	});
 
-    let initGame = function(socket){
+    let initGame = function(room){
 
       const canvasElement = document.getElementById('node-shooter');
-      const onLeaveNodeShooter = function(){
-        cleanup();
-      };
-      document.getElementById("leave-node-shooter").addEventListener("click", onLeaveNodeShooter);
-      cleanupTasks.push(() => document.getElementById("leave-node-shooter").removeEventListener("click", onLeaveNodeShooter));
 
       canvasElement.onmousedown = function(e){
         e.preventDefault();
@@ -241,7 +216,7 @@ export default function(){
     		let entityKey = "bullet|" + myName + "|" + bulletNo;
     		bulletNo++;
     		entities[entityKey] = new Bullet(SELF, x, y);
-    		socket.emit('player shot', x, y);
+    		room.emit('player shot', {x, y});
 
     	};
 
@@ -262,7 +237,7 @@ export default function(){
     				{
     					SELF.dy = -1;
     					keysDown.up = true;
-    					socket.emit('move up');
+    					room.emit('move up');
     				}
     				break;
 
@@ -272,7 +247,7 @@ export default function(){
     				{
     					SELF.dy = 1;
     					keysDown.down = true;
-    					socket.emit('move down');
+    					room.emit('move down');
     				}
     				break;
 
@@ -282,7 +257,7 @@ export default function(){
     				{
     					SELF.dx = -1;
     					keysDown.left = true;
-    					socket.emit('move left');
+    					room.emit('move left');
     				}
     				break;
 
@@ -292,7 +267,7 @@ export default function(){
     				{
     					SELF.dx = 1;
     					keysDown.right = true;
-    					socket.emit('move right');
+    					room.emit('move right');
     				}
     				break;
 
@@ -325,7 +300,7 @@ export default function(){
     				{
     					keysDown.up = false;
     					SELF.dy = 0;
-    					socket.emit('stop move up');
+    					room.emit('stop move up');
     				}
     				break;
 
@@ -335,7 +310,7 @@ export default function(){
     				{
     					SELF.dy = 0;
     					keysDown.down = false;
-    					socket.emit('stop move up');
+    					room.emit('stop move up');
     				}
     				break;
 
@@ -345,7 +320,7 @@ export default function(){
     				{
     					SELF.dx = 0;
     					keysDown.left = false;
-    					socket.emit('stop move left');
+    					room.emit('stop move left');
     				}
     				break;
 
@@ -355,7 +330,7 @@ export default function(){
     				{
     					SELF.dx = 0;
     					keysDown.right = false;
-    					socket.emit('stop move right');
+    					room.emit('stop move right');
     				}
     				break;
 
@@ -506,8 +481,6 @@ export default function(){
         }
       }
     };
-    return {onStart: task => {
-      onStart.push(task);
-    }};
+    return {cleanup};
   };
 }

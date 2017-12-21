@@ -54,6 +54,9 @@ export default function lobbyReducer(state = initialState.lobby, action){
       gameListPostRemoval.remove(action.game.id);
       return Object.assign({}, state, {gameList: gameListPostRemoval});
 
+    case Types.JOINED_LOBBY:
+      return Object.assign({}, state, {roomId: action.roomId});
+
     case Types.LEFT_LOBBY:
       return initialState.lobby;
 

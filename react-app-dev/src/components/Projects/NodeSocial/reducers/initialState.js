@@ -4,6 +4,7 @@ export default {
   lobby: {
     chatMessages: [], //{id, username, timestamp (ISO), text, group}
     players: new OrderedHash(), //{username: user}
-    gameList: new OrderedHash()
+    gameList: new OrderedHash(),
+    roomId: null
   }
 };

@@ -19,13 +19,14 @@ export default class Avatar extends React.PureComponent {
     if(this.state.coords && this.state.coords.length === 1){
 
       let color = '#ffffff';
-      if(this.props.status === 'ONLINE')
+      if(this.props.status === 'ACTIVE')
         color = '#33cc33';
       else if (this.props.status === 'IN_GAME')
         color = '#ee1111';
       else if (this.props.status === 'IDLE')
         color = '#cccc22';
-      else if (this.props.status === 'OFFLINE');
+      else
+        color = '#959595';
 
       const statusIconStyle = {
         position: 'absolute',
