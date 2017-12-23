@@ -1,5 +1,4 @@
 import React from 'react';
-import RoomComponent from '../utils/RoomComponent';
 import NodeShooter from '../NodeShooter';
 import {Rooms} from 'client-room';
 
@@ -26,12 +25,11 @@ export default class Game extends React.Component {
   }
 
   componentWillUnmount(){
-    this.leave();
+    this.gameInstance.cleanup();
+    this.room.leave();
   }
 
   leave(){
-    this.gameInstance.cleanup();
-    this.room.leave();
     this.props.history.goBack();
   }
 

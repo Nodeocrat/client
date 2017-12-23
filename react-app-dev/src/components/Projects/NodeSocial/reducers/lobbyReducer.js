@@ -58,8 +58,6 @@ export default function lobbyReducer(state = initialState.lobby, action){
       return Object.assign({}, state, {roomId: action.roomId});
 
     case Types.LEFT_LOBBY:
-      return initialState.lobby;
-
     default:
       return state;
   }

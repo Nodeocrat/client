@@ -89,6 +89,7 @@ export default function(){
     let cleanupTasks = [];
 
     function cleanup() {
+      console.log('Freeing resources from NodeShooter');
       while(cleanupTasks.length)
         cleanupTasks.shift()();
       if(wraf) window.cancelAnimationFrame(wraf);
