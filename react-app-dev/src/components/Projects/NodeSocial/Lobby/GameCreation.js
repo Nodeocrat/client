@@ -6,7 +6,7 @@ import text from '@styles/text.css';
 
 import {connect} from 'react-redux';
 
-export default class GameCreation extends React.Component {
+export default class GameCreation extends React.PureComponent {
 
   constructor(props){
     super(props);
