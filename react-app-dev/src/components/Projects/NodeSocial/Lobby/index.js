@@ -21,7 +21,8 @@ class Lobby extends React.Component {
       showStatusDialog: false,
       statusText: "",
       loading: true,
-      sendText: ""
+      sendText: "",
+      disconnected: false
     };
 
     let room = null;
@@ -77,8 +78,6 @@ class Lobby extends React.Component {
           const gameList = new OrderedHash({array: response.gameList});
           this.props.actions.addPlayers(players);
           this.props.actions.addGames(gameList);
-
-          //Think we're just gonna have to use redux only...?
           this.setState({loading: false});
         });
         this.on('RESUME', function(response){
@@ -86,9 +85,13 @@ class Lobby extends React.Component {
           const gameList = new OrderedHash({array: response.gameList});
           this.props.actions.addPlayers(players);
           this.props.actions.addGames(gameList);
-
-          //Think we're just gonna have to use redux only...?
           this.setState({loading: false});
+        });
+        this.on('disconnect', function(){
+          this.setState({disconnected: true});
+        });
+        this.on('reconnect', function(){
+          this.setState({disconnected: false});
         });
 
         this.room.initialized();
@@ -152,11 +155,17 @@ class Lobby extends React.Component {
 
     //const gameList = [{id: "testgame", name: "Test Game", playerCount: 5}];
 
+    let notificationJsx = null;
+    if(this.state.loading)
+      notificationJsx = <div>Loading lobby...</div>;
+    else if(this.state.disconnected)
+      notificationJsx = <div>Disconnected. Attempting to reconnect...</div>;
+
     return (
       <section style={{position: 'relative'}}>
         <div id="node-social-popup"/>
-        {this.state.loading ?
-          <div>Loading lobby...</div> :
+        {notificationJsx ?
+          notificationJsx :
           <div>
             <GameCreation gameList={this.props.gameList}
               onCreateGame={this.handleCreateGame}

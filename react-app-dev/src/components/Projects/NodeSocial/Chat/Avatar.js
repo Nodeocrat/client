@@ -25,7 +25,7 @@ export default class Avatar extends React.PureComponent {
         color = '#ee1111';
       else if (this.props.status === 'IDLE')
         color = '#cccc22';
-      else
+      else if (this.props.status === 'DISCONNECTED')
         color = '#959595';
 
       const statusIconStyle = {
