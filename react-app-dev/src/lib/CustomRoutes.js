@@ -15,11 +15,11 @@ const PropsRoute = ({ component, ...rest }) => (
 
 const AuthRouteComponent = ({user, component, unauthComponent, ...rest}) => (
   <Route {...rest} render={routeProps => user.profile ?
-    mergeProps(component, routeProps, rest) :
+    mergeProps(component, routeProps, {user}, rest) :
     (unauthComponent || <LoginDialog onClose={() => routeProps.history ? routeProps.history.goBack() : null } error="You must be logged in to view this page"/>)
   }/>
 );
 
-const mapStateToProps = (state, ownProps) => ({user: state.user, ...ownProps});
+const mapStateToProps = (state, ownProps) => ({user: ownProps.user || state.user, ...ownProps});
 const AuthRoute = connect(mapStateToProps, {}, null, {pure:false})(AuthRouteComponent);
 export {PropsRoute, AuthRoute};
