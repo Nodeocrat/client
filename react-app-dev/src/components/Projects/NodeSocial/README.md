@@ -25,3 +25,12 @@ const rootReducer = combineReducers({
   ...NodeSocialReducers
 });
 Look at reducers/index.js at the state. The same state cannot be present in the first-level of the rootReducer's state else they will be duplicated.
+
+
+
+
+
+
+
+------------------------------------ After ------------------------------------
+Assumed that you already have react-router-dom 4.X installed

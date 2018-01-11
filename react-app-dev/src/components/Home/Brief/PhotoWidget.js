@@ -1,8 +1,8 @@
 import React from 'react';
 import {SocialSymbol} from '@lib/SocialButton/SocialButton';
 import position from '@styles/position.css';
-import {polarToCartesian} from '@services/MathTools';
-import {offsetFromParent} from '@services/DOMTools';
+import {polarToCartesian} from 'math-tools';
+import {offsetFromParent} from 'dom-tools';
 import NcLogoLarge from '@media/nclogolarge.png';
 
 export default class PhotoWidget extends React.PureComponent {

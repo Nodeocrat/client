@@ -1,6 +1,6 @@
 import React from 'react';
-import {polarToCartesian} from '@services/MathTools';
-import {offsetFromParent} from '@services/DOMTools';
+import {polarToCartesian} from 'math-tools';
+import {offsetFromParent} from 'dom-tools';
 
 export default class Avatar extends React.PureComponent {
 

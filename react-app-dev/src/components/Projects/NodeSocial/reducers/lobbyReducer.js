@@ -26,6 +26,7 @@ export default function lobbyReducer(state = initialState.lobby, action){
 
     case Types.SET_PLAYER_OFFLINE:
       const newPlayersSetOffline = new OrderedHash({clone: state.players});
+      console.log(`username: ${action.username}. action: ${JSON.stringify(action)}`);
       newPlayersSetOffline.get(action.username).status = 'OFFLINE';
       return Object.assign({}, state, {players: newPlayersSetOffline});
 

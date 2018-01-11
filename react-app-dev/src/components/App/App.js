@@ -14,9 +14,6 @@ import Account from '@components/Account/Account';
 //styles
 import text from '@styles/text.css';
 
-//services
-import Ajax from '@services/Ajax';
-
 export default class extends React.Component {
   constructor(props){
     super(props);

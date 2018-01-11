@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from '@NodeSocial/utils/Dialog';
+import Dialog from './Dialog';
 import button from '@styles/button.css';
 import text from '@styles/text.css';
 
