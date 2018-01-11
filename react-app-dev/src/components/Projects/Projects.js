@@ -2,7 +2,7 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import ApProj from './ApProj';
 import NbProj from './GameProj';
-import NodeSocial from './NodeSocial';
+import NodeSocial from 'node-social';
 import ProjectThumbnails from '@components/ProjectThumbnails/ProjectThumbnails';
 import {AuthRoute} from '@lib/CustomRoutes';
 import {connect} from 'react-redux';
