@@ -5,6 +5,7 @@ import NbProj from './GameProj';
 import NodeSocial from './NodeSocial';
 import ProjectThumbnails from '@components/ProjectThumbnails/ProjectThumbnails';
 import {AuthRoute} from '@lib/CustomRoutes';
+import {connect} from 'react-redux';
 
 import text from '@styles/text.css';
 import position from '@styles/position.css';
@@ -14,7 +15,7 @@ import position from '@styles/position.css';
 //temp
 import {Link} from 'react-router-dom';
 
-export default props => {
+const Projects = props => {
   return (
     <div>
       <Route exact path={props.match.path} render={() => (
@@ -26,10 +27,16 @@ export default props => {
       )}/>
       <Route path={`${props.match.path}/ApProj`} component={ApProj}/>
       <Route path={`${props.match.path}/GameProj`} component={NbProj}/>
-      <AuthRoute style={{marginTop: 100 + 'px'}} path={`${props.match.path}/NodeSocial`} component={NodeSocial}/>
+      <AuthRoute style={{marginTop: 100 + 'px'}} user={props.user} path={`${props.match.path}/NodeSocial`} component={NodeSocial}/>
     </div>
   );
 };
+
+function mapStateToProps(state){
+  return {user: state.user};
+}
+
+export default connect(mapStateToProps)(Projects);
 
 
 //<AuthRoute style={{marginTop: 100 + 'px'}} path={`${props.match.path}/NodeSocial`} component={NodeSocial}/>

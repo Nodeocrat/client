@@ -6,6 +6,7 @@ export const REMOVE_PLAYERS = 'REMOVE_PLAYERS';
 export const SET_PLAYER_OFFLINE = 'SET_PLAYERS_OFFLINE';
 
 //Lobby actions
+export const APP_STARTED = 'APP_STARTED';
 export const CREATE_GAME = 'CREATE_GAME';
 export const CREATE_GAME_SUCCESS = 'CREATE_GAME_SUCCESS';
 export const CREATE_GAME_ERROR = 'CREATE_GAME_ERROR';

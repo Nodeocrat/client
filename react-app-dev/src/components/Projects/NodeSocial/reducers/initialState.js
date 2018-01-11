@@ -6,5 +6,6 @@ export default {
     players: new OrderedHash(), //{username: user}
     gameList: new OrderedHash(),
     roomId: null
-  }
+  },
+  user: null
 };
