@@ -6,15 +6,7 @@
   "dependencies": {
     "dom-tools": "git+https://github.com/Nodeocrat/dom-tools.git",
     "math-tools": "git+https://github.com/Nodeocrat/math-tools.git",
-    "node-social": "git+https://github.com/Nodeocrat/node-social.git",
-    "react": "^15.4.2",
-    "react-bootstrap": "^0.30.8",
-    "react-dom": "^15.4.2",
-    "react-redux": "^5.0.4",
-    "react-router-dom": "^4.0.0",
-    "redux": "^3.6.0",
-    "redux-immutable-state-invariant": "^2.0.0",
-    "redux-thunk": "^2.2.0"
+    "node-social": "git+https://github.com/Nodeocrat/node-social.git"
   },
   "directories": {
     "lib": "lib"
