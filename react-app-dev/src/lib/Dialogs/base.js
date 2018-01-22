@@ -22,12 +22,11 @@ export default class Dialog {
     }
 
     _close(){
-        if(this._containerEle){
-            window.removeEventListener("resize", this._render);
-            this._unrender();
-        } else {
-            console.log('ERROR: Attempted to close popup on null dialog container');
-        }
+      window.removeEventListener("resize", this._render);
+        if(this._containerEle)
+          this._unrender();
+        else
+          console.log('ERROR: Attempted to close popup on null dialog container');
     }
 
     show(ops = {}){
