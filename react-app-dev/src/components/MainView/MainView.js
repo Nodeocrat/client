@@ -2,8 +2,8 @@ import React from 'react';
 import {PropsRoute, AuthRoute} from '@lib/CustomRoutes';
 
 export default (props) => (
-  <div className="container">
-    <div className="col-md-10 col-md-offset-1">
+  <div style={{height: '100%'}}>
+    <div style={{height: '100%'}}>
       {props.routes.map(route => {
         const otherProps = route.props || {};
         const routeProps = {

@@ -17,7 +17,7 @@ import {Link} from 'react-router-dom';
 
 const Projects = props => {
   return (
-    <div>
+    <div style={{height: '100%'}}>
       <Route exact path={props.match.path} render={() => (
         <div className={position.center}>
           <div className={`${text.title}`}>Projects</div>
@@ -27,7 +27,7 @@ const Projects = props => {
       )}/>
       <Route path={`${props.match.path}/ApProj`} component={ApProj}/>
       <Route path={`${props.match.path}/GameProj`} component={NbProj}/>
-      <AuthRoute style={{marginTop: 100 + 'px'}} user={props.user} path={`${props.match.path}/NodeSocial`} component={NodeSocial}/>
+      <AuthRoute style={{padding: '0 40px 40px 40px'}} user={props.user} path={`${props.match.path}/NodeSocial`} component={NodeSocial}/>
     </div>
   );
 };

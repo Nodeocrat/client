@@ -49,7 +49,7 @@ export default class extends React.Component {
     return (
       <Provider store={this.store}>
         <BrowserRouter>
-          <div className={text.regular}>
+          <div className={text.regular} style={{height: '100%'}}>
             <NavBar routes={tabs}/>
             <MainView routes={tabs}/>
           </div>
