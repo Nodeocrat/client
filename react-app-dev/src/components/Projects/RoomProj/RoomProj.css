@@ -1,0 +1,7 @@
+:global(.nav-tab) {
+  margin: 5px;
+}
+
+:global(.nav-tab.active) {
+  color: red;
+}

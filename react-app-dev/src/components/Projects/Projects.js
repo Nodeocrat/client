@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
+import RoomProj from './RoomProj';
 import ApProj from './ApProj';
 import NbProj from './GameProj';
 import NodeSocial from 'node-social';
@@ -22,9 +23,9 @@ const Projects = props => {
         <div className={position.center}>
           <div className={`${text.title}`}>Projects</div>
           <ProjectThumbnails/>
-          <Link to={`${props.match.path}/NodeSocial`}><u>NodeSocial</u></Link>
         </div>
       )}/>
+      <Route path={`${props.match.path}/Room`} component={RoomProj}/>
       <Route path={`${props.match.path}/ApProj`} component={ApProj}/>
       <Route path={`${props.match.path}/GameProj`} component={NbProj}/>
       <AuthRoute style={{padding: '0 40px 40px 40px'}} user={props.user} path={`${props.match.path}/NodeSocial`} component={NodeSocial}/>

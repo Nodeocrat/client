@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import socialAppThumbnail from '@media/social-app-thumbnail.png';
 import nbThumbnail from '@media/nb-thumbnail.png';
 import apThumbnail from '@media/ap-thumbnail.png';
+import roomThumbnail from '@media/room-thumbnail.jpg';
 
 //styles
 import border from '@styles/border.css';
@@ -17,6 +18,12 @@ const projects = [
     summary: "Lobby integrated with Node Shooter",
     img: socialAppThumbnail,
     route: "NodeSocial"
+  },
+  {
+    name: "Room pattern",
+    summary: "Client & Backend package to aid with communication for a room of clients",
+    img: roomThumbnail,
+    route: "Room"
   },
   {
     name: "Node Shooter",
