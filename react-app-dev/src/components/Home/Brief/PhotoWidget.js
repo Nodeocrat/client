@@ -60,11 +60,12 @@ export default class PhotoWidget extends React.PureComponent {
 
   componentDidMount(){
     window.addEventListener("resize", this.updateCoords);
-    this.updateCoords();
+    window.addEventListener("load", this.updateCoords);
   }
 
   componentWillUnmount(){
     window.removeEventListener("resize", this.updateCoords);
+    window.removeEventListener("load", this.updateCoords);
   }
 
   // Function which calculates center coordinates of element, relative to
