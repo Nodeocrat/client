@@ -4,12 +4,15 @@ import ScriptLoader from '@services/ScriptLoader';
 export default class RoomProj extends React.Component {
   render(){
     return (
-      <section>
+      <section className="col-md-10 col-md-offset-1">
         <h2 style={{textAlign: 'center'}}><b>Room pattern</b></h2>
 
         <h4><b>Summary</b></h4>
         <p>
-        {`The Room package is designed to be used whenever there is a collection of clients communicating with each other via a central server. Usually there's a lot of setup involved with creating such rooms including setting up the websocket server, working out when the client is initialized and ready to receive the initial rooms state, and cleaning up resources such as event listeners, and if you want to implement more advanced functionality such as disconnect/reconnect management, then things can get messy. This room package is designed to greatly simplify all of this.`}
+        {`The Room package is designed to be used whenever there are multiple clients communicating with each other via a central server. Usually there's a lot of setup involved with creating such rooms including setting up the websocket server, working out when the client is initialized and ready to receive the initial rooms state, and cleaning up resources such as event listeners, and if you want to implement more advanced functionality such as disconnect/reconnect management, then things can get messy. This room package is designed to greatly simplify all of this.`}
+
+        <br/><br/>Client Room git repo: <a href="https://github.com/Nodeocrat/client-room" target="_blank">https://github.com/Nodeocrat/client-room</a>
+        <br/>Server Room git repo: <a href="https://github.com/Nodeocrat/server-room" target="_blank">https://github.com/Nodeocrat/server-room</a>
         </p>
 
         <h4><b>Socket Handler</b></h4>

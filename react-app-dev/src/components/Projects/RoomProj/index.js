@@ -14,8 +14,8 @@ export default props => (
   <div style={{height: '100%'}} className="container">
     <Route path={props.match.path} render={() => (
       <div className={position.center}>
-        <NavLink exact className="nav-tab" to={props.match.path}>Summary</NavLink>
-        <NavLink className="nav-tab" to={`${props.match.path}/Samples`}>Samples</NavLink>
+        <NavLink exact className="nav-tab" to={props.match.path}>Summary</NavLink>|
+        <NavLink className="nav-tab" to={`${props.match.path}/Samples`}>Samples</NavLink>|
         <NavLink className="nav-tab" to={`${props.match.path}/ApiDocs`}>API Docs</NavLink>
       </div>
     )}/>

@@ -13,7 +13,7 @@ export default class RoomProj extends React.Component {
 
   render(){
     return (
-      <section>
+      <section className="col-md-10 col-md-offset-1">
         <h2 style={{textAlign: 'center'}}><b>Samples</b></h2>
         <div>There are 6 samples:</div>
         <ul>
@@ -31,7 +31,7 @@ export default class RoomProj extends React.Component {
         <a href="https://github.com/Nodeocrat/room-samples/tree/master/sample-1">Sample 1</a>{` is a simple chat room example. If you're testing it on your own, use two separate browsers or a browser with incognito mode to log into multiple accounts. The server side room module doesn't allow multiple clients with the same session ID.`}
         </p>
         <p>
-        {`On the client side the part to take notice of is in the login() function. The rest is setup, or code to manipulate HTML/CSS.`}
+        {`On the client side the part to take notice of is in the login() function. The rest is mostly DOM manipulation.`}
         </p>
         <pre className="prettyprint lang-js">
         {`
@@ -159,25 +159,25 @@ export default class RoomProj extends React.Component {
         <br/>
         <h4><b>Sample 3: Permissions</b></h4>
         <p>
-        {``}
+        {`Sample coming soon.`}
         </p>
 
         <br/>
         <h4><b>Sample 4: Initialization hook</b></h4>
         <p>
-        {`Example of 'initializing...'; e.g. when to use 'onClientAccepted' ... explain you could also use this to change state of number of users in room and other things which could change if other users are accepted, in order to avoid conflicts of users joining at the same time. Make an explanation of this in the article and reference this sample. Explain at this point that you cannot assume there is an active websocket connection, so do not emit any events, or register for broadcasting. You may register event listeners though, but the main purpose is for informing people of another user joining, and avoiding conflicts of users joining around the same time.`}
+        {`Sample coming soon.`}
         </p>
 
         <br/>
         <h4><b>Sample 5: Multiple rooms of the same type</b></h4>
         <p>
-        {`a chat room which allows multi-login of clients of the same user & lock the room into a custom element? demonstrates that you can easily join multiple rooms of the same type without havint to worry about conflicting events on the server or client side thanks to the way the rooms on the client/server precede events with an agreed unique ID behind the scenes.`}
+        {`Sample 5 demonstrates that you can easily join multiple rooms of the same type without having to worry about conflicting events on the server or client thanks to the way the rooms on the client/server precede events with an agreed unique ID behind the scenes. Here, the code has been changed so that when you log in (auth-free), you are presented with 4 rooms which you can join, which no longer requires POST data to be sent in the join rooms' request. The code for each room is mostly the same apart from it has been factored into its own class (in chat-room.js), with the constructor taking an integer for the room number. Normally web components should be used here, but the spec is too unstable at the moment, and using babel or React isn't worth it for such a small sample, so we just use a class which manipulates the DOM when it is constructed.`}
         </p>
 
         <br/>
         <h4><b>Sample 6: Everything together</b></h4>
         <p>
-        {`balablae everythign in previous samples but the reconnect functionality is more interesting here.`}
+        {`Sample 6 combines everything from the previous samples. The disconnect/reconnect functionality is more interesting here, since if you disconnect and only rejoin a single room, you can still be booted from the other rooms if you don't join back in time. Also the onJoinRequest is used to refuse permission to join a 4th room if you are already a member of 3.`}
         </p>
       </section>
     );

@@ -59,7 +59,7 @@ const ExperienceSection = () => (
 );
 
 export default () => (
-  <section>
+  <section className="container">
     <Brief/>
     <SkillsSection/>
     <section className="col-sm-offset-2 col-sm-8" style={{marginTop: '40px'}}>

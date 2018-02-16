@@ -1,7 +1,11 @@
 :global(.nav-tab) {
   margin: 5px;
+  color: #777777;
+  text-decoration: none;
 }
 
 :global(.nav-tab.active) {
-  color: red;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }
