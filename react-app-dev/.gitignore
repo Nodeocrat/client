@@ -7,7 +7,7 @@
 /coverage
 
 # production
-/build
+#/build   --currently a problem with react build on AWS (will investigate asap)
 
 # misc
 .DS_Store
