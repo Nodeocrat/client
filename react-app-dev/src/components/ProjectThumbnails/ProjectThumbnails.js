@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import socialAppThumbnail from '@media/social-app-thumbnail.png';
 import nbThumbnail from '@media/nb-thumbnail.png';
 import apThumbnail from '@media/ap-thumbnail.png';
-import roomThumbnail from '@media/room-thumbnail.jpg';
+import roomThumbnail from '@media/room-thumbnail.png';
 
 //styles
 import border from '@styles/border.css';
@@ -14,16 +14,16 @@ import position from '@styles/position.css';
 
 const projects = [
   {
-    name: "Social App",
-    summary: "Lobby integrated with Node Shooter",
-    img: socialAppThumbnail,
-    route: "NodeSocial"
-  },
-  {
     name: "Room pattern",
     summary: "Client & Backend package to aid with communication for a room of clients",
     img: roomThumbnail,
     route: "Room"
+  },
+  {
+    name: "Social App",
+    summary: "Lobby integrated with Node Shooter",
+    img: socialAppThumbnail,
+    route: "NodeSocial"
   },
   {
     name: "Node Shooter",
@@ -57,17 +57,19 @@ const ProjectThumbnails = () => (
 const HomePageProjectThumbnails = props => (
   <div {...props}>
   {
-    <div>
-      <Link to={`projects/${projects[0].route}`}>
-        <figure style={{marginTop: 25 + 'px', marginBottom: 10 + 'px', display: 'inline-block'}} className={`${border.shadow} ${border.hoverShadow}`}>
-          <img alt="" height="185" width="300" src={projects[0].img}/>
-        </figure>
-      </Link>
-      <div className={`${text.center} ${text.subTitle}`}>{projects[0].name}</div>
-    </div>
+    projects.slice(0,2).map((project) => (
+      <div>
+        <Link to={`projects/${project.route}`}>
+          <figure style={{marginTop: 25 + 'px', marginBottom: 10 + 'px', display: 'inline-block'}} className={`${border.shadow} ${border.hoverShadow}`}>
+            <img alt="" height="185" width="300" src={project.img}/>
+          </figure>
+        </Link>
+        <div className={`${text.center} ${text.subTitle}`}>{project.name}</div>
+      </div>
+    ))
   }
   {
-    projects.slice(1).map((project) => (
+    projects.slice(2).map((project) => (
       <Link key={project.name} to={`projects/${project.route}`}>
         <div style={{verticalAlign: 'top', margin: 10 + 'px', display: 'inline-block'}}>
           <figure className={position.center}><img alt="" style={{margin: 20 + 'px'}} height="92.5" width="150" src={project.img} className={`${border.shadow} ${border.hoverShadow}`}/></figure>

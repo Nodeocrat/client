@@ -159,25 +159,138 @@ export default class RoomProj extends React.Component {
         <br/>
         <h4><b>Sample 3: Permissions</b></h4>
         <p>
-        {`Sample coming soon.`}
+        {`This sample demonstrates how to grant or refuse permission. Here, we refuse permission to join if the username entered is longer than 8 characters, or if its empty. To do this, all we need to do is implement the `}<a href="https://github.com/Nodeocrat/room-samples/blob/master/api-docs.md#hook-roomonjoinrequestclient-userinfo" target="_blank">onJoinRequest</a>{` hook on the server-side ChatRoom class, as shown below.`}
+        </p>
+        <pre className="prettyprint">
+        {`
+        onJoinRequest(userInfo){ // Do not call super for this hook
+          if(!userInfo.id)
+            return {success: false, reason: 'Username cannot be empty'};
+
+          if(userInfo.id.length > 8)
+            return {success: false, reason: 'Username cannot be longer than 8 characters'};
+
+          return true; // You can also return a boolean, but if it's false, it's recommended to include a reason
+        }`}
+        </pre>
+        <p>
+        {`Now, if we enter no name, or a name longer than 8 characters, the error reason will be caught and printed to the developer console.`}
         </p>
 
         <br/>
         <h4><b>Sample 4: Initialization hook</b></h4>
         <p>
-        {`Sample coming soon.`}
+        {`Here, the `}<a href="" target="_blank">onClientAccepted</a>{` hook is demonstrated, which is useful for a few reasons. First is that it allows us to broadcast that a user is joining, but not yet initialized, and second; it allows us to add a user to the room before the user has initialized, which can be useful if we have a user limit for our room, to avoid a conflict if two users request to join (see sample 3) at the same time for the last spot.`}
         </p>
+        <p>
+        {`All that has been changed to the client from sample 1 is a new 'USER_INITIALIZED' websocket event for when the user has finished initializing, and the initialized() callback has been wrapped in a setTimeout to simulate initialization.`}
+        </p>
+        <pre className="prettyprint">
+        {`
+          chatRoom.on('USER_INITIALIZED', user => {
+            userList.set(user.username, user);
+            renderUserList();
+            newMessage(\`\${user.username} initialized\`);
+          });
+
+          //etc...
+
+          setTimeout(() => chatRoom.initialized(), 5000);
+        `}
+        </pre>
+        <p>
+        {`For the backend, things have been moved around a little. The user now gets created in onClientAccepted, and the 'USER_JOINED' has been moved to the new onClientAccepted hook, while being replaced with 'USER_INITIALIZED'.`}
+        </p>
+        <pre className="prettyprint">
+        {`
+          initClient(client){
+            super.initClient(client); // Must always call super for this hook
+
+            const user = this._users.get(client.id);
+            if(!user)
+              return this.leave(client);
+
+            user.status = 'ONLINE';
+
+            this.addListener(client, 'SEND_MSG', msg => {
+              this.broadcast('USER_MSG', {username: client.id, text: msg});
+            });
+
+            this.broadcast('USER_INITIALIZED', this._users.get(client.id));
+            this.emit(client, 'INIT', [...this._users.values()]); // Convert to array of user objects since Map objects cannot be converted to JSON
+          }
+
+          onClientAccepted(client){
+            super.onClientAccepted(client); // Always call super for this hook
+
+            if(!client.id)
+              return console.log('Cannot create client with empty id');
+
+            const newUser = {username: client.id, status: 'INITIALIZING'};
+            this._users.set(client.id, newUser);
+            this.broadcast('USER_JOINED', newUser);
+          }`}
+          </pre>
 
         <br/>
         <h4><b>Sample 5: Multiple rooms of the same type</b></h4>
         <p>
-        {`Sample 5 demonstrates that you can easily join multiple rooms of the same type without having to worry about conflicting events on the server or client thanks to the way the rooms on the client/server precede events with an agreed unique ID behind the scenes. Here, the code has been changed so that when you log in (auth-free), you are presented with 4 rooms which you can join, which no longer requires POST data to be sent in the join rooms' request. The code for each room is mostly the same apart from it has been factored into its own class (in chat-room.js), with the constructor taking an integer for the room number. Normally web components should be used here, but the spec is too unstable at the moment, and using babel or React isn't worth it for such a small sample, so we just use a class which manipulates the DOM when it is constructed.`}
+        {`Sample 5 demonstrates that you can easily join multiple rooms of the same type without having to worry about conflicting events on the server or client thanks to the way the rooms on the client/server precede events with an agreed unique ID behind the scenes. Here, the backend code has been changed to require logging in before joining a room, which no longer requires POST data to be sent in the join rooms' request, and we now have 4 chat-rooms, and require a parameter ID for the room you wish to join for the /chatroom POST endpoint.`}
         </p>
+        <pre className="prettyprint">
+        {`
+          const chatRooms = [];
+          for(let i = 0; i < 4; ++i)
+            chatRooms.push(new ChatRoom());
 
+          /*
+          *  API
+          */
+          const namesInUse = new Map();
+
+          // Simple auth-free login just to be able to set a session name
+          app.post('/login', (req, res) => {
+            const username = req.body.username;
+            if(!username || (namesInUse.get(username) && namesInUse.get(username) !== req.sessionID))
+              return res.sendStatus(400);
+            req.session.username = username;
+            namesInUse.set(username, req.sessionID);
+            res.sendStatus(200);
+          });
+
+          app.post('/logout', (req, res) => {
+            namesInUse.delete(req.session.username);
+            req.session.username = null;
+            res.sendStatus(200);
+          });
+
+          //Same as before, but with a url parameter for the room we wish to join
+          app.post('/chatroom/:roomId', (req, res) => {
+            const roomId = req.params.roomId;
+            if(!roomId)
+              return res.json({success:false, reason:'Room Id not provided'});
+            if(!req.session.username)
+              return res.json({success: false, reason:'Username not provided'});
+            if(isNaN(roomId) || (roomId < 0 || roomId > 3))
+              return res.json({success: false, reason: 'Invalid Room ID'});
+
+            const result = chatRooms[roomId].join({cookie: req.headers.cookie, id: req.session.username});
+            res.json(result);
+          });`}
+        </pre>
+        <p>
+        {`For the client, when you login now, you are presented with 4 rooms which you can join. The code for the client is mostly the same apart from it has been factored into its own class (in `}<a href="https://github.com/Nodeocrat/room-samples/blob/master/sample-5/client/chat-room.js" target="_blank">chat-room.js</a>{`), with the constructor taking an integer for the room number and there is a new renderJoinBtn function so each room can have its own join button. Normally web components should be used here, but the spec is too unstable at the moment, and using babel or React isn't worth it for such a small sample, so we just use a class which manipulates the DOM when it is constructed.`}
+        </p>
+        <pre className="prettyprint">
+        {`
+          const chatRooms = [];
+          for(let i = 0; i <= 3; ++i)
+            chatRooms.push(new ChatRoom(i));`}
+        </pre>
         <br/>
         <h4><b>Sample 6: Everything together</b></h4>
         <p>
-        {`Sample 6 combines everything from the previous samples. The disconnect/reconnect functionality is more interesting here, since if you disconnect and only rejoin a single room, you can still be booted from the other rooms if you don't join back in time. Also the onJoinRequest is used to refuse permission to join a 4th room if you are already a member of 3.`}
+        {`Sample 6 combines everything from the previous samples. The disconnect/reconnect functionality is more interesting too, since if you disconnect and only rejoin a single room, you can still be booted from the other rooms if you don't join back in time. Also the onJoinRequest is used to refuse permission to join a room if you're already a member of another 3. Upon attempting to join a 4th, you will be refused permission and a message will be printed to the developer console stating this.`}
         </p>
       </section>
     );
