@@ -25,6 +25,7 @@ export default (props) => {
         <span className={icons['icon-mail']}/>
         <span>&nbsp; ashley.phillips@nodeocrat.com</span>
         <br/>
+        <a href="/AshleyPhillips-CV-20180220.pdf" target="_blank">View CV</a>
       </div>
       <div className={text.regular}>
       </div>

@@ -7,12 +7,12 @@ const keySkills = [
   "React.js",
   "ES6",
   "Redux",
-  "CSS Modules",
+  "AWS",
+  "CSS3",
   "HTML5",
   "Webpack",
   "MongoDB",
   "Linux",
-  "AWS",
   "Express.js"
 ];
 
