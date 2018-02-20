@@ -10,25 +10,32 @@ const keySkills = [
   "AWS",
   "CSS3",
   "HTML5",
+  "Web Components",
   "Webpack",
   "MongoDB",
   "Linux",
-  "Express.js"
+  "Express.js",
+  "Npm",
+  "Git",
+  "Mocha (TDD)",
+  "Cucumber (BDD)",
+  "PostgreSQL",
+  "WebSockets"
 ];
 
 const otherSkills = [
+  "Travis",
   "C++",
   "AngularDart",
   "Dart",
   "Passport",
-  "Npm",
-  "Git",
-  "Mocha",
   "Nginx",
   "Website Hosting",
   "Java",
-  "PostgreSQL",
-  "Qt"
+  "Qt",
+  "SubVersion",
+  "Redmin",
+  "JIRA"
 ];
 
 export default class Skills extends React.Component {
