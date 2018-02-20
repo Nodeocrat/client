@@ -61,6 +61,7 @@ export default class PhotoWidget extends React.PureComponent {
   componentDidMount(){
     window.addEventListener("resize", this.updateCoords);
     window.addEventListener("load", this.updateCoords);
+    this.updateCoords();
   }
 
   componentWillUnmount(){
