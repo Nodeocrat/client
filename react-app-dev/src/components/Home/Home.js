@@ -35,7 +35,7 @@ const Logos = () => (
 const SkillsSection = () => (
   <section className="col-sm-offset-4 col-sm-4">
     <div className={`${text.subTitle} ${text.center}`}>
-      Proficient with
+      Skills
     </div>
     <Skills/>
   </section>
